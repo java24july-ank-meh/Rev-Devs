@@ -19,7 +19,7 @@ Technologies used:
 
 
 
-<p>https://github.com/AmitaiIlan/Revature-Social-Network.git</p>
+<p>https://github.com/RevDevs/Revature-Social-Network.git</p>
 
 <p>Getting this clone from git</p>
 <ul>
@@ -27,6 +27,6 @@ Technologies used:
   <li>git init</li>
   <li>git add README.md</li>
   <li>git commit -m "first commit"</li>
-  <li>git remote add origin https://github.com/AmitaiIlan/Revature-Social-Network.git</li>
+  <li>git remote add origin https://github.com/RevDevs/Revature-Social-Network.git</li>
   <li>git push -u origin master</li>
 </ul>
