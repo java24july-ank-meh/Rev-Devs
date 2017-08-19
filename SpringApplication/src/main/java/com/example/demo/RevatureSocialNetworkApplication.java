@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"com.revature.controllers", "com.revature.restControllers"})
+@ComponentScan({"com.revature.restControllers"})
 public class RevatureSocialNetworkApplication {
 
 	public static void main(String[] args) {
