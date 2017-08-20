@@ -25,7 +25,7 @@ import com.example.demo.RevatureSocialNetworkApplication;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
 @WebAppConfiguration
-public class LocationControllerTest {
+public class PostControllerTest {
 
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
@@ -46,25 +46,24 @@ public class LocationControllerTest {
 	 */
 
 	@Test
-	public void returnAllLocations() throws Exception {
-		mockMvc.perform(get("/locations")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	public void returnAllPosts() throws Exception {
+		mockMvc.perform(get("/posts")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void returnSingleLocation() throws Exception {
+	public void returnSinglePost() throws Exception {
 		// Must be changed to mock a location object
-		mockMvc.perform(get("/locations/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+		mockMvc.perform(get("/posts/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void createLocation() throws Exception {
-		mockMvc.perform(post("/locations")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	public void createPost() throws Exception {
+		mockMvc.perform(post("/posts")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void deleteLocation() throws Exception {
-		mockMvc.perform(delete("/locations/1")).andExpect(status().isOk())
-				.andExpect(content().contentType(contentType));
+	public void deletePost() throws Exception {
+		mockMvc.perform(delete("/posts/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 }
