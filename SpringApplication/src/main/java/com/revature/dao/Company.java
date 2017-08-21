@@ -1,56 +1,65 @@
 package com.revature.dao;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
 public class Company {
-	
+
 	@Id
-	private long company_id;
-	
-	private long location_id;
-	
-	private String company_name;
-	
+	private long companyId;
+
+	@ManyToOne
+	@JoinColumn(name = "locationId")
+	private Location location;
+
+	@Column
+	private String companyName;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "companyId")
+	private Set<Employee> employees;
+
 	public Company() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Company(long company_id, long location_id, String company_name) {
+	public Company(Location location, String companyName) {
 		super();
-		this.company_id = company_id;
-		this.location_id = location_id;
-		this.company_name = company_name;
+		this.location = location;
+		this.companyName = companyName;
 	}
 
-	@Override
-	public String toString() {
-		return "Company [company_id=" + company_id + ", location_id=" + location_id + ", company_name=" + company_name
-				+ "]";
+	public long getCompanyId() {
+		return companyId;
 	}
 
-	public long getCompany_id() {
-		return company_id;
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
 	}
 
-	public void setCompany_id(long company_id) {
-		this.company_id = company_id;
+	public Location getLocation() {
+		return location;
 	}
 
-	public long getLocation_id() {
-		return location_id;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
-	public void setLocation_id(long location_id) {
-		this.location_id = location_id;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public String getCompany_name() {
-		return company_name;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
-	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
 	}
 
 }

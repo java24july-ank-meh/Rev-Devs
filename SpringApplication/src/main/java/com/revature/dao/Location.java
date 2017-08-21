@@ -1,43 +1,54 @@
 package com.revature.dao;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
 public class Location {
 
 	@Id
-	private long location_id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long locationId;
+
+	@Column
 	private String city;
-	
+
+	@Column(nullable = false)
 	private double longitude;
-	
+
+	@Column(nullable = false)
 	private double lattitude;
-	
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "locationId")
+	private Set<Employee> employees;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "locationId")
+	private Set<Company> companies;
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "locationId")
+	private Set<Post> posts;
+
 	public Location() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Location(long location_id, String city, double longitude, double lattitude) {
+	public Location(long locationId, String city, double longitude, double lattitude) {
 		super();
-		this.location_id = location_id;
+		this.locationId = locationId;
 		this.city = city;
 		this.longitude = longitude;
 		this.lattitude = lattitude;
 	}
 
-	@Override
-	public String toString() {
-		return "Location [location_id=" + location_id + ", city=" + city + ", longitude=" + longitude + ", lattitude="
-				+ lattitude + "]";
+	public long getLocationId() {
+		return locationId;
 	}
 
-	public long getLocation_id() {
-		return location_id;
-	}
-
-	public void setLocation_id(long location_id) {
-		this.location_id = location_id;
+	public void setLocationId(long locationId) {
+		this.locationId = locationId;
 	}
 
 	public String getCity() {
@@ -62,6 +73,36 @@ public class Location {
 
 	public void setLattitude(double lattitude) {
 		this.lattitude = lattitude;
+	}
+
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
+	}
+
+	public Set<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(Set<Company> companies) {
+		this.companies = companies;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
+
+	@Override
+	public String toString() {
+		return "Location [locationId=" + locationId + ", city=" + city + ", longitude=" + longitude + ", lattitude="
+				+ lattitude + "]";
 	}
 
 }

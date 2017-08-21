@@ -24,14 +24,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-core</artifactId>
-		    <version>5.0.0.Final</version>
-		</dependency>
-	
+	<dependencies>	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -55,8 +48,11 @@
 			<artifactId>javassist</artifactId>
 			<version>3.21.0-GA</version>
 		</dependency>
-
-
+		<dependency>
+	  		<groupId>com.oracle.jdbc</groupId>
+	  		<artifactId>ojdbc7</artifactId>
+	  		<version>12.1.0.1</version>
+	  	</dependency>
 	</dependencies>
 
 	<build>

@@ -1,36 +1,43 @@
 package com.revature.dao;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
 public class PostType {
 
 	@Id
-	private long type_id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long typeId;
+
+	@Column
 	private String type;
-	
+
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "typeId")
+	private Set<Post> posts;
+
 	public PostType() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public PostType(long type_id, String type) {
+	public PostType(String type) {
 		super();
-		this.type_id = type_id;
+		this.type = type;
+	}
+	
+	public PostType(long typeId, String type) {
+		super();
+		this.typeId = typeId;
 		this.type = type;
 	}
 
-	@Override
-	public String toString() {
-		return "PostType [type_id=" + type_id + ", type=" + type + "]";
+	public long getTypeId() {
+		return typeId;
 	}
 
-	public long getType_id() {
-		return type_id;
-	}
-
-	public void setType_id(long type_id) {
-		this.type_id = type_id;
+	public void setTypeId(long typeId) {
+		this.typeId = typeId;
 	}
 
 	public String getType() {
@@ -39,6 +46,14 @@ public class PostType {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
 	}
 
 }

@@ -1,59 +1,68 @@
 package com.revature.dao;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
 public class Comment {
 
 	@Id
-	private long comment_id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long commentId;
 	
-	private long user_id;
+	@ManyToOne
+	@JoinColumn(name="employeeId")
+	private Employee employee;
 	
-	private long post_id;
+	@ManyToOne
+	@JoinColumn(name="postId")
+	private Post post;
 	
+	@Column 
+	private Date date;
+	
+	@Column
 	private String content;
-	
-	public Comment() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public Comment(long comment_id, long user_id, long post_id, String content) {
+	public Comment(Employee employee, Post post, Date date, String content) {
 		super();
-		this.comment_id = comment_id;
-		this.user_id = user_id;
-		this.post_id = post_id;
+		this.employee = employee;
+		this.post = post;
+		this.date = date;
 		this.content = content;
 	}
 
-	@Override
-	public String toString() {
-		return "Comment [comment_id=" + comment_id + ", user_id=" + user_id + ", post_id=" + post_id + ", content="
-				+ content + "]";
+	public long getCommentId() {
+		return commentId;
 	}
 
-	public long getComment_id() {
-		return comment_id;
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
 	}
 
-	public void setComment_id(long comment_id) {
-		this.comment_id = comment_id;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public Post getPost() {
+		return post;
 	}
 
-	public long getPost_id() {
-		return post_id;
+	public void setPost(Post post) {
+		this.post = post;
 	}
 
-	public void setPost_id(long post_id) {
-		this.post_id = post_id;
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getContent() {
@@ -63,5 +72,7 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	
 
 }

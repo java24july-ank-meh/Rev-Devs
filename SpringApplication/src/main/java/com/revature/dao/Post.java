@@ -1,70 +1,89 @@
 package com.revature.dao;
 
+import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
 public class Post {
 	
 	@Id
-	private long post_id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long postId;
 	
-	private long location_id;
+	@ManyToOne
+	@JoinColumn(name="locationId")
+	private Location location;
 	
-	private long user_id;
+	@ManyToOne
+	@JoinColumn(name="employeeId")
+	private Employee employee;
 	
-	private long type_id;
+	@ManyToOne
+	@JoinColumn(name="typeId")
+	private PostType type;
 	
+	@Column 
+	private Date date;
+	
+	@Column
 	private String content;
 	
-	public Post() {
-		// TODO Auto-generated constructor stub
-	}
+	@OneToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name="postId")
+	private Set<Comment> comments;
 	
-	public Post(long post_id, long location_id, long user_id, long type_id, String content) {
+	public Post() {
+	}
+
+	public Post(Location location, Employee employee, PostType type, Date date, String content) {
 		super();
-		this.post_id = post_id;
-		this.location_id = location_id;
-		this.user_id = user_id;
-		this.type_id = type_id;
+		this.location = location;
+		this.employee = employee;
+		this.type = type;
+		this.date = date;
 		this.content = content;
 	}
-	
-	@Override
-	public String toString() {
-		return "Post [post_id=" + post_id + ", location_id=" + location_id + ", user_id=" + user_id + ", type_id="
-				+ type_id + ", content=" + content + "]";
+
+	public long getPostId() {
+		return postId;
 	}
 
-	public long getPost_id() {
-		return post_id;
+	public void setPostId(long postId) {
+		this.postId = postId;
 	}
 
-	public void setPost_id(long post_id) {
-		this.post_id = post_id;
+	public Location getLocation() {
+		return location;
 	}
 
-	public long getLocation_id() {
-		return location_id;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
-	public void setLocation_id(long location_id) {
-		this.location_id = location_id;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public PostType getType() {
+		return type;
 	}
 
-	public long getType_id() {
-		return type_id;
+	public void setType(PostType type) {
+		this.type = type;
 	}
 
-	public void setType_id(long type_id) {
-		this.type_id = type_id;
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getContent() {
@@ -75,4 +94,13 @@ public class Post {
 		this.content = content;
 	}
 
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
+	
 }
