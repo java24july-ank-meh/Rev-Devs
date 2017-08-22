@@ -1,4 +1,4 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Date;
 import java.util.Set;
