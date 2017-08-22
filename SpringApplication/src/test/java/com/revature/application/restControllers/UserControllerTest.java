@@ -1,8 +1,9 @@
-package com.revature.restControllers;
+package com.revature.application.restControllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,12 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.example.demo.RevatureSocialNetworkApplication;
+import com.revature.application.RevatureSocialNetworkApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
 @WebAppConfiguration
-public class PostControllerTest {
+public class UserControllerTest {
 
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
@@ -46,24 +47,29 @@ public class PostControllerTest {
 	 */
 
 	@Test
-	public void returnAllPosts() throws Exception {
-		mockMvc.perform(get("/posts")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	public void returnAllUsers() throws Exception {
+		mockMvc.perform(get("/users")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void returnSinglePost() throws Exception {
+	public void returnSingleUser() throws Exception {
 		// Must be changed to mock a location object
-		mockMvc.perform(get("/posts/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+		mockMvc.perform(get("/users/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void createPost() throws Exception {
-		mockMvc.perform(post("/posts")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	public void createUser() throws Exception {
+		mockMvc.perform(post("/users")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 	@Test
-	public void deletePost() throws Exception {
-		mockMvc.perform(delete("/posts/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	public void updateUser() throws Exception {
+		mockMvc.perform(put("/users/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+	}
+
+	@Test
+	public void deleteUser() throws Exception {
+		mockMvc.perform(delete("/users/1")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
 	}
 
 }

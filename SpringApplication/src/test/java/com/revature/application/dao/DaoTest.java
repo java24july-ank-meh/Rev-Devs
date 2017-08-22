@@ -1,11 +1,12 @@
-package com.revature.dao;
+package com.revature.application.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.revature.dao.Location;
+import com.revature.application.dao.Employee;
+import com.revature.application.dao.Location;
 
 public class DaoTest {
 

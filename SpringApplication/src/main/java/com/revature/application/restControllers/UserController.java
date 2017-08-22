@@ -1,11 +1,11 @@
-package com.revature.restControllers;
+package com.revature.application.restControllers;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Greeting;
+import com.revature.application.beans.Greeting;
 
 @RestController
 @RequestMapping("/users")
