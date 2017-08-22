@@ -25,24 +25,24 @@ public class Post {
 	private PostType type;
 	
 	@Column 
-	private Date date;
+	private Date posted;
 	
 	@Column
 	private String content;
 	
 	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name="postId")
-	private Set<Comment> comments;
+	private Set<PostComment> comments;
 	
 	public Post() {
 	}
 
-	public Post(Location location, Employee employee, PostType type, Date date, String content) {
+	public Post(Location location, Employee employee, PostType type, Date posted, String content) {
 		super();
 		this.location = location;
 		this.employee = employee;
 		this.type = type;
-		this.date = date;
+		this.posted = posted;
 		this.content = content;
 	}
 
@@ -78,12 +78,12 @@ public class Post {
 		this.type = type;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getPosted() {
+		return posted;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setPosted(Date posted) {
+		this.posted = posted;
 	}
 
 	public String getContent() {
@@ -94,13 +94,17 @@ public class Post {
 		this.content = content;
 	}
 
-	public Set<Comment> getComments() {
+	public Set<PostComment> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setComments(Set<PostComment> comments) {
 		this.comments = comments;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Post [postId=" + postId + ", location=" + location + ", employee=" + employee + ", type=" + type
+				+ ", posted=" + posted + ", content=" + content + "]";
+	}
 }
