@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+ <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+
+<!--  <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+ <property name="hibernate.connection.username">bear</property>
+ <property name="hibernate.connection.password">bear</property> -->
+
+ <property name="hibernate.connection.url">jdbc:oracle:thin:@revature-project2.c3ytlblkelbf.us-east-1.rds.amazonaws.com:1521:orcl</property>
+ <property name="hibernate.connection.username">revdevs</property>
+ <property name="hibernate.connection.password">revature123</property>
+ 
+ <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+ <property name="show_sql">true</property>
+ <property name="hbm2ddl.auto">update</property>
+<!--  <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property> -->
+<!-- <mapping resource="person.hbm.xml"></mapping> -->
+<mapping class="com.revature.dao.Comment"></mapping>
+<mapping class="com.revature.dao.Company"></mapping>
+<mapping class="com.revature.dao.Location"></mapping>
+<mapping class="com.revature.dao.Post"></mapping>
+<mapping class="com.revature.dao.PostType"></mapping>
+<mapping class="com.revature.dao.Employee"></mapping>
+</session-factory>
+</hibernate-configuration>
