@@ -8,4 +8,5 @@ public interface EmployeeDao {
 	public Employee read(String username);
 	public boolean update(Employee emp);
 	public boolean delete(Employee emp);
+	public boolean deleteById(long employee_id);
 }

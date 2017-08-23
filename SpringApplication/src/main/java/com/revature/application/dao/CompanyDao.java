@@ -10,4 +10,5 @@ public interface CompanyDao {
 	public Set<Company> readAll();
 	public boolean update(Company company);
 	public boolean delete(Company company);
+	public boolean deleteById(long company_id);
 }

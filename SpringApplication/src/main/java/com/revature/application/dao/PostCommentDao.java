@@ -7,4 +7,5 @@ public interface PostCommentDao {
 	public PostComment read(long comment_id);
 	public boolean update(PostComment comment);
 	public boolean delete(PostComment comment);
+	public boolean deleteById(long comment_id);
 }

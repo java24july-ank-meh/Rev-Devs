@@ -10,4 +10,5 @@ public interface PostTypeDao {
 	public Set<PostType> readAll();
 	public boolean update(PostType type);
 	public boolean delete(PostType type);
+	public boolean deleteById(long type_id);
 }

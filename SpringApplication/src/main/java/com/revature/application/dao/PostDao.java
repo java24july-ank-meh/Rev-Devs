@@ -7,4 +7,5 @@ public interface PostDao {
 	public Post read(long post_id);
 	public boolean update(Post post);
 	public boolean delete(Post post);
+	public boolean deleteById(long post_id);
 }
