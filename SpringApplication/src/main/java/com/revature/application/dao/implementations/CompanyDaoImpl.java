@@ -1,11 +1,7 @@
 package com.revature.application.dao.implementations;
 
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +15,6 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Autowired
 	SessionFactory sf;
 	
-	@Autowired
-	CriteriaBuilder builder;
-	
 	@Override
 	@Transactional
 	public boolean create(Company company) {
@@ -29,7 +22,6 @@ public class CompanyDaoImpl implements CompanyDao {
 		Session session = sf.openSession();
 		session.save(company);
 		session.flush();
-		session.close();
 		
 		return true;
 	}
@@ -40,7 +32,8 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sf.getCurrentSession();
 		
-		Company company = session.get(Company.class, company_id); 
+		Company company = session.get(Company.class, company_id);
+		session.flush();
 	
 		return company;
 	}
@@ -51,25 +44,44 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sf.getCurrentSession();
 		
-		return session.createQuery("from Company company").list();
+		List<Company> companies = session.createQuery("from Company company").list();
+		session.flush();
+		
+		return companies;
 		
 	}
 
 	@Override
+	@Transactional
 	public boolean update(Company company) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		Session session = sf.getCurrentSession();
+		session.saveOrUpdate(company);
+		session.flush();
+		
+		return true;
+		
 	}
 
 	@Override
 	public boolean delete(Company company) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		Session session = sf.getCurrentSession();
+		session.delete(company);
+		
+		return true;
 	}
 
 	@Override
 	public boolean deleteById(long company_id) {
-		// TODO Auto-generated method stub
+		
+		Session session = sf.getCurrentSession();
+		
+		Company company = new Company();
+		company.setCompanyId(company_id);
+		session.delete(company);
+		session.flush();
+		
 		return false;
 	}
 
