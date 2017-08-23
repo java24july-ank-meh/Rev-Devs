@@ -1,47 +1,56 @@
 package com.revature.application.restControllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.beans.Greeting;
+import com.revature.application.dao.Location;
 
 @RestController
 @RequestMapping("/locations")
 public class LocationController {
 
+	private Location location = new Location(1, "city", 12.12, 12.12);
+	
 	/*
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Greeting readAllLocations() {
+	public Collection<Location> readAllLocations() {
 		// Get all the locations from db
-		return new Greeting(1, "Returning all locations");
+		List<Location> locations = new ArrayList<>();
+		locations.add(location);
+		return locations;
 	}
 
 	@RequestMapping(path = "/{locationId}", method = RequestMethod.GET)
-	public Greeting readLocationById(@PathVariable long locationId) {
+	public Location readLocationById(@PathVariable long locationId) {
 		// Get single location from db by id
-		return new Greeting(1, "Returning single location");
+		return location;
 	}
 
 	/*
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public Greeting createLocation(/* Take in a location object */) {
+	public Location createLocation(/* Take in a location object */) {
 		// Add a new location to the db
-		return new Greeting(1, "Added a single location");
+		return location;
 	}
 
 	/*
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{locationId}", method = RequestMethod.DELETE)
-	public Greeting deleteLocation(@PathVariable long locationId) {
+	public Location deleteLocation(@PathVariable long locationId) {
 		// Delete a single location
-		return new Greeting(1, "Deleted single location");
+		return location;
 	}
 
 }
