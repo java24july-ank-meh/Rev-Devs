@@ -32,3 +32,6 @@ nbdist/
 
 ### Mac
 .DS_STORE
+
+### ignore anyting with secrets
+secrets*

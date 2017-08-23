@@ -1,4 +1,4 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Set;
 
@@ -35,9 +35,8 @@ public class Location {
 	public Location() {
 	}
 
-	public Location(long locationId, String city, double longitude, double lattitude) {
+	public Location(String city, double longitude, double lattitude) {
 		super();
-		this.locationId = locationId;
 		this.city = city;
 		this.longitude = longitude;
 		this.lattitude = lattitude;

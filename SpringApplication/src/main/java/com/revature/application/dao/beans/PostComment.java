@@ -1,35 +1,39 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Date;
 
 import javax.persistence.*;
 
 @Entity
-public class Comment {
+public class PostComment {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long commentId;
-	
+
 	@ManyToOne
-	@JoinColumn(name="employeeId")
+	@JoinColumn(name = "employeeId")
 	private Employee employee;
-	
+
 	@ManyToOne
-	@JoinColumn(name="postId")
+	@JoinColumn(name = "postId")
 	private Post post;
-	
-	@Column 
-	private Date date;
-	
+
+	@Column
+	private Date commented;
+
 	@Column
 	private String content;
 
-	public Comment(Employee employee, Post post, Date date, String content) {
+	public PostComment() {
+
+	}
+
+	public PostComment(Employee employee, Post post, Date commented, String content) {
 		super();
 		this.employee = employee;
 		this.post = post;
-		this.date = date;
+		this.commented = commented;
 		this.content = content;
 	}
 
@@ -57,12 +61,12 @@ public class Comment {
 		this.post = post;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getCommented() {
+		return commented;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCommented(Date commented) {
+		this.commented = commented;
 	}
 
 	public String getContent() {
@@ -72,7 +76,11 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "PostComment [commentId=" + commentId + ", employee=" + employee + ", post=" + post + ", commented="
+				+ commented + ", content=" + content + "]";
+	}
 
 }

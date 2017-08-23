@@ -1,4 +1,4 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Set;
 
@@ -40,7 +40,7 @@ public class Employee {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "employeeId")
-	private Set<Comment> comments;
+	private Set<PostComment> comments;
 
 	public Employee() {
 	}
@@ -129,12 +129,21 @@ public class Employee {
 		this.posts = posts;
 	}
 
-	public Set<Comment> getComments() {
+	public Set<PostComment> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setComments(Set<PostComment> comments) {
 		this.comments = comments;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", location=" + location + ", company=" + company + ", username="
+				+ username + ", password=" + password + ", email=" + email + ", fname=" + fname + ", lname=" + lname
+				+ "]";
+	}
+	
+	
 
 }

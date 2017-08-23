@@ -1,4 +1,4 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Set;
 
@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Company {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long companyId;
 
 	@ManyToOne
@@ -60,6 +61,11 @@ public class Company {
 
 	public void setEmployees(Set<Employee> employees) {
 		this.employees = employees;
+	}
+
+	@Override
+	public String toString() {
+		return "Company [companyId=" + companyId + ", location=" + location + ", companyName=" + companyName + "]";
 	}
 
 }

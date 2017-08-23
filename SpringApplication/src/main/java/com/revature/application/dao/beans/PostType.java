@@ -1,4 +1,4 @@
-package com.revature.application.dao;
+package com.revature.application.dao.beans;
 
 import java.util.Set;
 
@@ -25,12 +25,6 @@ public class PostType {
 		super();
 		this.type = type;
 	}
-	
-	public PostType(long typeId, String type) {
-		super();
-		this.typeId = typeId;
-		this.type = type;
-	}
 
 	public long getTypeId() {
 		return typeId;
@@ -54,6 +48,11 @@ public class PostType {
 
 	public void setPosts(Set<Post> posts) {
 		this.posts = posts;
+	}
+
+	@Override
+	public String toString() {
+		return "PostType [typeId=" + typeId + ", type=" + type + "]";
 	}
 
 }
