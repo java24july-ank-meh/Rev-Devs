@@ -1,6 +1,6 @@
 package com.revature.application.restControllers;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +22,7 @@ public class CompanyController {
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Set<Company> readAllCompanies() {
+	public List<Company> readAllCompanies() {
 		// Get all the companies from db
 		return companyDAO.readAll();
 	}
