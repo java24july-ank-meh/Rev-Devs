@@ -5,11 +5,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
 
+@Service
 public class CompanyDaoImpl implements CompanyDao {
 
 	@Autowired
@@ -64,6 +66,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Company company) {
 		
 		Session session = sf.getCurrentSession();
@@ -73,6 +76,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteById(long company_id) {
 		
 		Session session = sf.getCurrentSession();
