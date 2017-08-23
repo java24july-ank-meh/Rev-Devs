@@ -1,6 +1,6 @@
 package com.revature.application.restControllers;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ public class EmployeeController {
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Set<Employee> readAllEmployees() {
+	public List<Employee> readAllEmployees() {
 		// Get all the employee from db
 		return employeeDAO.readAll();
 	}
