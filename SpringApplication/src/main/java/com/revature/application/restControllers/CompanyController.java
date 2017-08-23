@@ -1,47 +1,54 @@
 package com.revature.application.restControllers;
 
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.application.beans.Greeting;
+import com.revature.application.dao.CompanyDao;
+import com.revature.application.dao.beans.Company;
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
 
+	@Autowired
+	CompanyDao companyDAO;
+	
 	/*
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Greeting readAllCompanies() {
+	public Set<Company> readAllCompanies() {
 		// Get all the companies from db
-		return new Greeting(1, "Returning all companies");
+		return companyDAO.readAll();
 	}
 
 	@RequestMapping(path = "/{companyId}", method = RequestMethod.GET)
-	public Greeting readCompanyById(@PathVariable long companyId) {
+	public Company readCompanyById(@PathVariable long companyId) {
 		// Get single company from db by id
-		return new Greeting(1, "Returning single company");
+		return companyDAO.read(companyId);
 	}
 
 	/*
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public Greeting createCompany(/* Take in a company object */) {
+	public boolean createCompany(/* Take in a company object */) {
 		// Add a new company to the db
-		return new Greeting(1, "Added a single company");
+		return true;
 	}
 
 	/*
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{companyId}", method = RequestMethod.DELETE)
-	public Greeting deleteLocation(@PathVariable long companyId) {
+	public boolean deleteLocation(@PathVariable long companyId) {
 		// Delete a single location
-		return new Greeting(1, "Deleted single company");
+		return companyDAO.deleteById(companyId);
 	}
 
 }
