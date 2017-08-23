@@ -17,8 +17,10 @@ public class PostTypeDaoImpl implements PostTypeDao{
 	@Autowired
 	SessionFactory sf;
 
+	@Override
 	@Transactional
 	public boolean create(PostType type) {
+		
 		Session session = sf.getCurrentSession();
 		
 		session.save(type);
@@ -27,8 +29,10 @@ public class PostTypeDaoImpl implements PostTypeDao{
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public PostType read(long type_id) {
+		
 		Session session = sf.getCurrentSession();
 		
 		PostType type = session.get(PostType.class, type_id);
@@ -37,8 +41,10 @@ public class PostTypeDaoImpl implements PostTypeDao{
 		return type;
 	}
 
+	@Override
 	@Transactional
 	public List<PostType> readAll() {
+		
 		Session session = sf.getCurrentSession();
 		
 		List<PostType> types = session.createQuery("from PostType type").list();
@@ -47,18 +53,22 @@ public class PostTypeDaoImpl implements PostTypeDao{
 		return types;
 	}
 
+	@Override
 	@Transactional
 	public boolean update(PostType type) {
+		
 		Session session = sf.getCurrentSession();
 		
-		session.saveOrUpdate(type);
+		session.update(type);
 		session.flush();
 
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean delete(PostType type) {
+		
 		Session session = sf.getCurrentSession();
 		
 		session.delete(type);
@@ -67,8 +77,10 @@ public class PostTypeDaoImpl implements PostTypeDao{
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean deleteById(long type_id) {
+		
 		Session session = sf.getCurrentSession();
 		
 		PostType type = new PostType();

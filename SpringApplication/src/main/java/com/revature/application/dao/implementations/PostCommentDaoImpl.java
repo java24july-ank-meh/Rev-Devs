@@ -17,8 +17,10 @@ public class PostCommentDaoImpl implements PostCommentDao{
 	@Autowired
 	SessionFactory sf;
 
+	@Override
 	@Transactional
 	public boolean create(PostComment comment) {
+		
 		Session session = sf.getCurrentSession();
 		session.save(comment);
 		session.flush();
@@ -26,8 +28,10 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public List<Post> readAll() {		
+		
 		Session session = sf.getCurrentSession();
 		
 		List<Post> posts = session.createQuery("from Post post").list();
@@ -36,8 +40,10 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		return posts;
 	}
 
+	@Override
 	@Transactional
 	public PostComment read(long comment_id) {
+		
 		Session session = sf.getCurrentSession();
 		
 		PostComment comment = session.get(PostComment.class, comment_id);
@@ -46,18 +52,22 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		return comment;
 	}
 
+	@Override
 	@Transactional
 	public boolean update(PostComment comment) {
+		
 		Session session = sf.getCurrentSession();
 		
-		session.saveOrUpdate(comment);
+		session.update(comment);
 		session.flush();
 		
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean delete(PostComment comment) {
+		
 		Session session = sf.getCurrentSession();
 		
 		session.delete(comment);
@@ -66,8 +76,10 @@ public class PostCommentDaoImpl implements PostCommentDao{
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean deleteById(long comment_id) {
+		
 		Session session = sf.getCurrentSession();
 
 		PostComment comment = new PostComment();

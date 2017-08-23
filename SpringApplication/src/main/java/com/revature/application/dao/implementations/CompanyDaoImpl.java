@@ -21,7 +21,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Transactional
 	public boolean create(Company company) {
 	
-		Session session = sf.openSession();
+		Session session = sf.getCurrentSession();
 		session.save(company);
 		session.flush();
 		
@@ -58,7 +58,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	public boolean update(Company company) {
 		
 		Session session = sf.getCurrentSession();
-		session.saveOrUpdate(company);
+		session.update(company);
 		session.flush();
 		
 		return true;
@@ -71,6 +71,7 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sf.getCurrentSession();
 		session.delete(company);
+		session.flush();
 		
 		return true;
 	}

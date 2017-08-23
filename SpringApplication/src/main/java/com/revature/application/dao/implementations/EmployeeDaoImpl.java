@@ -49,7 +49,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		String query = "from Employee employee where employee.username = :username";
 		Employee employee = (Employee) session.createQuery(query)
-				.setParameter("username", username).uniqueResult();
+				.setParameter("username", username)
+				.uniqueResult();
 		
 		session.flush();
 		
@@ -76,7 +77,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		Session session = sf.getCurrentSession();
 		
-		session.saveOrUpdate(emp);
+		session.update(emp);
 		session.flush();
 		
 		return true;

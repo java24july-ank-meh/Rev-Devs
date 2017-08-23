@@ -13,11 +13,14 @@ import com.revature.application.dao.beans.Location;
 
 @Service
 public class LocationDaoImpl implements LocationDao {
+	
 	@Autowired
 	SessionFactory sf;
 	
+	@Override
 	@Transactional
 	public boolean create(Location loc) {
+		
 		Session session = sf.getCurrentSession();
 		
 		session.save(loc);
@@ -26,8 +29,10 @@ public class LocationDaoImpl implements LocationDao {
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public Location read(long loc_id) {
+		
 		Session session = sf.getCurrentSession();
 		Location loc = session.get(Location.class, loc_id);
 		session.flush();
@@ -35,8 +40,10 @@ public class LocationDaoImpl implements LocationDao {
 		return loc;
 	}
 
+	@Override
 	@Transactional
 	public List<Location> readAll() {
+		
 		Session session = sf.getCurrentSession();
 		
 		List<Location> locations = session.createQuery("from Location location").list();
@@ -45,17 +52,22 @@ public class LocationDaoImpl implements LocationDao {
 		return locations;
 	}
 
+	@Override
 	@Transactional
 	public boolean update(Location loc) {
+		
 		Session session = sf.getCurrentSession();
-		session.saveOrUpdate(loc);
+		
+		session.update(loc);
 		session.flush();
 			
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean delete(Location loc) {
+		
 		Session session = sf.getCurrentSession();
 
 		session.delete(loc);
@@ -64,8 +76,10 @@ public class LocationDaoImpl implements LocationDao {
 		return true;
 	}
 
+	@Override
 	@Transactional
 	public boolean deleteById(long loc_id) {
+		
 		Session session = sf.getCurrentSession();
 
 		Location loc = new Location();
