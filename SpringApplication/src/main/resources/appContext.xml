@@ -8,11 +8,18 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 
-	<!-- * Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
-		* * In secrets.properties: * url-aws=<the aws url we are given> * user-aws=<the 
-		aws user> * password-aws=<the aws password> * * Now we can use them like 
-		this: * ......<property name="...">${url-aws}</property> * ......<property 
-		name="...">${user-aws}</property> * ......<property name="...">${password-aws}</property> -->
+	<!-- 
+		* Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
+		* 
+		* In secrets.properties: 
+		* url-aws=<the aws url we are given> 
+		* user-aws=<the aws user> 
+		* password-aws=<the aws password> 
+		* 
+		* Now we can use them like this: 
+		* ......<property name="...">${url-aws}</property> 
+		* ......<property name="...">${user-aws}</property> 
+		* ......<property name="...">${password-aws}</property> -->
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
