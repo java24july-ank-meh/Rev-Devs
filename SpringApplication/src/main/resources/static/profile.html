@@ -1,99 +1,98 @@
-			<div class="jumbotron">
+<div style="width:1000px; margin: 0 auto;">
+<div class="jumbotron">
+  <div class="media">
+    <img class="d-flex mr-3" src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/toni-magni-2.thumbnail.jpg">
+    <div class="media-body">
+      <h5 class="mt-0">username</h5>
+      <table id="userinfo" class="table table-no-border" style="width: 40%;">
+        <tr>
+          <td>First name:</td>
+          <td>Ted</td>
+        </tr>
+        <tr>
+          <td>Last name:</td>
+          <td>Stinson</td>
+        </tr>
+        <tr>
+          <td>Eamil:</td>
+          <td>notforfree@mail.com</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <font color="{{statusColor}}">{{status}}</font><br/>
+            <button type="button" class="btn btn-sm" ng-click="editButton()">{{editButtonName}}</button>
+            <span ng-if="editMode"><button type="button" class="btn btn-sm" ng-click="cancelButton()">CANCEL</button></span>
+          </td>
+        </tr>
+      </table>
+      <h3>Locations</h3>
+        <ul>
+          <li>Their housing</li>
+          <li>Their company name and company location name</li>
+        </ul>
+    </div>
+  </div>
+  </div>
+<br/><br/>
+<div class="jumbotron">
+  <h2>Recent Posts</h2>
 
-				<div class="container w3-container">
-					<h2 style="float: left">Username</h2>
-					<div style="float: right">
-						<i class="glyphicon glyphicon-edit"> Edit Info</i> <br /> <i
-							class="glyphicon glyphicon-cog"> Change Login</i>
-					</div>
+   <table class="table table borderless" style="width: 55%;">
+                <tbody>
+                <tr>
+                  <td> </td>
+                  <td><small>Date | Post Type</small> </td>
+                </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr class="active">
+                    <td> </td>
+                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
+                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
+                  </tr>
+                </tbody>
+              </table>
 
-				</div>
+               <table class="table table borderless" style="width: 55%;">
+                <tbody>
+                <tr>
+                  <td> </td>
+                  <td><small>Date | Post Type</small> </td>
+                </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr class="active">
+                    <td> </td>
+                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
+                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
+                  </tr>
+                </tbody>
+              </table>
 
-				<table id="userinfo" class="table table-no-border">
-					<tr>
-						<td>First name:</td>
-						<td>Mike</td>
-					</tr>
-					<tr>
-						<td>Last name:</td>
-						<td>Edds</td>
-					</tr>
-					<tr>
-						<td>Eamil:</td>
-						<td>notforfree@mail.com</td>
-					</tr>
-				</table>
-
-			</div>
-
-			<div>
-				<div class="jumbotron">
-					<div id="theirlocation">
-						<h3>Locations</h3>
-						<ul>
-							<li>Their housing</li>
-							<li>Their company name and company location name</li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="jumbotron">
-					<h3>Post</h3>
-					"in order of time maybe"
-					<div id="theirrecentpost">
-						<ul>
-							"ng-repeat" reapeat for their post?
-							<li>
-								<div>Post content</div> <span> location </span><span> type
-							</span>
-							</li>
-							<li>
-								<div>Post content</div> <span> location </span><span> type
-							</span>
-							</li>
-							<li>
-								<div>Post content</div> <span> location </span><span> type
-							</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!--
-		<div id="head" class="jumbotron col-md-14">or row
-		  <h2 class="col-md-8">Username</h2>
-		  <div class="col-md-12">
-		    <label class="col-md-4">First name</label>
-		    <div>Kyle</div>
-		  </div>
-		  <div class="col-md-10">
-		    <label class="col-md-5">Last name</label>
-		    <div class="col-md-4">Edwards</div>
-		  </div>
-		  <div class="col-md-8">
-		    <label class="col-md-5">Location</label>
-		    <div class="col-md-6">New York City</div>
-		  </div>
-		</div>
-		<div id="theirlocation">
-		  <ul>
-		    <li>
-		      Their housing
-		    </li>
-		    <li>
-		      Their company name and company location name
-		    </li>
-		  </ul>
-		</div>
-		<div id="theirrecentpost">
-		  <ul>"in order of time maybe"
-		    <li> "ng-repeat" reapeat for their post?
-		      <div>
-		        Post content
-		        <span> location </span><span> type </span>
-		      </div>
-		    </li>
-		  </ul>
-		</div>
-		-->
+               <table class="table table borderless" style="width: 55%;">
+                <tbody>
+                <tr>
+                  <td> </td>
+                  <td><small>Date | Post Type</small> </td>
+                </tr>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr class="active">
+                    <td> </td>
+                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
+                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
+                  </tr>
+                </tbody>
+              </table>
+    </div>
+</div>
