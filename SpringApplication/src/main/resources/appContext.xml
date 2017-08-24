@@ -1,81 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:cache="http://www.springframework.org/schema/cache"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-		
+
+
 	<!-- 
 		* Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
+		* 
 		* In secrets.properties: 
-		* database.url=<the aws url we are given> 
-		* database.username=<the aws user> 
-		* database.password=<the aws password>
-	 -->
-	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations" value="classpath:secrets.properties"/>
+		* url-aws=<the aws url we are given> 
+		* user-aws=<the aws user> 
+		* password-aws=<the aws password> 
+		* 
+		* Now we can use them like this: 
+		* ......<property name="...">${url-aws}</property> 
+		* ......<property name="...">${user-aws}</property> 
+		* ......<property name="...">${password-aws}</property> -->
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>classpath:secrets.properties</value>
+		</property>
 	</bean>
-	
-	<!-- BasicDataSource Bean definition -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="${database.url}" />
-		<property name="username" value="${database.username}" />
-		<property name="password" value="${database.password}" />
-	</bean>
-	
-	<!-- BasicDataSource Bean definition -->
-	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="bear" />
-		<property name="password" value="bear" />
-	</bean> -->
 
-	<!-- LocalSessionFactory Bean definition -->
+
+	<!-- CONTEXTUAL SESSION -->
+
+
+	<!-- BASIC DATASOURCE -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="${database.url}"></property>
+		<property name="username" value="${database.username}"></property>
+		<property name="password" value="${database.password}"></property>
+	</bean>
+
+	<!-- LOCAL SESSIONFACTORY -->
 	<bean id="sf"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="packagesToScan"> 
-			<array>
-				<value>com.revature.application.dao.implementations</value>
-				<value>com.revature.application.dao.beans</value>
-				<value>com.revature.application.dao</value>
-			</array>
-		</property>
+		<!-- Looking for @Entity -->
+		<property name="packagesToScan" value="com.revature.spring.hib"></property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.Oracle10gDialect
-				</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 				<prop key="current_session_context_class">thread</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
-		<property name="dataSource" ref="dataSource"/>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.revature.application.dao.beans.Company</value>
+				<value>com.revature.application.dao.beans.Employee</value>
+				<value>com.revature.application.dao.beans.Location</value>
+				<value>com.revature.application.dao.beans.Post</value>
+				<value>com.revature.application.dao.beans.PostComment</value>
+				<value>com.revature.application.dao.beans.PostType</value>
+			</list>
+
+		</property>
 	</bean>
 
-	<!-- HibernateTransactionManager Bean definition -->
+	<!-- TRANSACTION MANAGER -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sf" />
+		<property name="sessionFactory" ref="sf"></property>
 	</bean>
 
-	<!-- DataService Bean definition -->
-	<bean id="companyService" class="com.revature.application.dao.implementations.CompanyDaoImpl" autowire="byName"/>
-	<bean id="employeeService" class="com.revature.application.dao.implementations.EmployeeDaoImpl" autowire="byName"/>
-	<bean id="locationService" class="com.revature.application.dao.implementations.LocationDaoImpl" autowire="byName"/>
-	<bean id="commentService" class="com.revature.application.dao.implementations.PostCommentDaoImpl" autowire="byName"/>
-	<bean id="postService" class="com.revature.application.dao.implementations.PostDaoImpl" autowire="byName"/>
-	<bean id="typeService" class="com.revature.application.dao.implementations.PostTypeDaoImpl" autowire="byName"/>
-	<bean id="service" class="com.revature.application.dao.beans.DataService" autowire="byName"/>
+
+	<!-- LIBRARYIMPL -->
 
 	<tx:annotation-driven />
+
 
 </beans>
