@@ -1,31 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 
-	<!-- 
-	 * Load the secrets.properties file to maintain our secrets (src/main/resources/.)
-	 * 
-	 * In secrets.properties:
-	 * url-aws=<the aws url we are given>
-	 * user-aws=<the aws user>
-	 * password-aws=<the aws password>
-	 *
-	 * Now we can use them like this:
-	 * ......<property name="...">${url-aws}</property>
-	 * ......<property name="...">${user-aws}</property>
-	 * ......<property name="...">${password-aws}</property> -->
-	 <bean
+	<!-- * Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
+		* * In secrets.properties: * url-aws=<the aws url we are given> * user-aws=<the 
+		aws user> * password-aws=<the aws password> * * Now we can use them like 
+		this: * ......<property name="...">${url-aws}</property> * ......<property 
+		name="...">${user-aws}</property> * ......<property name="...">${password-aws}</property> -->
+	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
+		<property name="locations">
 			<value>classpath:secrets.properties</value>
 		</property>
 	</bean>
-	
-	
+
+
+	<!-- CONTEXTUAL SESSION -->
+
+
+	<!-- BASIC DATASOURCE -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="url" value="${url-aws}"></property>
+		<property name="username" value="${username-aws}"></property>
+		<property name="password" value="${password-aws}"></property>
+	</bean>
+
+	<!-- LOCAL SESSIONFACTORY -->
+	<bean id="sf"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- Looking for @Entity -->
+		<property name="packagesToScan" value="com.revature.spring.hib"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.revature.application.dao.beans.Company</value>
+				<value>com.revature.application.dao.beans.Employee</value>
+				<value>com.revature.application.dao.beans.Location</value>
+				<value>com.revature.application.dao.beans.Post</value>
+				<value>com.revature.application.dao.beans.PostComment</value>
+				<value>com.revature.application.dao.beans.PostType</value>
+			</list>
+
+		</property>
+	</bean>
+
+	<!-- TRANSACTION MANAGER -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sf"></property>
+	</bean>
+
+
+	<!-- LIBRARYIMPL -->
+
+	<tx:annotation-driven />
+
 
 </beans>
