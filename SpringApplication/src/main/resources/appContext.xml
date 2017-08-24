@@ -1,31 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+	<!-- * Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
+		* 
+		* In secrets.properties: 
+		* url-aws=<the aws url we are given> 
+		* user-aws=<the aws user> 
+		* password-aws=<the aws password> 
+		* 
+		* Now we can use them like this: 
+		* ......<property name="...">${url-aws}</property> 
+		* ......<property name="...">${user-aws}</property> 
+		* ......<property name="...">${password-aws}</property> -->
 
 
-	<!-- 
-	 * Load the secrets.properties file to maintain our secrets (src/main/resources/.)
-	 * 
-	 * In secrets.properties:
-	 * url-aws=<the aws url we are given>
-	 * user-aws=<the aws user>
-	 * password-aws=<the aws password>
-	 *
-	 * Now we can use them like this:
-	 * ......<property name="...">${url-aws}</property>
-	 * ......<property name="...">${user-aws}</property>
-	 * ......<property name="...">${password-aws}</property> -->
-	 <bean
+
+		
+<!-- 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
 			<value>classpath:secrets.properties</value>
 		</property>
 	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dhcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url">
+			${aws-url}
+		</property>
+		<property name="username">
+			${user-aws}
+		</property>
+		<property name="password">
+			${password-aws}
+		</property>
+	</bean> -->
 	
+	<!-- BasicDataSource Bean definition -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url">jdbc:oracle:thin:@localhost:1521:xe</property>
+		<property name="username">bear</property>
+		<property name="password">bear</property>
+	</bean> -->
 	
+	<!-- BasicDataSource Bean definition -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="bear" />
+		<property name="password" value="bear" />
+	</bean>
+
+	<!-- LocalSessionFactory Bean definition -->
+	<bean id="sf"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="packagesToScan" value="com.revature.application.dao.beans" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- HibernateTransactionManager Bean definition -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sf" />
+	</bean>
+
+	<!-- DataService Bean definition -->
+	<bean id="service" class="com.revature.application.dao.DataService" autowire="byName">
+	</bean>
+
+	<tx:annotation-driven />
 
 </beans>

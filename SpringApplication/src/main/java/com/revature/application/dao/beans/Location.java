@@ -4,6 +4,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 @Entity
 public class Location {
 
