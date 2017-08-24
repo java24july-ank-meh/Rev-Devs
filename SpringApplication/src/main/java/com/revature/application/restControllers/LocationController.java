@@ -2,12 +2,16 @@ package com.revature.application.restControllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.Location;
 
@@ -35,9 +39,13 @@ public class LocationController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public boolean createLocation(/* Take in a location object */) {
-		// Add a new location to the db
-		return true;
+	public RequestStatus createLocation(@Valid Location location, BindingResult bindingResult) {
+			
+		if (!bindingResult.hasErrors()) {
+			locationDAO.create(location);
+			return new RequestStatus();
+		}
+		return new RequestStatus(false, "Failed to create new location");
 	}
 
 	/*

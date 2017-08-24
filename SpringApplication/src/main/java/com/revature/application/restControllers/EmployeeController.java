@@ -2,13 +2,16 @@ package com.revature.application.restControllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.application.beans.Greeting;
+import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
 
@@ -38,18 +41,28 @@ public class EmployeeController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public boolean createEmployee(/* Take in a location object */) {
+	public RequestStatus createEmployee(@Valid Employee employee, BindingResult bindingResult) {
 		// Add a new user to the db
-		return true;
+		
+		if (!bindingResult.hasErrors()) {
+			employeeDAO.create(employee);
+			return new RequestStatus();
+		}
+		return new RequestStatus(false, "Failed to create new employee");
 	}
 
 	/*
 	 * All PUT request
 	 */
 	@RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
-	public boolean updateEmployee(@PathVariable long userId) {
+	public RequestStatus updateEmployee(@Valid Employee employee, BindingResult bindingResult, @PathVariable long userId) {
 		// Update user with userId
-		return true;
+		
+		if (!bindingResult.hasErrors()) {
+			employeeDAO.update(employee);
+			return new RequestStatus(); 
+		}
+		return new RequestStatus(false, "Failed to update employee");
 	}
 
 	/*

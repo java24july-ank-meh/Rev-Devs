@@ -2,13 +2,16 @@ package com.revature.application.restControllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.application.beans.Greeting;
+import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.Post;
 
@@ -38,9 +41,14 @@ public class PostController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public boolean createPost(/* Get Post object */) {
+	public RequestStatus createPost(@Valid Post post, BindingResult bindingResult) {
 		// Create a post in the db
-		return true;
+		if (!bindingResult.hasErrors()) {
+			postDAO.create(post);
+			return new RequestStatus(); 
+		}
+		
+		return new RequestStatus(false, "Failed to create post");
 	}
 
 	/*

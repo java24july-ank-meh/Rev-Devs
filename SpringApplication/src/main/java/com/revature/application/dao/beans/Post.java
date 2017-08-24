@@ -1,9 +1,11 @@
 package com.revature.application.dao.beans;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,29 +14,33 @@ public class Post {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@NotNull
 	private long postId;
 	
 	@ManyToOne
 	@JoinColumn(name="locationId")
+	@NotNull
 	private Location location;
 	
 	@ManyToOne
 	@JoinColumn(name="employeeId")
+	@NotNull
 	private Employee employee;
 	
 	@ManyToOne
 	@JoinColumn(name="typeId")
 	private PostType type;
 	
-	@Column 
+	@Column
 	private Date posted;
 	
 	@Column
+	@NotNull
 	private String content;
 	
 	@OneToMany(cascade = {CascadeType.ALL})
 	@JoinColumn(name="postId")
-	private Set<PostComment> comments;
+	private Set<PostComment> comments = new HashSet<>();
 	
 	public Post() {
 	}

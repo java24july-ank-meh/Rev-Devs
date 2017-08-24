@@ -1,8 +1,10 @@
 package com.revature.application.dao.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,14 +13,16 @@ public class PostType {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private long typeId;
 
 	@Column
+	@NotNull
 	private String type;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "typeId")
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<>();
 
 	public PostType() {
 	}

@@ -1,36 +1,48 @@
 package com.revature.application.dao.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private long locationId;
 
 	@Column
+	@NotNull
 	private String city;
 
 	@Column(nullable = false)
+	@NotNull
+	@DecimalMin("-180.0")
+	@DecimalMax("180.0")
 	private double longitude;
 
 	@Column(nullable = false)
+	@NotNull
+	@DecimalMin("-180.0")
+	@DecimalMax("180.0")
 	private double lattitude;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "locationId")
-	private Set<Employee> employees;
+	private Set<Employee> employees = new HashSet<>();
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "locationId")
-	private Set<Company> companies;
+	private Set<Company> companies = new HashSet<>();
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "locationId")
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<>();
 
 	public Location() {
 	}

@@ -1,20 +1,22 @@
 package com.revature.application.dao.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
-
-import org.springframework.stereotype.Repository;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private long employeeId;
 
 	@ManyToOne
 	@JoinColumn(name = "locationId")
+	@NotNull
 	private Location location;
 
 	@ManyToOne
@@ -22,27 +24,32 @@ public class Employee {
 	private Company company;
 
 	@Column(nullable = false, unique = true)
+	@NotNull
 	private String username;
 
 	@Column(nullable = false)
+	@NotNull
 	private String password;
 
 	@Column
+	@NotNull
 	private String email;
 
 	@Column
+	@NotNull
 	private String fname;
 
 	@Column
+	@NotNull
 	private String lname;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "employeeId")
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<Post>();
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "employeeId")
-	private Set<PostComment> comments;
+	private Set<PostComment> comments = new HashSet<PostComment>();
 
 	public Employee() {
 	}

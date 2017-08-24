@@ -1,8 +1,10 @@
 package com.revature.application.dao.beans;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,18 +13,21 @@ public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private long companyId;
 
 	@ManyToOne
 	@JoinColumn(name = "locationId")
+	@NotNull
 	private Location location;
 
 	@Column
+	@NotNull
 	private String companyName;
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "companyId")
-	private Set<Employee> employees;
+	private Set<Employee> employees = new HashSet<Employee>();
 
 	public Company() {
 	}

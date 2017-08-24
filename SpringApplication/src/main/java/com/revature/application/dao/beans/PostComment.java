@@ -3,6 +3,7 @@ package com.revature.application.dao.beans;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,20 +12,24 @@ public class PostComment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotNull
 	private long commentId;
 
 	@ManyToOne
 	@JoinColumn(name = "employeeId")
+	@NotNull
 	private Employee employee;
 
 	@ManyToOne
 	@JoinColumn(name = "postId")
+	@NotNull
 	private Post post;
 
 	@Column
 	private Date commented;
 
 	@Column
+	@NotNull
 	private String content;
 
 	public PostComment() {
