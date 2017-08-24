@@ -2,9 +2,8 @@ package com.revature.application.dao.beans;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.revature.application.dao.DataService;
 
-public class Test2 {
+public class Test {
 	public static void main(String[] args) throws Exception {
 		ApplicationContext ctx = 
 				new ClassPathXmlApplicationContext("appContext.xml");

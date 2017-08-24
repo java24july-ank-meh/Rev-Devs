@@ -85,7 +85,7 @@
 	</bean>
 
 	<!-- DataService Bean definition -->
-	<bean id="service" class="com.revature.application.dao.DataService" autowire="byName">
+	<bean id="service" class="com.revature.application.dao.beans.DataService" autowire="byName">
 	</bean>
 
 	<tx:annotation-driven />
