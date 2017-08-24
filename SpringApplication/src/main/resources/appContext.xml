@@ -11,55 +11,33 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 		
-	<!-- * Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
-		* 
+	<!-- 
+		* Load the secrets.properties file to maintain our secrets (src/main/resources/.) 
 		* In secrets.properties: 
-		* url-aws=<the aws url we are given> 
-		* user-aws=<the aws user> 
-		* password-aws=<the aws password> 
-		* 
-		* Now we can use them like this: 
-		* ......<property name="...">${url-aws}</property> 
-		* ......<property name="...">${user-aws}</property> 
-		* ......<property name="...">${password-aws}</property> -->
-
-
-
-		
-<!-- 	<bean
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location">
-			<value>classpath:secrets.properties</value>
-		</property>
-	</bean>
-	<bean id="dataSource" class="org.apache.commons.dhcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url">
-			${aws-url}
-		</property>
-		<property name="username">
-			${user-aws}
-		</property>
-		<property name="password">
-			${password-aws}
-		</property>
-	</bean> -->
+		* database.url=<the aws url we are given> 
+		* database.username=<the aws user> 
+		* database.password=<the aws password>
+	 -->
 	
-	<!-- BasicDataSource Bean definition -->
-	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url">jdbc:oracle:thin:@localhost:1521:xe</property>
-		<property name="username">bear</property>
-		<property name="password">bear</property>
-	</bean> -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:secrets.properties"/>
+	</bean>
 	
 	<!-- BasicDataSource Bean definition -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+	
+	<!-- BasicDataSource Bean definition -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="bear" />
 		<property name="password" value="bear" />
-	</bean>
+	</bean> -->
 
 	<!-- LocalSessionFactory Bean definition -->
 	<bean id="sf"
