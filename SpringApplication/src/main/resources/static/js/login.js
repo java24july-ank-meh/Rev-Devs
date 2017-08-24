@@ -6,7 +6,7 @@ app.run(function($rootScope, $http, $location){
 	$rootScope.login = function(username,password){
 		$http({
 			method: 'POST',
-			url: '/login/login',
+			url: '/authentication/login',
 			data: 'username='+username+"&password="+password,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).then(function successCallback(response){

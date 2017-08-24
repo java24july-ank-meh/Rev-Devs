@@ -16,5 +16,5 @@ app.config(function($routeProvider) {
 });
 
 app.run(function($rootScope, $http, $location){
-	$rootScope.page = 'home';
+	
 });

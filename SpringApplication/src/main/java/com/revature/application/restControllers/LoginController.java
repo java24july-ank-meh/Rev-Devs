@@ -13,7 +13,7 @@ import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/authentication")
 public class LoginController {
 
 	@Autowired
@@ -37,7 +37,7 @@ public class LoginController {
 			return new Greeting(1,"Logged in");
 		} else {
 			// Return Failure
-			return new Greeting(3,"Incorrect password");
+			return new Greeting(2,"Incorrect password");
 		}
 	}
 
@@ -51,5 +51,14 @@ public class LoginController {
 		
 		// Return success or failure
 		return new Greeting(1,"Logged out");
+	}
+	
+	@RequestMapping(path = "/user", method = RequestMethod.GET)
+	public Employee getCurrentUser(HttpSession session) {
+		Integer employee_id = (Integer)session.getAttribute("id");
+		if(employee_id == null) return null;
+		Employee employee = employeeDAO.read(employee_id);
+		if(employee == null) return null;
+		return employee;
 	}
 }
