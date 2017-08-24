@@ -17,6 +17,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	SessionFactory sf;
 
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
 	@Override
 	@Transactional
 	public boolean create(Employee emp) {

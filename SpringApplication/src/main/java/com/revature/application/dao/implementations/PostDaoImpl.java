@@ -17,6 +17,10 @@ public class PostDaoImpl implements PostDao{
 	@Autowired
 	SessionFactory sf;
 
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
 	@Override
 	@Transactional
 	public boolean create(Post post) {

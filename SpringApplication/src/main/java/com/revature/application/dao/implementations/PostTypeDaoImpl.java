@@ -17,6 +17,10 @@ public class PostTypeDaoImpl implements PostTypeDao{
 	@Autowired
 	SessionFactory sf;
 
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
 	@Override
 	@Transactional
 	public boolean create(PostType type) {

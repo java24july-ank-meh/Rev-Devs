@@ -17,6 +17,10 @@ public class LocationDaoImpl implements LocationDao {
 	@Autowired
 	SessionFactory sf;
 	
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
 	@Override
 	@Transactional
 	public boolean create(Location loc) {

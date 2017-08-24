@@ -42,7 +42,13 @@
 	<!-- LocalSessionFactory Bean definition -->
 	<bean id="sf"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="packagesToScan" value="com.revature.application.dao.beans" />
+		<property name="packagesToScan"> 
+			<array>
+				<value>com.revature.application.dao.implementations</value>
+				<value>com.revature.application.dao.beans</value>
+				<value>com.revature.application.dao</value>
+			</array>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">
@@ -52,7 +58,7 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
 	<!-- HibernateTransactionManager Bean definition -->
@@ -62,8 +68,13 @@
 	</bean>
 
 	<!-- DataService Bean definition -->
-	<bean id="service" class="com.revature.application.dao.beans.DataService" autowire="byName">
-	</bean>
+	<bean id="companyService" class="com.revature.application.dao.implementations.CompanyDaoImpl" autowire="byName"/>
+	<bean id="employeeService" class="com.revature.application.dao.implementations.EmployeeDaoImpl" autowire="byName"/>
+	<bean id="locationService" class="com.revature.application.dao.implementations.LocationDaoImpl" autowire="byName"/>
+	<bean id="commentService" class="com.revature.application.dao.implementations.PostCommentDaoImpl" autowire="byName"/>
+	<bean id="postService" class="com.revature.application.dao.implementations.PostDaoImpl" autowire="byName"/>
+	<bean id="typeService" class="com.revature.application.dao.implementations.PostTypeDaoImpl" autowire="byName"/>
+	<bean id="service" class="com.revature.application.dao.beans.DataService" autowire="byName"/>
 
 	<tx:annotation-driven />
 

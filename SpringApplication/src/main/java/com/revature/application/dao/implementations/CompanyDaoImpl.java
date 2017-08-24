@@ -17,6 +17,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Autowired
 	SessionFactory sf;
 	
+	public void setSf(SessionFactory sf) {
+		this.sf = sf;
+	}
+	
 	@Override
 	@Transactional
 	public boolean create(Company company) {
