@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title> Revautre-Social Network: My Profile</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body style="background-color:#ffffff">
+        <header>
+            <div class="page-header">
+                <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="background-color: #FFFFFF; border-color: #F26A25;">
+                    <img src="images/logo.png" height="35" width="135"></img>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="nav navbar-nav navbar-right" style="float:right;">
+                            <li><a ng-click="logout()" href="#!/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                        <ul class="navbar-nav" style="float:right;">
+                          <li class="nav-item active">
+                            <a class="nav-link" href="#" >Home <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Explore Area</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">My Account</a>
+                          </li>
+                        </ul>
+                  </div>
+                </nav>
+            </div>
+        </header>
+
+        <section>
+			<div class="jumbotron">
+
+				<div class="container w3-container">
+					<h2 style="float: left">Username</h2>
+					<div style="float: right">
+						<i class="glyphicon glyphicon-edit"> Edit Info</i> <br /> <i
+							class="glyphicon glyphicon-cog"> Change Login</i>
+					</div>
+
+				</div>
+
+				<table id="userinfo" class="table table-no-border">
+					<tr>
+						<td>First name:</td>
+						<td>Mike</td>
+					</tr>
+					<tr>
+						<td>Last name:</td>
+						<td>Edds</td>
+					</tr>
+					<tr>
+						<td>Eamil:</td>
+						<td>notforfree@mail.com</td>
+					</tr>
+				</table>
+
+			</div>
+
+			<div>
+				<div class="jumbotron">
+					<div id="theirlocation">
+						<h3>Locations</h3>
+						<ul>
+							<li>Their housing</li>
+							<li>Their company name and company location name</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="jumbotron">
+					<h3>Post</h3>
+					"in order of time maybe"
+					<div id="theirrecentpost">
+						<ul>
+							"ng-repeat" reapeat for their post?
+							<li>
+								<div>Post content</div> <span> location </span><span> type
+							</span>
+							</li>
+							<li>
+								<div>Post content</div> <span> location </span><span> type
+							</span>
+							</li>
+							<li>
+								<div>Post content</div> <span> location </span><span> type
+							</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!--
+		<div id="head" class="jumbotron col-md-14"><!--or row
+		  <h2 class="col-md-8">Username</h2>
+		  <div class="col-md-12">
+		    <label class="col-md-4">First name</label>
+		    <div>Kyle</div>
+		  </div>
+		  <div class="col-md-10">
+		    <label class="col-md-5">Last name</label>
+		    <div class="col-md-4">Edwards</div>
+		  </div>
+		  <div class="col-md-8">
+		    <label class="col-md-5">Location</label>
+		    <div class="col-md-6">New York City</div>
+		  </div>
+		</div>
+		<div id="theirlocation">
+		  <ul>
+		    <li>
+		      Their housing
+		    </li>
+		    <li>
+		      Their company name and company location name
+		    </li>
+		  </ul>
+		</div>
+		<div id="theirrecentpost">
+		  <ul>"in order of time maybe"
+		    <li> "ng-repeat" reapeat for their post?
+		      <div>
+		        Post content
+		        <span> location </span><span> type </span>
+		      </div>
+		    </li>
+		  </ul>
+		</div>
+		-->
+	</section>
+
+	<footer>
+            <p align="center">Revature-Social Network, Copyright &copy; 2017</p>
+     </footer>
+</body>
+</html>

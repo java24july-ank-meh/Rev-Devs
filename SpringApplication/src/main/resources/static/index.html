@@ -1,11 +1,172 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>My Index</title>
-	</head>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title> Revautre-Social Network: Home Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body style="background-color:#ffffff">
+        <header>
+            <div class="page-header">
+                <nav class="navbar navbar-toggleable-md navbar-light bg-faded" style="background-color: #FFFFFF; border-color: #F26A25;">
+                    <img src="images/logo.png" height="35" width="135"></img>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="nav navbar-nav navbar-right" style="float:right;">
+                            <li><a ng-click="logout()" href="#!/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                        <ul class="navbar-nav" style="float:right;">
+                          <li class="nav-item active">
+                            <a class="nav-link" href="#" >Home <span class="sr-only">(current)</span></a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Explore</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">My Profile</a>
+                          </li>
+                        </ul>
+                  </div>
+                </nav>
+            </div>
+        </header>
 
-	<body>
-		<h1> My index page</h1>
-	</body>
+        <section>
+          <h3>Welcome back user!</h3>
+          <div class="jumbotron" style="/* background-image: url(socializing.jpg); */ background-size: cover;"></div>
+          <div class="container" style="text-align: center;">
+            <div class="row">
 
+              <div class="col" style="text-align: center;">
+                <div class="card text-center" style="width: 55rem;">
+                  <div class="card-header"></div>
+                    <div class="card-block">
+                        <form>
+                          <div class="form-group">
+                            <label for="comment">Show other people what's going on in your area:</label>
+                            <textarea class="form-control" rows="5" id="comment" placeholder="What's going on in your area"></textarea>
+                          </div>
+
+                          <div class="wrapper" style="text-align: right;">
+                            <input type="image" src="images/icon.png"/>
+                            <input type="file" id="my_file" accept="image/*" style="display: none;" />
+                            <button type="submit" class="btn btn-primary" align="left">Post!</button>
+                          </div>
+
+                              <script>
+                               $("input[type='image']").click(function() {
+                                $("input[id='my_file']").click();
+                                });
+                            </script>
+                        </form>
+                    </div>
+                  </div>
+              </div>
+
+            </div>
+            <div class="row">
+
+              <table class="table table borderless" style="width: 55%;">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="media">
+                        <img class="d-flex mr-3" src="thumbnail.jpg" alt="Generic placeholder image">
+                      </div>
+                    </th>
+                    <th>Full Name</th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Post Type | Date</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
+
+
+              <table class="table table borderless" style="width: 55%;">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="media">
+                        <img class="d-flex mr-3" src="thumbnail.jpg" alt="Generic placeholder image">
+                      </div>
+                    </th>
+                    <th>Full Name</th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Post Type | Date</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="table table borderless" style="width: 55%;">
+                <thead>
+                  <tr>
+                    <th>
+                      <div class="media">
+                        <img class="d-flex mr-3" src="thumbnail.jpg" alt="Generic placeholder image">
+                      </div>
+                    </th>
+                    <th>Full Name</th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> </td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>Post Type | Date</td>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+
+          </div>
+        </section>
+
+        <footer>
+            <p align="center">Revature-Social Network, Copyright &copy; 2017</p>
+        </footer>
+</body>
 </html>
