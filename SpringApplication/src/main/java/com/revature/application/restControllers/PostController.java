@@ -1,6 +1,6 @@
 package com.revature.application.restControllers;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ public class PostController {
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public Set<Post> readAllPosts() {
+	public List<Post> readAllPosts() {
 		// Read all posts from the db
 		return postDAO.readAll();
 	}

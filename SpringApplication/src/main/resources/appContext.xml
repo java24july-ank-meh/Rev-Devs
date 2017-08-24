@@ -32,7 +32,6 @@
 			<value>classpath:secrets.properties</value>
 		</property>
 	</bean>
-
 	<bean id="dataSource" class="org.apache.commons.dhcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url">
