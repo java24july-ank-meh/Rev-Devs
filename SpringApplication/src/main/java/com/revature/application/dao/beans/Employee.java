@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Entity
 public class Employee {
 
