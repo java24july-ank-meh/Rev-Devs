@@ -6,8 +6,6 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Repository;
 
 @Entity
 public class Company {
