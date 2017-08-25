@@ -16,5 +16,10 @@ public class ApplicationController {
 	public String homePage(Model model) {
 		return "index.html";
 	}
+	
+	@RequestMapping("/map")
+	public String mapPage(Model model) {
+		return "map.html";
+	}
 
 }
