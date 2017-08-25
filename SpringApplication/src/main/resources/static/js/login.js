@@ -17,7 +17,7 @@ app.run(function($rootScope, $http, $location){
 				$rootScope.status= response.data.message;
 			}
 		}, function errorCallback(response){
-			$rootScope.status= "ERROR";
+			$rootScope.status = response.data.error + ": " + response.data.exception;
 		});
 	};
 	
@@ -57,7 +57,7 @@ app.controller("registerController", function($scope,$rootScope,$http,$location)
 				$scope.statusColor = "red";
 			}
 		}, function errorCallback(response){
-			$scope.status = "ERROR";
+			$scope.status = response.data.error + ": " + response.data.exception;
 			$scope.statusColor = "red";
 		});
 	};
