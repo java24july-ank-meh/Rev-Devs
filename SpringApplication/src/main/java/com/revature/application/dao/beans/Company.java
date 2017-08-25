@@ -18,7 +18,6 @@ public class Company {
 
 	@ManyToOne
 	@JoinColumn(name = "locationId")
-	@NotNull
 	private Location location;
 
 	@Column
