@@ -29,6 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.revature.application.RevatureSocialNetworkApplication;
 import com.revature.application.dao.beans.Company;
+import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.implementations.CompanyDaoImpl;
 
 @RunWith(SpringRunner.class)
@@ -53,7 +54,11 @@ public class CompanyControllerTest {
 		
 		
 		// Setup all the companies info
+		Company company = new Company(new Location(), "Bobs");
+		company.setCompanyId(1);
+		
 		companies = new ArrayList<>();
+		companies.add(company);
 	}
 
 	/*
@@ -79,7 +84,7 @@ public class CompanyControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(contentType))
 			.andExpect(jsonPath("$[0]", is(companies.get(0))))
-			.andExpect(jsonPath("[0].id", is(1)));
+			.andExpect(jsonPath("$[0].companyId", is(1)));
 	}
 
 	@Test
