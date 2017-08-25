@@ -13,7 +13,8 @@ import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostComment;
 
 @Service
-public class PostCommentDaoImpl implements PostCommentDao{
+public class PostCommentDaoImpl implements PostCommentDao {
+	
 	@Autowired
 	SessionFactory sf;
 
@@ -30,14 +31,14 @@ public class PostCommentDaoImpl implements PostCommentDao{
 
 	@Override
 	@Transactional
-	public List<Post> readAll() {		
+	public List<PostComment> readAll() {		
 		
 		Session session = sf.getCurrentSession();
 		
-		List<Post> posts = session.createQuery("from Post post").list();
+		List<PostComment> comments = session.createQuery("from PostComment postComment").list();
 		session.flush();
 		 
-		return posts;
+		return comments;
 	}
 
 	@Override

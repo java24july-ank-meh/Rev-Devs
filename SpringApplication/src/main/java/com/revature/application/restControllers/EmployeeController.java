@@ -69,9 +69,10 @@ public class EmployeeController {
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{userId}", method = RequestMethod.DELETE)
-	public boolean deleteEmployee(@PathVariable long userId) {
+	public RequestStatus deleteEmployee(@PathVariable long userId) {
 		// Delete a single user
-		return employeeDAO.deleteById(userId);
+		employeeDAO.deleteById(userId);
+		return new RequestStatus();
 	}
 
 }

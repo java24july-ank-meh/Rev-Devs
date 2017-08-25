@@ -52,9 +52,10 @@ public class LocationController {
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{locationId}", method = RequestMethod.DELETE)
-	public boolean deleteLocation(@PathVariable long locationId) {
+	public RequestStatus deleteLocation(@PathVariable long locationId) {
 		// Delete a single location
-		return locationDAO.deleteById(locationId);
+		locationDAO.deleteById(locationId);
+		return new RequestStatus();
 	}
 
 }

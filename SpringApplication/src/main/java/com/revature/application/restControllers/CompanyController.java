@@ -55,9 +55,10 @@ public class CompanyController {
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{companyId}", method = RequestMethod.DELETE)
-	public boolean deleteLocation(@PathVariable long companyId) {
+	public RequestStatus deleteLocation(@PathVariable long companyId) {
 		// Delete a single location
-		return companyDAO.deleteById(companyId);
+		companyDAO.deleteById(companyId);
+		return new RequestStatus();
 	}
 
 }

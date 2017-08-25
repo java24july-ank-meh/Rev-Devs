@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.beans.RequestStatus;
+import com.revature.application.dao.PostCommentDao;
 import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.Post;
+import com.revature.application.dao.beans.PostComment;
 
 @RestController
 @RequestMapping("/posts")
@@ -21,6 +23,9 @@ public class PostController {
 
 	@Autowired
 	PostDao postDAO;
+	
+	@Autowired
+	PostCommentDao commentDAO;
 	
 	/*
 	 * All GET requests
@@ -48,16 +53,37 @@ public class PostController {
 			return new RequestStatus(); 
 		}
 		
-		return new RequestStatus(false, "Failed to create post");
+		return new RequestStatus(false, "Failed to create new post");
 	}
-
+	
+	@RequestMapping(path = "/comment", method = RequestMethod.POST) 
+	public RequestStatus createComment(@Valid PostComment comment, BindingResult bindingResult) {
+		// Save a comment for this comment
+		
+		if (!bindingResult.hasErrors()) {
+			commentDAO.create(comment);
+			return new RequestStatus();
+		}
+		
+		return new RequestStatus(false, "Failed to create new comment");
+	}
+	
+	
 	/*
 	 * All DELETE requests
 	 */
 	@RequestMapping(path = "/{postId}", method = RequestMethod.DELETE)
-	public boolean deletePost(@PathVariable long postId) {
+	public RequestStatus deletePost(@PathVariable long postId) {
 		// Delete a post from the db
-		return postDAO.deleteById(postId);
+		postDAO.deleteById(postId);
+		return new RequestStatus();
+	}
+	
+	@RequestMapping(path = "/comment/{commentId}", method = RequestMethod.DELETE)
+	public RequestStatus deleteComment(@PathVariable long commentId) {
+		// Delete a comment from the db
+		commentDAO.deleteById(commentId);
+		return new RequestStatus();
 	}
 
 }
