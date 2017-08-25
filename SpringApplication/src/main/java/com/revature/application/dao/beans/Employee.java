@@ -6,11 +6,14 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="employeeSequence", sequenceName="employee_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator="employeeSequence")
 	@NotNull
 	private long employeeId;
 

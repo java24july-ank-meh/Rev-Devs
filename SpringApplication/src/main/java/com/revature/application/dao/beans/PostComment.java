@@ -5,13 +5,15 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Repository;
 
 @Entity
 public class PostComment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="postCommentSequence", sequenceName="postcomment_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator="postCommentSequence")
 	@NotNull
 	private long commentId;
 

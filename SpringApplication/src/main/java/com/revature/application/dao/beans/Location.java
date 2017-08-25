@@ -8,11 +8,14 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Location {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="locationSequence", sequenceName="location_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator="locationSequence")
 	@NotNull
 	private long locationId;
 

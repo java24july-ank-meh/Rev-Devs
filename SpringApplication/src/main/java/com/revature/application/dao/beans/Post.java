@@ -7,13 +7,15 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Repository;
 
 @Entity
 public class Post {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="postSequence", sequenceName="post_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator="postSequence")
 	@NotNull
 	private long postId;
 	
