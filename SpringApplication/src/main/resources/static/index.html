@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp"> 
 <head>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
@@ -27,7 +27,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
 <script src="js/index.js"></script>
-
+<script src="js/profile.js"></script>
 <title>Revautre-Social Network: Home Page</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -58,9 +58,7 @@
 	</header>
 
 	<section>
-		<div ng-app="myApp">
-			<ng-view></ng-view>
-		</div>
+		<ng-view></ng-view>
 	</section>
 
 	<footer>

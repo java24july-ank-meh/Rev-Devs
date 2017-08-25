@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.beans.Greeting;
+import com.revature.application.beans.RequestEmployee;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
@@ -32,7 +33,7 @@ public class LoginController {
 		
 		if(user.getPassword().equals(password)) {
 			// Start a session
-			session.setAttribute("id", user.getEmployeeId());
+			session.setAttribute("username", user.getUsername());
 	
 			// Return Success
 			return new RequestStatus();
@@ -55,11 +56,11 @@ public class LoginController {
 	}
 	
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
-	public Employee getCurrentUser(HttpSession session) {
-		Integer employee_id = (Integer)session.getAttribute("id");
-		if(employee_id == null) return null;
-		Employee employee = employeeDAO.read(employee_id);
-		if(employee == null) return null;
-		return employee;
+	public RequestEmployee getCurrentUser(HttpSession session) {
+		String username = (String)session.getAttribute("username");
+		if(username == null) return new RequestEmployee(false,null);
+		Employee employee = employeeDAO.read(username);
+		if(employee == null) return new RequestEmployee(false,null);
+		return new RequestEmployee(true,employee);
 	}
 }

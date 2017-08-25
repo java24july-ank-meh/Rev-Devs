@@ -10,14 +10,30 @@ app.run(function($rootScope, $http, $location){
 			data: 'username='+username+"&password="+password,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).then(function successCallback(response){
-			let res = response.data;
-			if(res.success){
+			let success = response.data.success;
+			if(success){
 				window.location.href = "/home";
 			} else {
-				$rootScope.status= res.message;
+				$rootScope.status= response.data.message;
 			}
 		}, function errorCallback(response){
 			$rootScope.status= "ERROR";
 		});
 	};
+	
+	//Log in if the user has a session
+	$rootScope.autoLogin = function(){
+		$http({
+			method: 'GET',
+			url: '/authentication/user',
+		}).then(function successCallback(response){
+			let success = response.data.success;
+			if(success){
+				window.location.href = "/home";
+			}
+		}, function errorCallback(response){
+		});
+	};
+	
+	$rootScope.autoLogin();
 });
