@@ -81,7 +81,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="panel-footer">
+                                    <div class="panel-footer" ng-controller="registerController">
                                         Not Registred? <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#registerModal" data-whatever="@fat" style="background:none; border:none; padding:0; top: 50px;">Register here</button>
 
                                         <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="reisterModalLabel" aria-hidden="true">
@@ -95,35 +95,36 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <form>
+                                                            <div class="form-group">
+                                                                <label for="username">Username</label>
+                                                                <input ng-model="_username" type="form-control" class="form-control" id="username" aria-describedby="userHelp" placeholder="Enter Username" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">Password</label>
+                                                                <input ng-model="_password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="email">Email address</label>
+                                                                <input ng-model="_email" type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                                            </div>
+                                                            
                                                             <label for="fname" class="col-2 col-form-label">First Name</label>
                                                             <div class="col-10">
-                                                                <input class="form-control" type="text" placeholder="First Name" id="fname" required>
+                                                                <input ng-model="_fname" class="form-control" type="text" placeholder="First Name" id="fname" required>
                                                             </div>
 
                                                             <label for="lname" class="col-2 col-form-label">Last Name</label>
                                                             <div class="col-10">
-                                                                <input class="form-control" type="text" placeholder="Last Name" id="lname" required>
+                                                                <input ng-model="_lname" class="form-control" type="text" placeholder="Last Name" id="lname" required>
                                                             </div>
-
-                                                            <div class="form-group">
-                                                                <label for="email">Email address</label>
-                                                                <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" required>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="username">Username</label>
-                                                                <input type="form-control" class="form-control" id="username" aria-describedby="userHelp" placeholder="Enter Username" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputPassword1">Password</label>
-                                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-                                                            </div>
+                                                            
                                                         </form>
                                                     </div>
-
                                                     <div class="modal-footer">
+                                                    	<font color="{{statusColor}}">{{status}}</font>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary" type="submit">Register</button>
+                                                        <button ng-click="register(_username,_password,_email,_fname,_lname)" type="button" class="btn btn-primary" type="submit">Register</button>
                                                     </div>
                                                 </div>
                                              </div>

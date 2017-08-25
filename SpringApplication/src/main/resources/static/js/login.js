@@ -37,3 +37,28 @@ app.run(function($rootScope, $http, $location){
 	
 	$rootScope.autoLogin();
 });
+
+app.controller("registerController", function($scope,$rootScope,$http,$location){
+	$scope.status = "";
+	$scope.statusColor = "red";
+	$scope.register = function(username,password,email,fname,lname){
+		$http({
+			method: 'POST',
+			url: '/employees',
+			data: 'employeeId=0&username='+username+"&password="+password+"&email="+email+"&fname="+fname+"&lname="+lname,
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		}).then(function successCallback(response){
+			let success = response.data.success;
+			if(success){
+				$scope.status = username + " created";
+				$scope.statusColor = "green";
+			} else {
+				$scope.status = response.data.message;
+				$scope.statusColor = "red";
+			}
+		}, function errorCallback(response){
+			$scope.status = "ERROR";
+			$scope.statusColor = "red";
+		});
+	};
+});
