@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.PostCommentDao;
 import com.revature.application.dao.PostDao;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostComment;
 
@@ -41,7 +42,7 @@ public class PostController {
 		// Read a single post from db
 		return postDAO.read(postId);
 	}
-
+	
 	/*
 	 * All POST requests
 	 */

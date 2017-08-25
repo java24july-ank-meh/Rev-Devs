@@ -1,5 +1,6 @@
 package com.revature.application.restControllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.application.beans.RequestStatus;
+import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 
 @RestController
@@ -21,6 +24,9 @@ public class LocationController {
 	
 	@Autowired
 	LocationDao locationDAO;
+	
+	@Autowired
+	HotSpotDao hotSpotDAO;
 	
 	/*
 	 * All GET requests
@@ -34,7 +40,13 @@ public class LocationController {
 	public Location readLocationById(@PathVariable long locationId) {
 		return locationDAO.read(locationId);
 	}
-
+	
+	@RequestMapping(path = "/{locationId}/hotspots", method = RequestMethod.GET)
+	public List<HotSpot> readAllHotSpots(@PathVariable long locationId) {
+		// Read the hotspot for a post
+		return hotSpotDAO.readAllHotSpotsByLocationId(locationId);
+	}
+	
 	/*
 	 * All POST requests
 	 */
@@ -46,6 +58,17 @@ public class LocationController {
 			return new RequestStatus();
 		}
 		return new RequestStatus(false, "Failed to create new location");
+	}
+	
+	@RequestMapping(path = "/{locationId}/hotspots", method = RequestMethod.POST)
+	public RequestStatus createHotSpot(@Valid HotSpot hotSpot, BindingResult bindingResult, @PathVariable long locationId) {
+		// Read the hotspot for a post
+		if (!bindingResult.hasErrors()) {
+			hotSpotDAO.createHotSpot(hotSpot);
+			return new RequestStatus();
+		}
+		
+		return new RequestStatus(false, "Failed to create new hot spot");
 	}
 
 	/*
