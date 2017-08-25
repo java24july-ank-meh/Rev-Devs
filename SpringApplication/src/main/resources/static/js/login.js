@@ -42,6 +42,12 @@ app.controller("registerController", function($scope,$rootScope,$http,$location)
 	$scope.status = "";
 	$scope.statusColor = "red";
 	$scope.register = function(username,password,email,fname,lname){
+		if(!username || !password || !email || !fname || !lname){
+			$scope.status = "You got empty fields";
+			$scope.statusColor = "red";
+			return;
+		}
+		
 		$http({
 			method: 'POST',
 			url: '/employees',
