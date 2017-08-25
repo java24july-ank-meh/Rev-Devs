@@ -11,10 +11,10 @@ app.run(function($rootScope, $http, $location){
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).then(function successCallback(response){
 			let res = response.data;
-			if(res.id==1){
+			if(res.success){
 				window.location.href = "/home";
 			} else {
-				$rootScope.status= res.content;
+				$rootScope.status= res.message;
 			}
 		}, function errorCallback(response){
 			$rootScope.status= "ERROR";
