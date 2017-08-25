@@ -17,7 +17,6 @@ public class Employee {
 
 	@ManyToOne
 	@JoinColumn(name = "locationId")
-	@NotNull
 	private Location location;
 
 	@ManyToOne
