@@ -6,13 +6,15 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Repository;
 
 @Entity
 public class Company {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="companySequence", sequenceName="company_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator="companySequence")
 	@NotNull
 	private long companyId;
 
