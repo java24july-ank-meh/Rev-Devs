@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
@@ -33,7 +35,7 @@ import com.revature.application.dao.beans.Location;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
 public class CompanyControllerTest {
-	
+
 	private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
@@ -53,13 +55,24 @@ public class CompanyControllerTest {
 		MockitoAnnotations.initMocks(this);
 
 		this.mockMvc = MockMvcBuilders.standaloneSetup(companyController).build();
-
 		// Setup all the companies info
-		Company company = new Company(new Location(), "Bobs");
-		company.setCompanyId(1);
-
 		companies = new ArrayList<>();
+
+		Company company = new Company(new Location(), "Bobs");
+		company.setCompanyId(1L);
+
 		companies.add(company);
+
+		company = new Company();
+		company.setCompanyId(8L);
+		company.setCompanyName("Brix Phones");
+
+		companies.add(company);
+
+		System.out.println("Setting up Company Controller Test List");
+		for(Company c: companies) {
+			System.out.println(c);
+		}
 	}
 
 	/*
@@ -67,7 +80,7 @@ public class CompanyControllerTest {
 	 * tested for correct data response
 	 */
 
-	@Test
+	//	@Test
 	public void returnAllCompanies() throws Exception {
 
 		// When the method calls .readAll(), mockito will not call it
@@ -82,37 +95,59 @@ public class CompanyControllerTest {
 		// Test passes
 		mockMvc.perform(rb).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType))
-		.andDo(print())
+		//		.andDo(print())
 		.andExpect(jsonPath("$[0].companyId", is(cId)))
 		.andExpect(jsonPath("$[0].companyName", is(companies.get(0).getCompanyName())));
 
 	}
 
-	@Test
+	//	@Test
 	public void returnSingleCompany() throws Exception {
 
-		when(mockComDao.readAll()).thenReturn(companies);
+		when(mockComDao.read(isA(Long.class))).thenReturn(companies.get(0));
 
 		int cId = (int) companies.get(0).getCompanyId();
 		RequestBuilder rb = get("/companies/" + cId).accept(contentType);
 
 		mockMvc.perform(rb).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType))
-//		.andDo(print())
+		.andDo(print())
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(model().hasNoErrors())
 		.andExpect(jsonPath("$.companyId", is(cId)))
 		.andExpect(jsonPath("$.companyName", is(companies.get(0).getCompanyName())));
 
 	}
 
-//	@Test
+	@Test
 	public void createCompany() throws Exception {
-		mockMvc.perform(post("/companies")).andExpect(status().isOk()).andExpect(content().contentType(contentType));
+
+		when(mockComDao.read(isA(Long.class))).thenReturn(companies.get(1));
+
+		RequestBuilder rb = post("/companies").param("companyName", companies.get(1).getCompanyName());
+		//.accept(contentType);
+
+		mockMvc.perform(rb).andExpect(status().isOk())
+		.andExpect(content().contentType(contentType))
+		.andDo(print())
+		.andExpect(status().is2xxSuccessful())
+		.andExpect(jsonPath("$.message",is("Success")))
+		.andExpect(jsonPath("$.success",is(true)));
 	}
 
-//	@Test
+	@Test
 	public void deleteCompany() throws Exception {
-		mockMvc.perform(delete("/companies/1")).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType));
+
+		when(mockComDao.deleteById(isA(Long.class))).thenReturn(true);
+
+		RequestBuilder rb = delete("/companies/"+companies.get(1).getCompanyId()).param("companyName", companies.get(1).getCompanyName());
+
+		mockMvc.perform(rb)
+		.andExpect(status().isOk())
+		.andExpect(content().contentType(contentType))
+		.andDo(print())
+		.andExpect(jsonPath("$.message",is("Success")))
+		.andExpect(jsonPath("$.success",is(true)));;
 	}	
 
 }
