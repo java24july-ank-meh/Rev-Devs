@@ -1,98 +1,142 @@
-<div style="width:1000px; margin: 0 auto;">
-<div class="jumbotron">
-  <div class="media">
-    <img class="d-flex mr-3" src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/toni-magni-2.thumbnail.jpg">
-    <div class="media-body">
-      <h5 class="mt-0">{{employee.username}}</h5>
-      <table id="userinfo" class="table table-no-border" style="width: 40%;">
-        <tr>
-          <td>First name:</td>
-          <td>{{employee.fname}}</td>
-        </tr>
-        <tr>
-          <td>Last name:</td>
-          <td>{{employee.lname}}</td>
-        </tr>
-        <tr>
-          <td>Eamil:</td>
-          <td>{{employee.email}}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            <font color="{{statusColor}}">{{status}}</font><br/>
-            <button type="button" class="btn btn-sm" ng-click="editButton()">{{editButtonName}}</button>
-            <span ng-if="editMode"><button type="button" class="btn btn-sm" ng-click="cancelButton()">CANCEL</button></span>
-          </td>
-        </tr>
-      </table>
-      <h3>Locations</h3>
-        <ul>
-          <li>Their housing</li>
-          <li>Their company name and company location name</li>
-        </ul>
-    </div>
-  </div>
-  </div>
-<br/><br/>
-<div class="jumbotron">
-  <h2>Recent Posts</h2>
+<div style="width: 1000px; margin: 0 auto;" ng-controller="profileController">
+	<div class="jumbotron">
+		<div class="media">
+			<img class="d-flex mr-3"
+				src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/toni-magni-2.thumbnail.jpg">
+			<div class="media-body">
+				<table id="userinfo" class="table table-no-border"
+					style="width: 40%;">
+					<tr>
+						<td>Username:</td>
+						<td><span ng-if="editMode"> <input type="text"
+								ng-model="employee.username" />
+						</span> <span ng-if="!editMode"> {{employee.username}} </span></td>
+					</tr>
+					<tr>
+						<td>Eamil:</td>
+						<td><span ng-if="editMode"> <input type="text"
+								ng-model="employee.email" />
+						</span> <span ng-if="!editMode"> {{employee.email}} </span></td>
+					</tr>
+					<tr>
+						<td>First name:</td>
+						<td><span ng-if="editMode"> <input type="text"
+								ng-model="employee.fname" />
+						</span> <span ng-if="!editMode"> {{employee.fname}} </span></td>
+					</tr>
+					<tr>
+						<td>Last name:</td>
+						<td><span ng-if="editMode"> <input type="text"
+								ng-model="employee.lname" />
+						</span> <span ng-if="!editMode"> {{employee.lname}} </span></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><font color="{{statusColor}}">{{status}}</font><br />
+							<button type="button" class="btn btn-sm"
+								ng-click="editButton(_username,_email,_fname,lname)">{{editButtonName}}</button>
+							<span ng-if="editMode"><button type="button"
+									class="btn btn-sm" ng-click="cancelButton()">CANCEL</button></span></td>
+					</tr>
+				</table>
+				<h3>Locations</h3>
+				<ul>
+					<li>Their housing</li>
+					<li>Their company name and company location name</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="jumbotron">
+		<h2>Recent Posts</h2>
 
-   <table class="table table borderless" style="width: 55%;">
-                <tbody>
-                <tr>
-                  <td> </td>
-                  <td><small>Date | Post Type</small> </td>
-                </tr>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td> </td>
-                  </tr>
-                  <tr class="active">
-                    <td> </td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                </tbody>
-              </table>
+		<table class="table table borderless" style="width: 55%;">
+			<tbody>
+				<tr>
+					<td></td>
+					<td><small>Date | Post Type</small></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+						nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+						reprehenderit in voluptate velit esse cillum dolore eu fugiat
+						nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+						sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+					<td></td>
+				</tr>
+				<tr class="active">
+					<td></td>
+					<td><button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-thumbs-up"></span> Like
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-comment"></span> Comment
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
 
-               <table class="table table borderless" style="width: 55%;">
-                <tbody>
-                <tr>
-                  <td> </td>
-                  <td><small>Date | Post Type</small> </td>
-                </tr>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td> </td>
-                  </tr>
-                  <tr class="active">
-                    <td> </td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                </tbody>
-              </table>
+		<table class="table table borderless" style="width: 55%;">
+			<tbody>
+				<tr>
+					<td></td>
+					<td><small>Date | Post Type</small></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+						nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+						reprehenderit in voluptate velit esse cillum dolore eu fugiat
+						nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+						sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+					<td></td>
+				</tr>
+				<tr class="active">
+					<td></td>
+					<td><button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-thumbs-up"></span> Like
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-comment"></span> Comment
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
 
-               <table class="table table borderless" style="width: 55%;">
-                <tbody>
-                <tr>
-                  <td> </td>
-                  <td><small>Date | Post Type</small> </td>
-                </tr>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                    <td> </td>
-                  </tr>
-                  <tr class="active">
-                    <td> </td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                      <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                </tbody>
-              </table>
-    </div>
+		<table class="table table borderless" style="width: 55%;">
+			<tbody>
+				<tr>
+					<td></td>
+					<td><small>Date | Post Type</small></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+						nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+						reprehenderit in voluptate velit esse cillum dolore eu fugiat
+						nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+						sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+					<td></td>
+				</tr>
+				<tr class="active">
+					<td></td>
+					<td><button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-thumbs-up"></span> Like
+						</button>
+						<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-comment"></span> Comment
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>

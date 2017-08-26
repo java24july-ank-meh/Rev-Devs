@@ -33,8 +33,9 @@ public class LoginController {
 		
 		if(user.getPassword().equals(password)) {
 			// Start a session
-			session.setAttribute("username", user.getUsername());
-	
+			//session.setAttribute("id", ""+user.getEmployeeId());
+			saveEmployee(session,user);
+			
 			// Return Success
 			return new RequestStatus();
 		} else {
@@ -51,16 +52,43 @@ public class LoginController {
 		// Destroy session
 		session.invalidate();
 		
-		// Return success or failure
+		// Return success
 		return new RequestStatus();
+	}
+	
+	private void saveEmployee(HttpSession session,Employee e) {
+		session.setAttribute("id", ""+e.getEmployeeId());
+	}
+	
+	private Employee loadEmployee(HttpSession session) {
+		String id_str = (String)session.getAttribute("id");
+		if(id_str == null) return null;
+		long employee_id;
+		try {
+			employee_id = Long.parseLong(id_str);
+		} catch(Exception e) {
+			return null;
+		}
+		Employee employee = employeeDAO.read(employee_id);
+		return employee;
 	}
 	
 	@RequestMapping(path = "/user", method = RequestMethod.GET)
 	public RequestEmployee getCurrentUser(HttpSession session) {
-		String username = (String)session.getAttribute("username");
-		if(username == null) return new RequestEmployee(false,null);
-		Employee employee = employeeDAO.read(username);
+		Employee employee = loadEmployee(session);
 		if(employee == null) return new RequestEmployee(false,null);
 		return new RequestEmployee(true,employee);
+	}
+	
+	@RequestMapping(path = "/update-profile", method = RequestMethod.POST)
+	public RequestStatus updateProfile(String username, String email, String fname, String lname, HttpSession session) {
+		Employee employee = loadEmployee(session);
+		if(employee == null) return new RequestStatus(false,"Not logged in");
+		employee.setUsername(username);
+		employee.setEmail(email);
+		employee.setFname(fname);
+		employee.setLname(lname);
+		employeeDAO.update(employee);
+		return new RequestStatus();
 	}
 }
