@@ -1,0 +1,21 @@
+	  #map { 
+        height: 100%;
+      }
+      #mapDiv {
+        height: 600px;
+        top: 10%;
+        margin: 0;
+        padding: 0;
+      }
+      #locationField {
+	    position: absolute;
+		width: 100%;
+		height: 0px;
+		text-align: center;
+		top: 12%;
+		z-index: 5;
+		}
+	  #autocomplete {
+	    font-size: 150%;
+		width: 400px;
+		}
