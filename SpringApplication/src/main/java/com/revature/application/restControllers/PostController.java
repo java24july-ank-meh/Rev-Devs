@@ -17,6 +17,8 @@ import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostComment;
+import com.revature.application.dao.beans.forms.PostCommentForm;
+import com.revature.application.dao.beans.forms.PostForm;
 
 @RestController
 @RequestMapping("/posts")
@@ -47,10 +49,10 @@ public class PostController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public RequestStatus createPost(@Valid Post post, BindingResult bindingResult) {
+	public RequestStatus createPost(@Valid PostForm postForm, BindingResult bindingResult) {
 		// Create a post in the db
 		if (!bindingResult.hasErrors()) {
-			postDAO.create(post);
+			postDAO.create(postForm);
 			return new RequestStatus(); 
 		}
 		
@@ -58,11 +60,11 @@ public class PostController {
 	}
 	
 	@RequestMapping(path = "/comment", method = RequestMethod.POST) 
-	public RequestStatus createComment(@Valid PostComment comment, BindingResult bindingResult) {
+	public RequestStatus createComment(@Valid PostCommentForm commentForm, BindingResult bindingResult) {
 		// Save a comment for this comment
 		
 		if (!bindingResult.hasErrors()) {
-			commentDAO.create(comment);
+			commentDAO.create(commentForm);
 			return new RequestStatus();
 		}
 		

@@ -1,6 +1,5 @@
 package com.revature.application.restControllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +16,8 @@ import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.forms.HotSpotForm;
+import com.revature.application.dao.beans.forms.LocationForm;
 
 @RestController
 @RequestMapping("/locations")
@@ -51,20 +52,20 @@ public class LocationController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public RequestStatus createLocation(@Valid Location location, BindingResult bindingResult) {
+	public RequestStatus createLocation(@Valid LocationForm locationForm, BindingResult bindingResult) {
 			
 		if (!bindingResult.hasErrors()) {
-			locationDAO.create(location);
+			locationDAO.create(locationForm);
 			return new RequestStatus();
 		}
 		return new RequestStatus(false, "Failed to create new location");
 	}
 	
 	@RequestMapping(path = "/{locationId}/hotspots", method = RequestMethod.POST)
-	public RequestStatus createHotSpot(@Valid HotSpot hotSpot, BindingResult bindingResult, @PathVariable long locationId) {
+	public RequestStatus createHotSpot(@Valid HotSpotForm hotSpotForm, BindingResult bindingResult, @PathVariable long locationId) {
 		// Read the hotspot for a post
 		if (!bindingResult.hasErrors()) {
-			hotSpotDAO.createHotSpot(hotSpot);
+			hotSpotDAO.createHotSpot(hotSpotForm);
 			return new RequestStatus();
 		}
 		

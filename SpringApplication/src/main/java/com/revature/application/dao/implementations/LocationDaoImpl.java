@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.forms.LocationForm;
 
 @Service
 public class LocationDaoImpl implements LocationDao {
@@ -19,11 +20,13 @@ public class LocationDaoImpl implements LocationDao {
 	
 	@Override
 	@Transactional
-	public boolean create(Location loc) {
+	public boolean create(LocationForm locationForm) {
 		
 		Session session = sf.getCurrentSession();
 		
-		session.save(loc);
+		Location location = new Location(locationForm.getCity(), locationForm.getLongitude(), locationForm.getLattitude());
+		
+		session.save(location);
 		session.flush();
 		 
 		return true;
@@ -54,11 +57,14 @@ public class LocationDaoImpl implements LocationDao {
 
 	@Override
 	@Transactional
-	public boolean update(Location loc) {
+	public boolean update(long loc_id, LocationForm locationForm) {
 		
 		Session session = sf.getCurrentSession();
 		
-		session.update(loc);
+        Location location = new Location(locationForm.getCity(), locationForm.getLongitude(), locationForm.getLattitude());
+		location.setLocationId(loc_id);
+           
+		session.update(location);
 		session.flush();
 			
 		return true;
