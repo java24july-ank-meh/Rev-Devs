@@ -2,7 +2,6 @@ package com.revature.application.dao.beans;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -31,7 +30,7 @@ public class Employee {
 	@NotNull
 	private String password;
 
-	@Column
+	@Column(nullable = false, unique = true)
 	@NotNull
 	private String email;
 
