@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.forms.EmployeeForm;
 
 @RestController
 @RequestMapping("/employees")
@@ -41,11 +42,11 @@ public class EmployeeController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public RequestStatus createEmployee(@Valid Employee employee, BindingResult bindingResult) {
+	public RequestStatus createEmployee(@Valid EmployeeForm employeeForm, BindingResult bindingResult) {
 		// Add a new user to the db
 		
 		if (!bindingResult.hasErrors()) {
-			employeeDAO.create(employee);
+			employeeDAO.create(employeeForm);
 			return new RequestStatus();
 		}
 		return new RequestStatus(false, "Failed to create new employee");
@@ -55,11 +56,11 @@ public class EmployeeController {
 	 * All PUT request
 	 */
 	@RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
-	public RequestStatus updateEmployee(@Valid Employee employee, BindingResult bindingResult, @PathVariable long userId) {
+	public RequestStatus updateEmployee(@Valid EmployeeForm employeeForm, BindingResult bindingResult, @PathVariable long userId) {
 		// Update user with userId
 		
 		if (!bindingResult.hasErrors()) {
-			employeeDAO.update(employee);
+			employeeDAO.update(userId, employeeForm);
 			return new RequestStatus(); 
 		}
 		return new RequestStatus(false, "Failed to update employee");

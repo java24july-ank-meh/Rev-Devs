@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -18,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +32,7 @@ import com.revature.application.RevatureSocialNetworkApplication;
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.forms.CompanyForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
@@ -103,7 +106,7 @@ public class CompanyControllerTest {
 //	@Test
 	public void returnSingleCompany() throws Exception {
 
-		when(mockComDao.read(isA(Long.class))).thenReturn(companies.get(0));
+		when(mockComDao.read(any(Long.class))).thenReturn(companies.get(0));
 
 		int cId = (int) companies.get(0).getCompanyId();
 		RequestBuilder rb = get("/companies/" + cId).accept(contentType);
@@ -120,7 +123,7 @@ public class CompanyControllerTest {
 	@Test
 	public void createCompanyPass() throws Exception {
 
-		when(mockComDao.create(isA(Company.class))).thenReturn(true);
+	    when(mockComDao.create(any(CompanyForm.class))).thenReturn(true);
 
 		RequestBuilder rb = post("/companies").param("companyName", companies.get(1).getCompanyName());
 		//.accept(contentType);

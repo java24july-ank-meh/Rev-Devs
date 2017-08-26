@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -32,6 +33,8 @@ import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.forms.HotSpotForm;
+import com.revature.application.dao.beans.forms.LocationForm;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
@@ -108,7 +111,8 @@ public class LocationControllerTest {
 
 //	@Test
 	public void createLocationPass() throws Exception {
-		when(mockLocDao.create(isA(Location.class))).thenReturn(true);
+		
+	    when(mockLocDao.create(any(LocationForm.class))).thenReturn(true);
 
 		RequestBuilder rb = post("/locations").param("city", locations.get(0).getCity())
 				.param("lattitude", locations.get(0).getLattitude() + "")
@@ -133,7 +137,8 @@ public class LocationControllerTest {
 
 //	@Test
 	public void createHotSpotPass() throws Exception {
-		when(mockHSDao.createHotSpot(isA(HotSpot.class))).thenReturn(true);
+	    
+		when(mockHSDao.createHotSpot(any(HotSpotForm.class))).thenReturn(true);
 
 		int lId = (int)locations.get(0).getLocationId() ;
 		RequestBuilder rb = post("/locations/"+lId+"/hotspots")

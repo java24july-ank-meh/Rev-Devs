@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
+import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.forms.CompanyForm;
 
 @Service
 public class CompanyDaoImpl implements CompanyDao {
@@ -19,9 +21,15 @@ public class CompanyDaoImpl implements CompanyDao {
 	
 	@Override
 	@Transactional
-	public boolean create(Company company) {
+	public boolean create(CompanyForm companyForm) {
 	
 		Session session = sf.getCurrentSession();
+		
+		Location location = new Location();
+		location.setLocationId(companyForm.getLocationId());
+			
+		Company company = new Company(location, companyForm.getCompanyName());
+		
 		session.save(company);
 		session.flush();
 		
@@ -55,9 +63,16 @@ public class CompanyDaoImpl implements CompanyDao {
 
 	@Override
 	@Transactional
-	public boolean update(Company company) {
+	public boolean update(long company_id, CompanyForm companyForm) {
 		
 		Session session = sf.getCurrentSession();
+		
+		Location location = new Location();
+        location.setLocationId(companyForm.getLocationId());
+            
+        Company company = new Company(location, companyForm.getCompanyName());
+        company.setCompanyId(company_id);
+		
 		session.update(company);
 		session.flush();
 		

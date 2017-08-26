@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
+import com.revature.application.dao.beans.forms.CompanyForm;
 
 @RestController
 @RequestMapping("/companies")
@@ -41,11 +42,11 @@ public class CompanyController {
 	 * All POST requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public RequestStatus createCompany(@Valid Company company, BindingResult bindingResult) {
+	public RequestStatus createCompany(@Valid CompanyForm companyForm, BindingResult bindingResult) {
 		// Add a new company to the db
 		
 		if (!bindingResult.hasErrors()) {
-			companyDAO.create(company);
+			companyDAO.create(companyForm);
 			return new RequestStatus();
 		}
 		return new RequestStatus(false, "Failed to create new company");
