@@ -10,7 +10,7 @@ app.config(function($routeProvider) {
 		activetab: 'profile'
 	})
 	.when("/explore", {
-		templateUrl : "explore.html",
+		templateUrl : "mainMap.html",
 		activetab: 'explore'
 	});
 });

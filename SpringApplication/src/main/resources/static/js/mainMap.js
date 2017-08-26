@@ -1,67 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-      #map { 
-        height: 100%;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #locationField {
-	    position: absolute;
-		width: 100%;
-		height: 0px;
-		text-align: center;
-		top: 30px;
-		z-index: 5;
-		}
-	  #autocomplete {
-	    font-size: 150%;
-		width: 400px;
-		}
-    </style>
-    <!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script>
-    var locations = [];
-    $.getJSON('http://localhost:8080/locations', function(json) {
-    //console.log(json);
-    	$.each(json, function(key, data) {
-    		locations.push({address: data.city, id: data.locationId, employees: 
-    			0/*data.employees.length*/, companies: 0/*data.companies.length*/, location: 
-    			{lat: data.lattitude, lng: data.longitude}});
-      });
-    });
-    </script> 
-  </head>
-  <body onload="initMap()">
-
-	<div id="locationField">
- 	 <input id="autocomplete" placeholder="Enter a city" type="text" />
-	</div>
-
-    <div id="map"></div>
-    
-    <div id="newLocation">
-    		<button type="button" class="btn btn-primary" onClick="createLocation()">Start Location</button>
-    </div>
-    
-    <script>
+var locations = [];
+    $.getJSON('http://localhost:8080/locations/', function(json) {
+    		locations = json; initMap();});
 	  var autocomplete;
       var map;
-      var image = 'https://www.dxpnet.com/e/Tongue.png';
+      var image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
       var markers;
       var currentMarker;
+      var markerCluster;
       
       //Initializes the map
       function initMap() {
@@ -108,12 +53,10 @@
       markers = locations.map(function(l, i) {
           var marker = new google.maps.Marker({
         	  infowindow : new google.maps.InfoWindow({
-      		    content: l.address + '<br>Employees: ' + l.employees + 
-      		    '<br>Companies: ' + l.companies +
-      		    '<br>Latitude: ' + l.location.lat +
-      		    '<br>Longitude: ' + l.location.lng
+      		    content: l.city + '<br>Employees: ' + l.employees + 
+      		    '<br>Companies: ' + l.companies
       		  }),
-            position: l.location,
+            position: new google.maps.LatLng(l.lattitude, l.longitude),
             icon: image
           });
           marker.addListener('mouseover', function() {
@@ -126,7 +69,7 @@
         });
         
         //Allows clustering of the markers
-        var markerCluster = new MarkerClusterer(map, markers,
+        markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       
       // When the user selects a city, get the place details for the city and
@@ -136,25 +79,26 @@
 		  if (place.geometry) {
 		    map.panTo(place.geometry.location);
 		    if(currentMarker != undefined){
+			  currentMarker.clickwindow.setMap(null);
 		    	  currentMarker.setMap(null);
 		    }
 		    if(!placeExists(place.formatted_address)){
 			    currentMarker = new google.maps.Marker({
 			    infowindow : new google.maps.InfoWindow({
-	        		    content: place.formatted_address + '<p>This location does not have any ' + 
-	        		    'employees yet. If you would like to establish ' + place.formatted_address +
-	        		    ', you can do so by clicking the marker.</p>' + 
-	        		    '<br>Latitude: ' + place.geometry.location.lat().toFixed(8) + 
-	        		    '<br>Longitude: ' + place.geometry.location.lng().toFixed(8),
+	        		    content: place.formatted_address + '<p>This location has not been established ' + 
+	        		    'yet. If you would like to add ' + place.formatted_address +
+	        		    ' to our listing, you can do so by clicking the marker and pressing "Add Location".</p>',
 					maxWidth: 300
 	        		  }),
 	        		  clickwindow : new google.maps.InfoWindow({
-		        		    content: newLocation
+		        		    content: "<button id=\"newLocation\" type=\"button\" class=\"btn btn-primary\""+ 
+		        		    "onClick=\"createLocation()\">Add Location</button>"
 		        		  }),
 	        		  id:null,
 	                map: map,
 	                position: place.geometry.location,
-	                address: place.formatted_address
+	                city: place.formatted_address,
+	                icon: 'https://mt.googleapis.com/vt/icon/name=icons/onion/161-grn-pushpin.png'
 	              });
 			    currentMarker.addListener('mouseover', function() {
 			          currentMarker.infowindow.open(map, currentMarker);
@@ -175,7 +119,7 @@
       // Returns true if the searched location is already established
       function placeExists(address){
     	  	for(l in locations){
-    	  		if(locations[l].address === address){
+    	  		if(locations[l].city === address){
     	  			return true;
     	  		}
     	  	}
@@ -185,11 +129,36 @@
       }
       // Creates a new location in the database
       function createLocation(){
-	  		console.log(currentMarker);
+    	  		var Location = { city:currentMarker.city,
+    	  				lattitude:currentMarker.position.lat().toFixed(8),
+    	  				longitude:currentMarker.position.lng().toFixed(8)};
+    	  		$.ajax({
+    	  		    url: "http://localhost:8080/locations",
+    	  		    type: "POST",
+    	  		    data: Location,
+    	  		    dataType: "json"
+    	  		});
+    	  		currentMarker.clickwindow.setMap(null);
+    	  		currentMarker.setMap(null);
+    	  		Location.employees = 0;
+    	  		Location.companies = 0;
+    	  		var marker = new google.maps.Marker({
+    	        	  infowindow : new google.maps.InfoWindow({
+    	      		    content: Location.city + '<br>Employees: ' + Location.employees + 
+    	      		    '<br>Companies: ' + Location.companies +
+    	      		    '<br>Latitude: ' + Location.lattitude +
+    	      		    '<br>Longitude: ' + Location.longitude
+    	      		  }),
+    	            position: new google.maps.LatLng(Location.lattitude, Location.longitude),
+    	            icon: image
+    	          });
+    	          marker.addListener('mouseover', function() {
+    	        	  marker.infowindow.open(map, marker);
+    	       	 });
+    	          marker.addListener('mouseout', function() {
+    	        	  marker.infowindow.setMap(null);
+    	       	 });
+    	         markers.push(marker);
+    	         locations.push(Location);
+    	         markerCluster.addMarker(marker,false);
 	  }
-    </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8G37jOv4-9enSEXFuxtiDl0DKiOR1BG0&libraries=places"
-    async defer></script>
-  </body>
-</html>
