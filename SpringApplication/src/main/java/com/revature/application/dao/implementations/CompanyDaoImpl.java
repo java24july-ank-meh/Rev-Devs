@@ -67,12 +67,13 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sf.getCurrentSession();
 		
-		Location location = new Location();
-        location.setLocationId(companyForm.getLocationId());
-            
-        Company company = new Company(location, companyForm.getCompanyName());
-        company.setCompanyId(company_id);
+		Location location = (Location) session.get(Location.class, companyForm.getLocationId());
 		
+		Company company = (Company) session.get(Company.class, company_id);
+		
+		company.setLocation(location);
+		company.setCompanyName(companyForm.getCompanyName());
+	
 		session.update(company);
 		session.flush();
 		
@@ -97,12 +98,15 @@ public class CompanyDaoImpl implements CompanyDao {
 		
 		Session session = sf.getCurrentSession();
 		
-		Company company = new Company();
-		company.setCompanyId(company_id);
+		// Not deleting with a query
+		// String hql = "delete Company where companyId = :companyId";
+		// session.createQuery(hql).setLong("companyId", company_id).executeUpdate();
+		
+		Company company = (Company) session.get(Company.class, company_id);
 		session.delete(company);
 		session.flush();
-		
-		return false;
+				
+		return true;
 	}
 
 
