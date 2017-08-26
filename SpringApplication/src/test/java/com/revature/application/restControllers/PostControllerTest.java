@@ -5,7 +5,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -119,15 +118,30 @@ public class PostControllerTest {
         when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
         
         RequestBuilder builder = post("/posts")
-                .param("location", "1")
-                .param("employee", "1")
-                .param("type", "1")
-                .param("content", "message");        
+                .param("locationId", "1")
+                .param("employeeId", "1")
+                .param("typeId", "1")
+                .param("content", "message");      
         
         mockMvc.perform(builder).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.success", Matchers.is(true)))
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));
+    }
+    
+    @Test
+    public void missingParamForPost() throws Exception {
+        
+        when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/posts")
+                .param("locationId", "1")
+                .param("typeId", "1")
+                .param("content", "message");      
+        
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
     }
     
     @Test
