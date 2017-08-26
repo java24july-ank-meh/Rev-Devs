@@ -3,7 +3,7 @@ var locations = [];
     		locations = json; initMap();});
 	  var autocomplete;
       var map;
-      var image = 'https://www.dxpnet.com/e/Tongue.png';
+      var image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
       var markers;
       var currentMarker;
       var markerCluster;
@@ -97,7 +97,8 @@ var locations = [];
 	        		  id:null,
 	                map: map,
 	                position: place.geometry.location,
-	                city: place.formatted_address
+	                city: place.formatted_address,
+	                icon: 'https://mt.googleapis.com/vt/icon/name=icons/onion/161-grn-pushpin.png'
 	              });
 			    currentMarker.addListener('mouseover', function() {
 			          currentMarker.infowindow.open(map, currentMarker);
