@@ -16,7 +16,7 @@ public class HotSpot {
     @Column(nullable = false)
     private double lattitude;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "locationId")
     private Location location;
     

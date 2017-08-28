@@ -25,8 +25,8 @@ public class HotSpotDaoImpl implements HotSpotDao {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from HotSpot hotSpot where hotSpot.locationId = :location";
-        List<HotSpot> hotSpots = session.createQuery(query).setParameter("location", locationId)
+        String query = "from HotSpot hotSpot where hotSpot.location.locationId = :locationId";
+        List<HotSpot> hotSpots = session.createQuery(query).setParameter("locationId", locationId)
                 .list();
         session.flush();
         
