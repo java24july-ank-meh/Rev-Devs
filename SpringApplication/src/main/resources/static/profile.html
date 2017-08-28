@@ -31,6 +31,10 @@
 						</span> <span ng-if="!editMode"> {{employee.lname}} </span></td>
 					</tr>
 					<tr>
+						<td>Location:</td>
+						<td>{{employee.location.city}}</td>
+					</tr>
+					<tr>
 						<td></td>
 						<td><font color="{{statusColor}}">{{status}}</font><br />
 							<button type="button" class="btn btn-sm"
@@ -39,11 +43,6 @@
 									class="btn btn-sm" ng-click="cancelButton()">CANCEL</button></span></td>
 					</tr>
 				</table>
-				<h3>Locations</h3>
-				<ul>
-					<li>Their housing</li>
-					<li>Their company name and company location name</li>
-				</ul>
 			</div>
 		</div>
 	</div>
