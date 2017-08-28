@@ -89,12 +89,12 @@ public class CompanyControllerTest {
         mockMvc.perform(rb).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath("$[0].companyId",
-                        Matchers.is((int) companies.get(0).getCompanyId())))
+                        Matchers.is(companies.get(0).getCompanyId().intValue())))
                 .andExpect(jsonPath("$[0].companyName",
                         Matchers.is(companies.get(0).getCompanyName())))
                 .andExpect(jsonPath("$[0].location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].companyId",
-                        Matchers.is((int) companies.get(1).getCompanyId())))
+                        Matchers.is(companies.get(1).getCompanyId().intValue())))
                 .andExpect(jsonPath("$[1].companyName",
                         Matchers.is(companies.get(1).getCompanyName())))
                 .andExpect(jsonPath("$[1].location", Matchers.notNullValue()));
@@ -109,7 +109,7 @@ public class CompanyControllerTest {
         RequestBuilder rb = get("/companies/" + company1.getCompanyId()).accept(contentType);
         
         mockMvc.perform(rb).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.companyId", Matchers.is((int) company1.getCompanyId())))
+                .andExpect(jsonPath("$.companyId", Matchers.is(company1.getCompanyId().intValue())))
                 .andExpect(jsonPath("$.companyName", Matchers.is(company1.getCompanyName())))
                 .andExpect(jsonPath("$.location", Matchers.notNullValue()));
         

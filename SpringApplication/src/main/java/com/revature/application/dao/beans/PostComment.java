@@ -10,7 +10,7 @@ public class PostComment {
     @Id
     @SequenceGenerator(name = "postCommentSequence", sequenceName = "postcomment_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postCommentSequence")
-    private long commentId;
+    private Long commentId;
     
     @ManyToOne
     @JoinColumn(name = "employeeId")
@@ -38,11 +38,11 @@ public class PostComment {
         this.content = content;
     }
     
-    public long getCommentId() {
+    public Long getCommentId() {
         return commentId;
     }
     
-    public void setCommentId(long commentId) {
+    public void setCommentId(Long commentId) {
         this.commentId = commentId;
     }
     

@@ -11,7 +11,7 @@ public class PostType {
     @Id
     @SequenceGenerator(name = "postTypeSequence", sequenceName = "posttype_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postTypeSequence")
-    private long typeId;
+    private Long typeId;
     
     @Column
     private String type;
@@ -28,11 +28,11 @@ public class PostType {
         this.type = type;
     }
     
-    public long getTypeId() {
+    public Long getTypeId() {
         return typeId;
     }
     
-    public void setTypeId(long typeId) {
+    public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
     

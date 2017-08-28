@@ -86,7 +86,7 @@ public class LocationControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath("$[0].locationId",
-                        Matchers.is((int) locations.get(0).getLocationId())))
+                        Matchers.is(locations.get(0).getLocationId())))
                 .andExpect(jsonPath("$[0].longitude", Matchers.is(locations.get(0).getLongitude())))
                 .andExpect(jsonPath("$[0].lattitude", Matchers.is(locations.get(0).getLattitude())))
                 .andExpect(jsonPath("$[0].city", Matchers.is(locations.get(0).getCity())))
@@ -94,7 +94,7 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$[0].companies", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].posts", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].locationId",
-                        Matchers.is((int) locations.get(1).getLocationId())))
+                        Matchers.is(locations.get(1).getLocationId())))
                 .andExpect(jsonPath("$[1].longitude", Matchers.is(locations.get(1).getLongitude())))
                 .andExpect(jsonPath("$[1].lattitude", Matchers.is(locations.get(1).getLattitude())))
                 .andExpect(jsonPath("$[1].city", Matchers.is(locations.get(1).getCity())))
@@ -112,7 +112,7 @@ public class LocationControllerTest {
         mockMvc.perform(get("/locations/" + location1.getLocationId())).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.locationId",
-                        Matchers.is((int) locations.get(0).getLocationId())))
+                        Matchers.is(locations.get(0).getLocationId())))
                 .andExpect(jsonPath("$.longitude", Matchers.is(locations.get(0).getLongitude())))
                 .andExpect(jsonPath("$.lattitude", Matchers.is(locations.get(0).getLattitude())))
                 .andExpect(jsonPath("$.city", Matchers.is(locations.get(0).getCity())))
