@@ -8,7 +8,7 @@ public class CompanyForm {
     
     @NotNull
     @Min(0)
-    private long locationId;
+    private Long locationId;
     
     @NotNull
     @Size(min = 1, max = 32)

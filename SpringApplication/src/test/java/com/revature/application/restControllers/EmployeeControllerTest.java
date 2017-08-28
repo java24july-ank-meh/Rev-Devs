@@ -165,6 +165,25 @@ public class EmployeeControllerTest {
     }
     
     @Test
+    public void createUserMissingParamMustSucceed() throws Exception {
+        
+        when(employeeDAO.create(any(EmployeeForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/employees")
+                .param("password", employee1.getPassword())
+                .param("username", employee1.getUsername())
+                .param("email", employee1.getEmail())
+                .param("fname", employee1.getFname())
+                .param("lname", employee1.getLname());
+          
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(true)))
+                .andExpect(jsonPath("$.message", Matchers.is("Success")));
+    }
+    
+    
+    @Test
     public void updateUser() throws Exception {
         
         when(employeeDAO.update(anyLong(), any(EmployeeForm.class)))

@@ -7,10 +7,10 @@ import javax.validation.constraints.Size;
 public class EmployeeForm {
     
     @Min(0)
-    private long locationId;
+    private Long locationId;
     
     @Min(0)
-    private long companyId;
+    private Long companyId;
     
     @NotNull
     @Size(min = 5, max = 32)
@@ -34,7 +34,7 @@ public class EmployeeForm {
     public EmployeeForm() {
     }
     
-    public EmployeeForm(long locationId, long companyId, String username, String password,
+    public EmployeeForm(Long locationId, Long companyId, String username, String password,
             String email, String fname, String lname) {
         super();
         this.locationId = locationId;
@@ -46,19 +46,19 @@ public class EmployeeForm {
         this.lname = lname;
     }
     
-    public long getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
     
-    public void setLocationId(long locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
     
-    public long getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
     
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
     

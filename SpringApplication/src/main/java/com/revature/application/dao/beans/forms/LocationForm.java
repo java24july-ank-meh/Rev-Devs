@@ -14,12 +14,12 @@ public class LocationForm {
     @NotNull
     @DecimalMin("-180.0")
     @DecimalMax("180.0")
-    private double longitude;
+    private Double longitude;
     
     @NotNull
     @DecimalMin("-180.0")
     @DecimalMax("180.0")
-    private double lattitude;
+    private Double lattitude;
     
     public LocationForm() {
     }

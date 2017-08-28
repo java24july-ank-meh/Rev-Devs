@@ -10,16 +10,16 @@ public class HotSpotForm {
     @NotNull
     @DecimalMin("-180.0")
     @DecimalMax("180.0")
-    private double longitude;
+    private Double longitude;
     
     @NotNull
     @DecimalMin("-180.0")
     @DecimalMax("180.0")
-    private double lattitude;
+    private Double lattitude;
     
     @NotNull
     @Min(0)
-    private long locationId;
+    private Long locationId;
     
     public HotSpotForm() {
         super();
