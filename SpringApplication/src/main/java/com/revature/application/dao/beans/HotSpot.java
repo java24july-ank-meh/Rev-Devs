@@ -8,7 +8,7 @@ public class HotSpot {
     @Id
     @SequenceGenerator(name = "locationSequence", sequenceName = "location_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locationSequence")
-    private long hotSpotId;
+    private Long hotSpotId;
     
     @Column(nullable = false)
     private double longitude;
@@ -31,11 +31,11 @@ public class HotSpot {
         this.location = location;
     }
     
-    public long getHotSpotId() {
+    public Long getHotSpotId() {
         return hotSpotId;
     }
     
-    public void setHotSpotId(long hotSpotId) {
+    public void setHotSpotId(Long hotSpotId) {
         this.hotSpotId = hotSpotId;
     }
     

@@ -26,11 +26,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
         
         Session session = sf.getCurrentSession();
         
-        Location location = new Location();
-        location.setLocationId(employeeForm.getLocationId());
+        Location location = null;
+        Company company = null;
         
-        Company company = new Company();
-        company.setCompanyId(employeeForm.getCompanyId());
+        if (employeeForm.getLocationId() != null) {
+            location = (Location) session.get(Location.class, employeeForm.getLocationId());
+        }
+        if (employeeForm.getCompanyId() != null) {
+            company = (Company) session.get(Company.class, employeeForm.getCompanyId());
+        }
         
         Employee employee = new Employee(location, company, employeeForm.getUsername(),
                 employeeForm.getPassword(), employeeForm.getEmail(), employeeForm.getFname(),

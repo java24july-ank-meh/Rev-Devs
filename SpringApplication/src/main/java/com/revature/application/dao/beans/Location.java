@@ -11,7 +11,7 @@ public class Location {
     @Id
     @SequenceGenerator(name = "locationSequence", sequenceName = "location_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "locationSequence")
-    private long locationId;
+    private Long locationId;
     
     @Column
     private String city;
@@ -44,11 +44,11 @@ public class Location {
         this.lattitude = lattitude;
     }
     
-    public long getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
     
-    public void setLocationId(long locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
     

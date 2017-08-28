@@ -12,7 +12,7 @@ public class Post {
     @Id
     @SequenceGenerator(name = "postSequence", sequenceName = "post_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postSequence")
-    private long postId;
+    private Long postId;
     
     @ManyToOne
     @JoinColumn(name = "locationId")
@@ -48,11 +48,11 @@ public class Post {
         this.content = content;
     }
     
-    public long getPostId() {
+    public Long getPostId() {
         return postId;
     }
     
-    public void setPostId(long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
     

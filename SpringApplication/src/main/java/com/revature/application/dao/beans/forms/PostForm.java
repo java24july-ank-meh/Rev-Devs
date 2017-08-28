@@ -8,15 +8,15 @@ public class PostForm {
     
     @NotNull
     @Min(0)
-    private long locationId;
+    private Long locationId;
     
     @NotNull
     @Min(0)
-    private long employeeId;
+    private Long employeeId;
     
     @NotNull
     @Min(0)
-    private long typeId;
+    private Long typeId;
     
     @NotNull
     @Size(min = 1, max = 250)

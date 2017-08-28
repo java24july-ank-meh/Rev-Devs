@@ -11,7 +11,7 @@ public class Company {
     @Id
     @SequenceGenerator(name = "companySequence", sequenceName = "company_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "companySequence")
-    private long companyId;
+    private Long companyId;
     
     @ManyToOne
     @JoinColumn(name = "locationId")
@@ -33,11 +33,11 @@ public class Company {
         this.companyName = companyName;
     }
     
-    public long getCompanyId() {
+    public Long getCompanyId() {
         return companyId;
     }
     
-    public void setCompanyId(long companyId) {
+    public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
     

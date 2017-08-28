@@ -8,11 +8,11 @@ public class PostCommentForm {
     
     @NotNull
     @Min(0)
-    private long employeeId;
+    private Long employeeId;
     
     @NotNull
     @Min(0)
-    private long postId;
+    private Long postId;
     
     @NotNull
     @Size(min = 1, max = 250)

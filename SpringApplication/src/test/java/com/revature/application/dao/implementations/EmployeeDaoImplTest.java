@@ -102,6 +102,30 @@ public class EmployeeDaoImplTest {
     }
     
     @Test
+    public void createMethodMustSaveToDbWithSomeNullParameters() {
+        
+        Session session = sf.getCurrentSession();
+        
+        EmployeeForm employeeForm = new EmployeeForm(null,
+                null, employee3.getUsername(), employee3.getPassword(),
+                employee3.getEmail(), employee3.getFname(), employee3.getLname());
+        
+        employeeDAO.create(employeeForm);
+        
+        String query = "from Employee employee where employee.username = :username";
+        Employee newEmployee = (Employee) session.createQuery(query)
+                .setParameter("username", employee3.getUsername()).uniqueResult();
+        
+        assertTrue("Company object must be persisted to DB", newEmployee != null);
+        assertTrue(newEmployee.getUsername().equals(employee3.getUsername()));
+        assertTrue(newEmployee.getPassword().equals(employee3.getPassword()));
+        assertTrue(newEmployee.getEmail().equals(employee3.getEmail()));
+        assertTrue(newEmployee.getLname().equals(employee3.getLname()));
+        assertTrue(newEmployee.getFname().equals(employee3.getFname()));
+        
+    }
+    
+    @Test
     public void readGetsTheProperEmployeeObject() {
         
         Session session = sf.getCurrentSession();
@@ -164,8 +188,7 @@ public class EmployeeDaoImplTest {
         Session session = sf.getCurrentSession();
         
         EmployeeForm form = new EmployeeForm(location.getLocationId(), company.getCompanyId(),
-                "Changed", "Changed", "Changed",
-                "Changed", "Changed");
+                "Changed", "Changed", "Changed", "Changed", "Changed");
         
         employeeDAO.update(employee1.getEmployeeId(), form);
         
