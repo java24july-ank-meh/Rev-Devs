@@ -17,10 +17,10 @@ public class Location {
     private String city;
     
     @Column(nullable = false)
-    private double longitude;
+    private Double longitude;
     
     @Column(nullable = false)
-    private double lattitude;
+    private Double lattitude;
     
     @OneToMany(cascade = { CascadeType.ALL })
     @JoinColumn(name = "locationId")
@@ -37,7 +37,7 @@ public class Location {
     public Location() {
     }
     
-    public Location(String city, double longitude, double lattitude) {
+    public Location(String city, Double longitude, Double lattitude) {
         super();
         this.city = city;
         this.longitude = longitude;
@@ -60,19 +60,19 @@ public class Location {
         this.city = city;
     }
     
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
     
-    public double getLattitude() {
+    public Double getLattitude() {
         return lattitude;
     }
     
-    public void setLattitude(double lattitude) {
+    public void setLattitude(Double lattitude) {
         this.lattitude = lattitude;
     }
     
