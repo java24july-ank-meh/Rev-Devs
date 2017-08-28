@@ -72,15 +72,22 @@ public class PostCommentDaoImpl implements PostCommentDao {
         
         Session session = sf.getCurrentSession();
         
-        Employee employee = new Employee();
-        employee.setEmployeeId(commentForm.getEmployeeId());
+//        Employee employee = new Employee();
+//        employee.setEmployeeId(commentForm.getEmployeeId());
         
-        Post post = new Post();
-        post.setPostId(commentForm.getPostId());
+//        Post post = new Post();
+//        post.setPostId(commentForm.getPostId());
         
-        PostComment postComment = new PostComment(employee, post, new Date(),
-                commentForm.getContent());
-        postComment.setCommentId(comment_id);
+//        PostComment postComment = new PostComment(employee, post, new Date(), commentForm.getContent());
+//        postComment.setCommentId(comment_id);
+        
+        Employee employee = (Employee) session.get(Employee.class, commentForm.getEmployeeId());
+        Post post = (Post) session.get(Post.class, commentForm.getPostId());
+
+        PostComment postComment = (PostComment) session.get(PostComment.class, comment_id);
+        
+        postComment.setCommented(new Date());
+        postComment.setContent(commentForm.getContent());
         
         session.update(postComment);
         session.flush();
@@ -106,8 +113,10 @@ public class PostCommentDaoImpl implements PostCommentDao {
         
         Session session = sf.getCurrentSession();
         
-        PostComment comment = new PostComment();
-        comment.setCommentId(comment_id);
+        PostComment comment = (PostComment) session.get(PostComment.class, comment_id);
+
+//        PostComment comment = new PostComment();
+//        comment.setCommentId(comment_id);
         
         session.delete(comment);
         session.flush();
