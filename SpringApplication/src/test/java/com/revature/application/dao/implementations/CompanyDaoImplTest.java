@@ -95,7 +95,7 @@ public class CompanyDaoImplTest {
         Company newCompany = companyDAO.read(company1.getCompanyId());
         
         assertTrue("Company object must not be null", newCompany != null);
-        assertTrue(newCompany.getCompanyId() == company1.getCompanyId());
+        assertTrue(newCompany.getCompanyId().equals(company1.getCompanyId()));
         assertTrue(newCompany.getCompanyName().equals(company1.getCompanyName()));        
         
     }
