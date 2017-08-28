@@ -121,8 +121,8 @@ public class CompanyDaoImplTest {
    
         assertTrue(companies.size() == 2);
         
-        assertTrue(companies.get(0).getCompanyId() == company1.getCompanyId());
-        assertTrue(companies.get(1).getCompanyId() == company2.getCompanyId());
+        assertTrue(companies.get(0).getCompanyId().equals(company1.getCompanyId()));
+        assertTrue(companies.get(1).getCompanyId().equals(company2.getCompanyId()));
         
         assertTrue(companies.get(0).getCompanyName().equals(company1.getCompanyName()));
         assertTrue(companies.get(1).getCompanyName().equals(company2.getCompanyName()));
@@ -141,7 +141,7 @@ public class CompanyDaoImplTest {
         Company newCompany = (Company) session.get(Company.class, company1.getCompanyId());
         
         assertTrue("New Company must not be null", newCompany != null);
-        assertTrue(newCompany.getCompanyId() == company1.getCompanyId());
+        assertTrue(newCompany.getCompanyId().equals(company1.getCompanyId()));
         assertTrue(newCompany.getCompanyName().equals("Changed"));
         
     }

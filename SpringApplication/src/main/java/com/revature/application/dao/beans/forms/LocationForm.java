@@ -24,7 +24,7 @@ public class LocationForm {
     public LocationForm() {
     }
     
-    public LocationForm(String city, double longitude, double lattitude) {
+    public LocationForm(String city, Double longitude, Double lattitude) {
         super();
         this.city = city;
         this.longitude = longitude;
@@ -39,19 +39,19 @@ public class LocationForm {
         this.city = city;
     }
     
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
     
-    public double getLattitude() {
+    public Double getLattitude() {
         return lattitude;
     }
     
-    public void setLattitude(double lattitude) {
+    public void setLattitude(Double lattitude) {
         this.lattitude = lattitude;
     }
     

@@ -25,34 +25,34 @@ public class HotSpotForm {
         super();
     }
     
-    public HotSpotForm(double longitude, double lattitude, long locationId) {
+    public HotSpotForm(Double longitude, Double lattitude, Long locationId) {
         super();
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.locationId = locationId;
     }
     
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
     
-    public double getLattitude() {
+    public Double getLattitude() {
         return lattitude;
     }
     
-    public void setLattitude(double lattitude) {
+    public void setLattitude(Double lattitude) {
         this.lattitude = lattitude;
     }
     
-    public long getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
     
-    public void setLocationId(long locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
     
