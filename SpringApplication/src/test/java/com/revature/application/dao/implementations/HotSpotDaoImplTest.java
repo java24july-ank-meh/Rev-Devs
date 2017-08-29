@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,7 +89,7 @@ public class HotSpotDaoImplTest {
         assertTrue(newHotSpot.getLattitude().equals(hotSpot3.getLattitude()));
     }
     
-    @Test
+    @Test(expected = ConstraintViolationException.class)
     public void createMethodMissingParamMustNotSaveToDb() {
         
         Session session = sf.getCurrentSession();
@@ -97,12 +98,7 @@ public class HotSpotDaoImplTest {
                 hotSpot3.getLocation().getLocationId());
         
         hotSpotDAO.createHotSpot(hotSpotForm);
-        
-        String query = "from HotSpot hotSpot where hotSpot.longitude = :longitude and hotSpot.lattitude = :lattitude";
-        HotSpot newHotSpot = (HotSpot) session.createQuery(query).setParameter("longitude", null)
-                .setParameter("lattitude", hotSpot3.getLattitude()).uniqueResult();
-        
-        assertTrue("HotSpot object must not be persisted to DB", newHotSpot == null);
+             
     }
     
     @Test
