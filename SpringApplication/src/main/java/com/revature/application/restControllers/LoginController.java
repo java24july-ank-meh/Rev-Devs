@@ -12,8 +12,11 @@ import com.revature.application.beans.Greeting;
 import com.revature.application.beans.RequestEmployee;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
+import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.forms.EmployeeForm;
+import com.revature.application.dao.beans.forms.LocationForm;
 
 @RestController
 @RequestMapping("/authentication")
@@ -21,6 +24,9 @@ public class LoginController {
     
     @Autowired
     EmployeeDao employeeDAO;
+    
+    @Autowired
+	LocationDao locationDAO;
     
     /*
      * Main handler for logging in a user
@@ -120,5 +126,22 @@ public class LoginController {
         
         employeeDAO.update(employee.getEmployeeId(), employeeForm);
         return new RequestStatus();
+    }
+    
+    @RequestMapping(path = "/set-location", method = RequestMethod.POST)
+    public RequestStatus setLocation(long location_id, HttpSession session) {
+    	Employee employee = loadEmployee(session);
+    	if(employee == null) {
+    		 return new RequestStatus(false, "Not logged in");
+    	}
+    	
+    	Location loc = locationDAO.read(location_id);
+    	employee.setLocation(loc);
+    	if(loc == null) return new RequestStatus(false, "Bad location");
+    	EmployeeForm employeeForm = new EmployeeForm(location_id, employee.getCompany().getCompanyId(), employee.getUsername(),
+                employee.getPassword(), employee.getEmail(), employee.getFname(), employee.getLname());
+    	employeeDAO.update(employee.getEmployeeId(), employeeForm);
+    	
+    	return new RequestStatus();
     }
 }

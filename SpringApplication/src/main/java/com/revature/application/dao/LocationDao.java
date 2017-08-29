@@ -8,6 +8,7 @@ import com.revature.application.dao.beans.forms.LocationForm;
 public interface LocationDao {
 	public boolean create(LocationForm locationForm);
 	public Location read(long loc_id);
+	public Location read(String city);
 	public List<Location> readAll();
 	public boolean update(long loc_id, LocationForm locationForm);
 	public boolean delete(Location loc);
