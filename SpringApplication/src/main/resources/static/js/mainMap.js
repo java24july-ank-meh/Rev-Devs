@@ -177,7 +177,6 @@ function setLocation(city, lat, lng){
 	setLocationCity = city;
 	setLocationLat = lat;
 	setLocationLng = lng;
-	console.log(city);
 	angular.element(document.querySelector('#setLocationButton')).click();
 }
 

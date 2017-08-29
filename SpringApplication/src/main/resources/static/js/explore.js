@@ -3,7 +3,7 @@ app.controller("exploreController", function($window, $scope,$rootScope,$http,$l
 		$http({
 			method: 'POST',
 			url: '/authentication/set-location',
-			data: 'location_id='+$window.location_id,
+			data: 'city='+$window.setLocationCity,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		}).then(function successCallback(response){
 			let success = response.data.success;

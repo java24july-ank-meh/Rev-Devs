@@ -90,27 +90,6 @@ public class LoginController {
         return new RequestEmployee(true, employee);
     }
     
-    
-   /*
-    * Change method (NEEDS to validate input)
-    * 
-    @RequestMapping(path = "/employees/{userId}", method = RequestMethod.PUT)
-    public RequestStatus updateProfile(@Valid EmployeeForm employeeForm, BindingResult bindingResult, 
-                                       @PathVariable userId, HttpSession session) {
-        Employee employee = loadEmployee(session);
-        if (employee == null || employee.getEmployeeId() != userId) {
-            return new RequestStatus(false, "Not logged in");
-        }
-            
-        if (!bindingResult.hasErrors()) {
-            employeeDAO.update(userId, employeeForm);
-            return new Request();
-        }
-        
-        return new RequestStatus(false, "Failed to update employee");
-    }
-    */
-    
     @RequestMapping(path = "/update-profile", method = RequestMethod.POST)
     public RequestStatus updateProfile(String username, String email, String fname, String lname,
             HttpSession session) {
@@ -129,16 +108,17 @@ public class LoginController {
     }
     
     @RequestMapping(path = "/set-location", method = RequestMethod.POST)
-    public RequestStatus setLocation(long location_id, HttpSession session) {
+    public RequestStatus setLocation(String city, HttpSession session) {
     	Employee employee = loadEmployee(session);
     	if(employee == null) {
     		 return new RequestStatus(false, "Not logged in");
     	}
     	
-    	Location loc = locationDAO.read(location_id);
+    	Location loc = locationDAO.read(city);
+    	if(loc == null) return new RequestStatus(false, "location not found");
+    	
     	employee.setLocation(loc);
-    	if(loc == null) return new RequestStatus(false, "Bad location");
-    	EmployeeForm employeeForm = new EmployeeForm(location_id, employee.getCompany().getCompanyId(), employee.getUsername(),
+    	EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), employee.getCompany().getCompanyId(), employee.getUsername(),
                 employee.getPassword(), employee.getEmail(), employee.getFname(), employee.getLname());
     	employeeDAO.update(employee.getEmployeeId(), employeeForm);
     	
