@@ -46,6 +46,9 @@ public class EmployeeDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
+        // Clean out the Employee table
+        session.createQuery("delete from Employee").executeUpdate();
+        
         location = new Location("LA", 123.12, 123.12);
         company = new Company(location, "tech");
         
