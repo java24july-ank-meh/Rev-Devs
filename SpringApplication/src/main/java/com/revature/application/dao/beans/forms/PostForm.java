@@ -25,7 +25,7 @@ public class PostForm {
     public PostForm() {
     }
     
-    public PostForm(long locationId, long employeeId, long typeId, String content) {
+    public PostForm(Long locationId, Long employeeId, Long typeId, String content) {
         super();
         this.locationId = locationId;
         this.employeeId = employeeId;
@@ -33,27 +33,27 @@ public class PostForm {
         this.content = content;
     }
     
-    public long getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
     
-    public void setLocationId(long locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
     
-    public long getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
     
-    public void setEmployeeId(long employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
     
-    public long getTypeId() {
+    public Long getTypeId() {
         return typeId;
     }
     
-    public void setTypeId(long typeId) {
+    public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
     

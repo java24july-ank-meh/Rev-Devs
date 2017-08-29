@@ -62,7 +62,7 @@ public class PostController {
 	@RequestMapping(path = "/comment", method = RequestMethod.POST) 
 	public RequestStatus createComment(@Valid PostCommentForm commentForm, BindingResult bindingResult) {
 		// Save a comment for this comment
-		
+			    	    
 		if (!bindingResult.hasErrors()) {
 			commentDAO.create(commentForm);
 			return new RequestStatus();

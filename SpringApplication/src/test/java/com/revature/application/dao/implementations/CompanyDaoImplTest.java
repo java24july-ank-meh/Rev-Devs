@@ -95,7 +95,7 @@ public class CompanyDaoImplTest {
         Company newCompany = companyDAO.read(company1.getCompanyId());
         
         assertTrue("Company object must not be null", newCompany != null);
-        assertTrue(newCompany.getCompanyId() == company1.getCompanyId());
+        assertTrue(newCompany.getCompanyId().equals(company1.getCompanyId()));
         assertTrue(newCompany.getCompanyName().equals(company1.getCompanyName()));        
         
     }
@@ -121,8 +121,8 @@ public class CompanyDaoImplTest {
    
         assertTrue(companies.size() == 2);
         
-        assertTrue(companies.get(0).getCompanyId() == company1.getCompanyId());
-        assertTrue(companies.get(1).getCompanyId() == company2.getCompanyId());
+        assertTrue(companies.get(0).getCompanyId().equals(company1.getCompanyId()));
+        assertTrue(companies.get(1).getCompanyId().equals(company2.getCompanyId()));
         
         assertTrue(companies.get(0).getCompanyName().equals(company1.getCompanyName()));
         assertTrue(companies.get(1).getCompanyName().equals(company2.getCompanyName()));
@@ -141,7 +141,7 @@ public class CompanyDaoImplTest {
         Company newCompany = (Company) session.get(Company.class, company1.getCompanyId());
         
         assertTrue("New Company must not be null", newCompany != null);
-        assertTrue(newCompany.getCompanyId() == company1.getCompanyId());
+        assertTrue(newCompany.getCompanyId().equals(company1.getCompanyId()));
         assertTrue(newCompany.getCompanyName().equals("Changed"));
         
     }
@@ -152,14 +152,10 @@ public class CompanyDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from Company company where company.companyName = :name";
-        Company newCompany = (Company) session.createQuery(query)
-                .setParameter("name", company1.getCompanyName())
-                .uniqueResult();
+        Long companyId = company1.getCompanyId();
+        companyDAO.delete(company1);
         
-        companyDAO.delete(newCompany);
-        
-        Company testCompany = session.get(Company.class, newCompany.getCompanyId());
+        Company testCompany = session.get(Company.class, companyId);
         
         assertTrue("Test company must be null", testCompany == null);
     }
@@ -170,14 +166,9 @@ public class CompanyDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from Company company where company.companyName = :name";
-        Company newCompany = (Company) session.createQuery(query)
-                .setParameter("name", company1.getCompanyName())
-                .uniqueResult();
-                
-        long companyId = newCompany.getCompanyId();
+        Long companyId = company1.getCompanyId();
         companyDAO.deleteById(companyId);
-                        
+                                
         Company testCompany = (Company) session.get(Company.class, companyId);
         
         assertTrue("Test company must be null", testCompany == null);

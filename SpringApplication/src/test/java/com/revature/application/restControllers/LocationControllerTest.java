@@ -26,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -55,6 +56,9 @@ public class LocationControllerTest {
     private LocationController locationController;
     
     // list for readAll test
+    private List<HotSpot> hotSpots;
+    private HotSpot hotSpot1;
+    private HotSpot hotSpot2;
     private List<Location> locations;
     private Location location1;
     private Location location2;
@@ -75,6 +79,16 @@ public class LocationControllerTest {
         
         locations.add(location1);
         locations.add(location2);
+        
+        hotSpot1 = new HotSpot(123.12, 123.12, location1);
+        hotSpot1.setHotSpotId(100L);
+        hotSpot2 = new HotSpot(1.1, 1.1, location1);
+        hotSpot2.setHotSpotId(111L);
+        
+        hotSpots = new ArrayList<>();
+        hotSpots.add(hotSpot1);
+        hotSpots.add(hotSpot2);
+        
     }
     
     @Test
@@ -86,7 +100,7 @@ public class LocationControllerTest {
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath("$[0].locationId",
-                        Matchers.is(locations.get(0).getLocationId())))
+                        Matchers.is(locations.get(0).getLocationId().intValue())))
                 .andExpect(jsonPath("$[0].longitude", Matchers.is(locations.get(0).getLongitude())))
                 .andExpect(jsonPath("$[0].lattitude", Matchers.is(locations.get(0).getLattitude())))
                 .andExpect(jsonPath("$[0].city", Matchers.is(locations.get(0).getCity())))
@@ -94,7 +108,7 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$[0].companies", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].posts", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].locationId",
-                        Matchers.is(locations.get(1).getLocationId())))
+                        Matchers.is(locations.get(1).getLocationId().intValue())))
                 .andExpect(jsonPath("$[1].longitude", Matchers.is(locations.get(1).getLongitude())))
                 .andExpect(jsonPath("$[1].lattitude", Matchers.is(locations.get(1).getLattitude())))
                 .andExpect(jsonPath("$[1].city", Matchers.is(locations.get(1).getCity())))
@@ -112,13 +126,34 @@ public class LocationControllerTest {
         mockMvc.perform(get("/locations/" + location1.getLocationId())).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.locationId",
-                        Matchers.is(locations.get(0).getLocationId())))
+                        Matchers.is(locations.get(0).getLocationId().intValue())))
                 .andExpect(jsonPath("$.longitude", Matchers.is(locations.get(0).getLongitude())))
                 .andExpect(jsonPath("$.lattitude", Matchers.is(locations.get(0).getLattitude())))
                 .andExpect(jsonPath("$.city", Matchers.is(locations.get(0).getCity())))
                 .andExpect(jsonPath("$.employees", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.companies", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.posts", Matchers.notNullValue()));
+    }
+    
+    @Test
+    public void returnAllHotSpotsForSingleLocation() throws Exception {
+        
+        when(mockHSDao.readAllHotSpotsByLocationId(anyLong())).thenReturn(hotSpots);
+        
+        mockMvc.perform(get("/locations/" + location1.getLocationId() + "/hotspots")).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andDo(print())
+                .andExpect(jsonPath("$[0].hotSpotId",
+                        Matchers.is(hotSpots.get(0).getHotSpotId().intValue())))
+                .andExpect(jsonPath("$[0].longitude", Matchers.is(hotSpots.get(0).getLongitude())))
+                .andExpect(jsonPath("$[0].lattitude", Matchers.is(hotSpots.get(0).getLattitude())))
+                .andExpect(jsonPath("$[0].location",  Matchers.notNullValue()))
+                .andExpect(jsonPath("$[1].hotSpotId",
+                        Matchers.is(hotSpots.get(1).getHotSpotId().intValue())))
+                .andExpect(jsonPath("$[1].longitude", Matchers.is(hotSpots.get(1).getLongitude())))
+                .andExpect(jsonPath("$[1].lattitude", Matchers.is(hotSpots.get(1).getLattitude())))
+                .andExpect(jsonPath("$[1].location",  Matchers.notNullValue()));
+
     }
     
     @Test
