@@ -99,7 +99,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
         
         Employee employee = (Employee) session.get(Employee.class, employee_id);
         employee.setUsername(employeeForm.getUsername());
-        employee.setPassword(employeeForm.getPassword());
         employee.setEmail(employeeForm.getEmail());
         employee.setFname(employeeForm.getFname());
         employee.setLname(employeeForm.getLname());
