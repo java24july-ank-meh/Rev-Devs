@@ -7,6 +7,9 @@ public interface SafeUserOperations {
 	//checks login credentials
 	public boolean checkLoginCredits(String un, String pw);
 	
+	//logout
+	public void logoutUser();
+	
 	//authenticating user
 	public void authenticateById(Long id);
 	
@@ -14,7 +17,7 @@ public interface SafeUserOperations {
 	public Employee loadEmployee();
 	
 	//checks if authenticated or not and have employee id
-	public boolean isSessionValid();
+	public boolean isValidSession();
 	
 	//update user taken from out of controller
 	public void updateUser(Employee e2);

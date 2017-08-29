@@ -16,89 +16,97 @@ public class SafeUserOperationsService implements SafeUserOperations{
 
 	@Autowired
 	HttpSession masterSession;
-    @Autowired
-    EmployeeDao employeeDAO;
-    @Autowired
-    LocationDao locationDAO;
+	@Autowired
+	EmployeeDao employeeDAO;
+	@Autowired
+	LocationDao locationDAO;
 
 	@Override
 	public boolean checkLoginCredits(String username, String password) {
-		
+
 		Employee user = employeeDAO.read(username);
-		
+
 		if (user == null) return false;
-		
+
 		if(user.getPassword().equals(password)) {
-	        authenticateById(user.getEmployeeId());
+			authenticateById(user.getEmployeeId());
 		}
-		 
+
 		return false;
+	}
+
+	public void logoutUser() {
+
+		masterSession.setAttribute("id", "");	
+		masterSession.setAttribute("auth", false);
+
+		masterSession.invalidate();
 	}
 
 	@Override
 	public void authenticateById(Long id) {
-		
-        masterSession.setAttribute("id", "" + id);	
-        masterSession.setAttribute("auth", true);
+
+		masterSession.setAttribute("id", "" + id);	
+		masterSession.setAttribute("auth", true);
 	}
 
 	@Override
 	public Employee loadEmployee() {
-		
+
 		Long emp_id = (Long) masterSession.getAttribute("id");
-		
+
 		if(emp_id == null) return null;
 		//^shouldnt happen but placed for precaution
 		Employee emp = employeeDAO.read(emp_id);
-		
+
 		return emp;
 	}
 
 	@Override
-	public boolean isSessionValid() {
+	public boolean isValidSession() {
 		return (boolean) masterSession.getAttribute("auth");
 	}
 
 	@Override
 	public void updateUser(Employee e2) {
 		Employee emp = loadEmployee();
-        
-        long locId = emp.getLocation().getLocationId();
-        long compId = emp.getCompany().getCompanyId();
-        
-        EmployeeForm employeeForm = new EmployeeForm(locId, compId, e2.getUsername(),
-        		e2.getPassword(), e2.getEmail(), e2.getFname(), e2.getLname());
-        
-        employeeDAO.update(emp.getEmployeeId(), employeeForm);
+
+		long locId = emp.getLocation().getLocationId();
+		long compId = emp.getCompany().getCompanyId();
+
+		EmployeeForm employeeForm = new EmployeeForm(locId, compId, e2.getUsername(),
+				e2.getPassword(), e2.getEmail(), e2.getFname(), e2.getLname());
+
+		employeeDAO.update(emp.getEmployeeId(), employeeForm);
 	}
-	
+
 	@Override
 	public void updateUser2(String username, String email, String fname, String lname) {
 		Employee emp = loadEmployee();
-        
-        long locId = emp.getLocation() == null ? 0 : emp.getLocation().getLocationId();
-        long compId = emp.getCompany() == null ? 0 : emp.getCompany().getCompanyId();
-        
-        EmployeeForm employeeForm = new EmployeeForm(locId, compId, username,
-        		emp.getPassword(), email, fname, lname);
-        
-        employeeDAO.update(emp.getEmployeeId(), employeeForm);
+
+		long locId = emp.getLocation() == null ? 0 : emp.getLocation().getLocationId();
+		long compId = emp.getCompany() == null ? 0 : emp.getCompany().getCompanyId();
+
+		EmployeeForm employeeForm = new EmployeeForm(locId, compId, username,
+				emp.getPassword(), email, fname, lname);
+
+		employeeDAO.update(emp.getEmployeeId(), employeeForm);
 	}
 
 	@Override
 	public boolean setLocation(String city) {
 		Employee emp = loadEmployee();
-		
+
 		Location loc = null;
 		loc = locationDAO.read(city);
 		if(loc == null)return false;
-		
+
 		emp.setLocation(loc);
-		
-	   	EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), emp.getCompany().getCompanyId(), emp.getUsername(),
-	   			emp.getPassword(), emp.getEmail(), emp.getFname(), emp.getLname());
-    	employeeDAO.update(emp.getEmployeeId(), employeeForm);
-    	return true;	
+
+		EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), emp.getCompany().getCompanyId(), emp.getUsername(),
+				emp.getPassword(), emp.getEmail(), emp.getFname(), emp.getLname());
+		employeeDAO.update(emp.getEmployeeId(), employeeForm);
+		return true;	
 	}
-	
+
 }
