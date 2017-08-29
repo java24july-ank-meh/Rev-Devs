@@ -196,12 +196,7 @@ public class PostDaoImplTest {
 
 		Session session = sf.getCurrentSession();
 
-		String query = "from Post post where post.content = :postContent";
-		Post newPost = (Post) session.createQuery(query)
-				.setParameter("postContent", post1.getContent())
-				.uniqueResult();
-
-		long postId = newPost.getPostId();
+		Long postId = post1.getPostId();
 
 		postDAO.deleteById(postId);
 

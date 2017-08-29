@@ -63,6 +63,7 @@ public class CompanyControllerTest {
         companies = new ArrayList<>();
         
         Location location = new Location("LA", 123.12, 123.12);
+        location.setLocationId(1L);
         
         company1 = new Company(location, "Bobs");
         company1.setCompanyId(1L);
@@ -125,6 +126,7 @@ public class CompanyControllerTest {
                 .param("companyName", company1.getCompanyName());
         
         mockMvc.perform(rb).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andDo(print())
                 .andExpect(jsonPath("$.message", Matchers.is("Success")))
                 .andExpect(jsonPath("$.success", Matchers.is(true)));
     }
