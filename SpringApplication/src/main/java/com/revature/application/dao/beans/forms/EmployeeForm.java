@@ -4,6 +4,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class EmployeeForm {
     
     @Min(0)
@@ -16,7 +18,6 @@ public class EmployeeForm {
     @Size(min = 5, max = 32)
     private String username;
     
-    @NotNull
     @Size(min = 7, max = 32)
     private String password;
     

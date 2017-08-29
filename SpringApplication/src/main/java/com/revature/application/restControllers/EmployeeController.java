@@ -58,7 +58,7 @@ public class EmployeeController {
 	@RequestMapping(path = "/{userId}", method = RequestMethod.PUT)
 	public RequestStatus updateEmployee(@Valid EmployeeForm employeeForm, BindingResult bindingResult, @PathVariable long userId) {
 		// Update user with userId
-		
+	    
 		if (!bindingResult.hasErrors()) {
 			employeeDAO.update(userId, employeeForm);
 			return new RequestStatus(); 
