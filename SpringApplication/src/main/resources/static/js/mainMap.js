@@ -83,7 +83,8 @@ function initMap() {
 												+ "onClick=\"viewLocation()\">View Location</button>"
 												+ "</br>"
 												+ "<button type=\"button\" style=\"width:200px\" class=\"btn btn-primary\""
-												+ "onClick=\"setLocation()\">Set As Your Location</button>"
+												+ "onClick=\"setLocation('"+l.city+"',"+l.lattitude+","+l.longitude+")\""
+												+ ">Set As Your Location</button>"
 									}),
 							position : new google.maps.LatLng(l.lattitude,
 									l.longitude),
@@ -168,14 +169,15 @@ function initMap() {
 		}
 		return false;
 	}
-
-	// TODO: redirect to location page
-	function viewLocation() {
-	}
-	// TODO: set users location at current marker
-	function setLocation() {
-	}
-
+}
+var setLocationCity;
+var setLocationLat;
+var setLocationLng;
+function setLocation(city, lat, lng, ){
+	setLocationCity = city;
+	setLocationLat = lat;
+	setLocationLng = lng;
+	angular.element(document.querySelector('#setLocationButton')).click();
 }
 
 // Creates a new location in the database

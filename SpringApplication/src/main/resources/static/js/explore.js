@@ -1,9 +1,8 @@
-app.controller("exploreController", function($scope,$rootScope,$http,$location){
-	$scope.setLocation = function(city,lat,long){
-		console.log(city);
-		console.log(lat);
-		console.log(long);
+app.controller("exploreController", function($window, $scope,$rootScope,$http,$location){
+	$scope.setLocation = function(){
+		console.log($window.setLocationCity);
+		console.log($window.setLocationLat);
+		console.log($window.setLocationLng);
 		console.log($rootScope.employee);
 	};
-	
 });
