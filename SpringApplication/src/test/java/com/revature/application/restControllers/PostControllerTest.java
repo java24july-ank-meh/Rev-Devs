@@ -2,6 +2,7 @@ package com.revature.application.restControllers;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,6 +16,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +27,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -64,6 +68,9 @@ public class PostControllerTest {
     private Employee employee = new Employee();
     private PostType postType = new PostType();
     
+    MockHttpSession emptySession = new MockHttpSession();
+    MockHttpSession validSession = new MockHttpSession();
+    
     @Before
     public void setup() throws Exception {
         
@@ -72,6 +79,9 @@ public class PostControllerTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(postController).build();
         
         // Set up all the Post info
+        employee.setEmployeeId(200L);
+        validSession.setAttribute("id", employee.getEmployeeId());
+        
         date = new Date(1L);
         post1 = new Post(location, employee, postType, date, "content1");
         post1.setPostId(1L);
@@ -84,19 +94,95 @@ public class PostControllerTest {
     }
     
     @Test
+    public void readAllWithoutSessionMustFail() throws Exception {
+        
+        when(mockPostDao.readAll()).thenReturn(posts);
+        
+        mockMvc.perform(get("/posts").session(emptySession)).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
+        
+    }
+    
+    @Test
+    public void readWithoutSessionMustFail() throws Exception {
+        
+        when(mockPostDao.read(anyLong())).thenReturn(post1);
+        
+        mockMvc.perform(get("/posts/" + post1.getPostId()).session(emptySession))
+                .andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
+        
+    }
+    
+    @Test
+    public void createPostWithoutSessionMustFail() throws Exception {
+        
+        when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/posts").session(emptySession)
+                .param("employeeId", "1")
+                .param("locationId", "1")
+                .param("typeId", "1").param("content", "message");
+        
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
+        
+    }
+    
+    @Test
+    public void createCommentWithoutSessionMustFail() throws Exception {
+        
+        when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/posts/comment").session(emptySession)
+                .param("employeeId", "1")
+                .param("postId", "1")
+                .param("content", "content");
+        
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
+        
+    }
+    
+    @Test
+    public void deletePostWithoutSessionMustFail() throws Exception {
+        
+        when(mockPostDao.deleteById(anyLong())).thenReturn(true);
+        
+        mockMvc.perform(delete("/posts/1").session(emptySession)).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
+    }
+    
+    @Test
+    public void deleteCommentWithoutSessionMustFail() throws Exception {
+        
+        when(postCommentDao.deleteById(anyLong())).thenReturn(true);
+        
+        mockMvc.perform(delete("/posts/comment/1").session(emptySession)).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false)));;
+    }
+    
+    @Test
     public void returnAllPosts() throws Exception {
         
         when(mockPostDao.readAll()).thenReturn(posts);
         
-        mockMvc.perform(get("/posts")).andExpect(status().isOk())
+        mockMvc.perform(get("/posts").session(validSession)).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(jsonPath("$[0].postId", Matchers.is(posts.get(0).getPostId().intValue())))
+                .andExpect(
+                        jsonPath("$[0].postId", Matchers.is(posts.get(0).getPostId().intValue())))
                 .andExpect(jsonPath("$[0].content", Matchers.is(posts.get(0).getContent())))
                 .andExpect(jsonPath("$[0].location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].employee", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].type", Matchers.notNullValue()))
-                .andExpect(jsonPath("$[1].postId", Matchers.is(posts.get(1).getPostId().intValue())))
+                .andExpect(
+                        jsonPath("$[1].postId", Matchers.is(posts.get(1).getPostId().intValue())))
                 .andExpect(jsonPath("$[1].content", Matchers.is(posts.get(1).getContent())))
                 .andExpect(jsonPath("$[1].location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].employee", Matchers.notNullValue()))
@@ -108,7 +194,7 @@ public class PostControllerTest {
         
         when(mockPostDao.read(post1.getPostId())).thenReturn(post1);
         
-        mockMvc.perform(get("/posts/1")).andExpect(status().isOk())
+        mockMvc.perform(get("/posts/1").session(validSession)).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.postId", Matchers.is(post1.getPostId().intValue())))
                 .andExpect(jsonPath("$.content", Matchers.is(post1.getContent())))
@@ -122,11 +208,8 @@ public class PostControllerTest {
         
         when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
         
-        RequestBuilder builder = post("/posts")
-                .param("locationId", "1")
-                .param("employeeId", "1")
-                .param("typeId", "1")
-                .param("content", "message");      
+        RequestBuilder builder = post("/posts").session(validSession).param("locationId", "1")
+                .param("typeId", "1").param("content", "message");
         
         mockMvc.perform(builder).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -139,10 +222,8 @@ public class PostControllerTest {
         
         when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
         
-        RequestBuilder builder = post("/posts")
-                .param("locationId", "1")
-                .param("typeId", "1")
-                .param("content", "message");      
+        RequestBuilder builder = post("/posts").session(validSession)
+                .param("typeId", "1");
         
         mockMvc.perform(builder).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -154,8 +235,7 @@ public class PostControllerTest {
         
         when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
         
-        RequestBuilder builder = post("/posts/comment")
-                .param("employeeId", "1")
+        RequestBuilder builder = post("/posts/comment").session(validSession)
                 .param("postId", "1")
                 .param("content", "content");
         
@@ -170,20 +250,19 @@ public class PostControllerTest {
         
         when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
         
-        RequestBuilder builder = post("/posts");
+        RequestBuilder builder = post("/posts").session(validSession).param("content", "content");
         
         mockMvc.perform(builder).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.success", Matchers.is(false))); 
+                .andExpect(jsonPath("$.success", Matchers.is(false)));
     }
-    
     
     @Test
     public void deletePost() throws Exception {
         
         when(mockPostDao.deleteById(anyLong())).thenReturn(true);
         
-        mockMvc.perform(delete("/posts/1")).andExpect(status().isOk())
+        mockMvc.perform(delete("/posts/1").session(validSession)).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.success", Matchers.is(true)))
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));
@@ -194,7 +273,7 @@ public class PostControllerTest {
         
         when(postCommentDao.deleteById(anyLong())).thenReturn(true);
         
-        mockMvc.perform(delete("/posts/comment/1")).andExpect(status().isOk())
+        mockMvc.perform(delete("/posts/comment/1").session(validSession)).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.success", Matchers.is(true)))
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));

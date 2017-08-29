@@ -95,7 +95,6 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].company", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[0].username", Matchers.is(employees.get(0).getUsername())))
-                .andExpect(jsonPath("$[0].password", Matchers.is(employees.get(0).getPassword())))
                 .andExpect(jsonPath("$[0].email", Matchers.is(employees.get(0).getEmail())))
                 .andExpect(jsonPath("$[0].fname", Matchers.is(employees.get(0).getFname())))
                 .andExpect(jsonPath("$[0].lname", Matchers.is(employees.get(0).getLname())))
@@ -103,7 +102,6 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[1].location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].company", Matchers.notNullValue()))
                 .andExpect(jsonPath("$[1].username", Matchers.is(employees.get(1).getUsername())))
-                .andExpect(jsonPath("$[1].password", Matchers.is(employees.get(1).getPassword())))
                 .andExpect(jsonPath("$[1].email", Matchers.is(employees.get(1).getEmail())))
                 .andExpect(jsonPath("$[1].fname", Matchers.is(employees.get(1).getFname())))
                 .andExpect(jsonPath("$[1].lname", Matchers.is(employees.get(1).getLname())));
@@ -120,7 +118,6 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.location", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.company", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.username", Matchers.is(employee1.getUsername())))
-                .andExpect(jsonPath("$.password", Matchers.is(employee1.getPassword())))
                 .andExpect(jsonPath("$.email", Matchers.is(employee1.getEmail())))
                 .andExpect(jsonPath("$.fname", Matchers.is(employee1.getFname())))
                 .andExpect(jsonPath("$.lname", Matchers.is(employee1.getLname())));
@@ -155,7 +152,6 @@ public class EmployeeControllerTest {
                 .param("locationId", "1")
                 .param("companyId", "1")
                 .param("username", employee1.getUsername())
-                .param("email", employee1.getEmail())
                 .param("fname", employee1.getFname())
                 .param("lname", employee1.getLname());
           
@@ -170,9 +166,9 @@ public class EmployeeControllerTest {
         when(employeeDAO.create(any(EmployeeForm.class))).thenReturn(true);
         
         RequestBuilder builder = post("/employees")
-                .param("password", employee1.getPassword())
                 .param("username", employee1.getUsername())
                 .param("email", employee1.getEmail())
+                .param("password", employee1.getPassword())
                 .param("fname", employee1.getFname())
                 .param("lname", employee1.getLname());
           
@@ -193,7 +189,6 @@ public class EmployeeControllerTest {
                 .param("locationId", "1")
                 .param("companyId", "1")
                 .param("username", employee1.getUsername())
-                .param("password", employee1.getPassword())
                 .param("email", employee1.getEmail())
                 .param("fname", employee1.getFname())
                 .param("lname", employee1.getLname());
@@ -214,7 +209,6 @@ public class EmployeeControllerTest {
         RequestBuilder builder = put("/employees/1")
                 .param("locationId", "1")
                 .param("companyId", "1")
-                .param("password", employee1.getPassword())
                 .param("email", employee1.getEmail())
                 .param("fname", employee1.getFname())
                 .param("lname", employee1.getLname());
