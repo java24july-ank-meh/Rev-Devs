@@ -6,7 +6,7 @@ import com.revature.application.dao.beans.Employee;
 
 public interface SafeUserOperations {
 
-	public void authenticateById(String id);
+	public void authenticateById(HttpSession s);
 	public Employee loadEmployee();
 	public void saveEmployee(Employee e, HttpSession s);//cant do without httpsession
 	public void setSession(HttpSession s);
