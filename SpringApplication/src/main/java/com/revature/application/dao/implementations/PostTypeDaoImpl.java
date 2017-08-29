@@ -62,8 +62,8 @@ public class PostTypeDaoImpl implements PostTypeDao {
         
         Session session = sf.getCurrentSession();
         
-        PostType postType = new PostType(typeForm.getType());
-        postType.setTypeId(type_id);
+        PostType postType = (PostType) session.get(PostType.class, type_id);
+        postType.setType(typeForm.getType());
         
         session.update(postType);
         session.flush();
@@ -89,9 +89,7 @@ public class PostTypeDaoImpl implements PostTypeDao {
         
         Session session = sf.getCurrentSession();
         
-        PostType type = new PostType();
-        type.setTypeId(type_id);
-        
+        PostType type = (PostType) session.get(PostType.class, type_id);         
         session.delete(type);
         session.flush();
         

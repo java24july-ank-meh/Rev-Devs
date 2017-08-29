@@ -21,26 +21,26 @@ public class PostCommentForm {
     public PostCommentForm() {
     }
     
-    public PostCommentForm(long employeeId, long postId, String content) {
+    public PostCommentForm(Long employeeId, Long postId, String content) {
         super();
         this.employeeId = employeeId;
         this.postId = postId;
         this.content = content;
     }
     
-    public long getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
     
-    public void setEmployeeId(long employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
     
-    public long getPostId() {
+    public Long getPostId() {
         return postId;
     }
     
-    public void setPostId(long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
     

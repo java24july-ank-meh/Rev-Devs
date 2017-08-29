@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,11 +30,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.revature.application.RevatureSocialNetworkApplication;
+import com.revature.application.dao.PostCommentDao;
 import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostType;
+import com.revature.application.dao.beans.forms.PostCommentForm;
 import com.revature.application.dao.beans.forms.PostForm;
 
 @RunWith(SpringRunner.class)
@@ -47,6 +50,8 @@ public class PostControllerTest {
     
     @Mock
     private PostDao mockPostDao;
+    @Mock
+    private PostCommentDao postCommentDao;
     @InjectMocks
     private PostController postController;
     
@@ -145,11 +150,51 @@ public class PostControllerTest {
     }
     
     @Test
+    public void createComment() throws Exception {
+        
+        when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/posts/comment")
+                .param("employeeId", "1")
+                .param("postId", "1")
+                .param("content", "content");
+        
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(true)))
+                .andExpect(jsonPath("$.message", Matchers.is("Success")));
+    }
+    
+    @Test
+    public void createCommentMissingParamsMustFail() throws Exception {
+        
+        when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
+        
+        RequestBuilder builder = post("/posts");
+        
+        mockMvc.perform(builder).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(false))); 
+    }
+    
+    
+    @Test
     public void deletePost() throws Exception {
         
-        when(mockPostDao.delete(any(Post.class))).thenReturn(true);
+        when(mockPostDao.deleteById(anyLong())).thenReturn(true);
         
         mockMvc.perform(delete("/posts/1")).andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.success", Matchers.is(true)))
+                .andExpect(jsonPath("$.message", Matchers.is("Success")));
+    }
+    
+    @Test
+    public void deleteComment() throws Exception {
+        
+        when(postCommentDao.deleteById(anyLong())).thenReturn(true);
+        
+        mockMvc.perform(delete("/posts/comment/1")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.success", Matchers.is(true)))
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));

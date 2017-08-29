@@ -63,6 +63,7 @@ public class CompanyControllerTest {
         companies = new ArrayList<>();
         
         Location location = new Location("LA", 123.12, 123.12);
+        location.setLocationId(1L);
         
         company1 = new Company(location, "Bobs");
         company1.setCompanyId(1L);

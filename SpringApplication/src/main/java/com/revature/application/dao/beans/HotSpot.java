@@ -11,10 +11,10 @@ public class HotSpot {
     private Long hotSpotId;
     
     @Column(nullable = false)
-    private double longitude;
+    private Double longitude;
     
     @Column(nullable = false)
-    private double lattitude;
+    private Double lattitude;
     
     @ManyToOne
     @JoinColumn(name = "locationId")
@@ -24,7 +24,7 @@ public class HotSpot {
         super();
     }
     
-    public HotSpot(double longitude, double lattitude, Location location) {
+    public HotSpot(Double longitude, Double lattitude, Location location) {
         super();
         this.longitude = longitude;
         this.lattitude = lattitude;
@@ -39,19 +39,19 @@ public class HotSpot {
         this.hotSpotId = hotSpotId;
     }
     
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
     
-    public double getLattitude() {
+    public Double getLattitude() {
         return lattitude;
     }
     
-    public void setLattitude(double lattitude) {
+    public void setLattitude(Double lattitude) {
         this.lattitude = lattitude;
     }
     
