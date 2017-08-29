@@ -99,8 +99,7 @@ public class HotSpotDaoImplTest {
         hotSpotDAO.createHotSpot(hotSpotForm);
         
         String query = "from HotSpot hotSpot where hotSpot.longitude = :longitude and hotSpot.lattitude = :lattitude";
-        HotSpot newHotSpot = (HotSpot) session.createQuery(query)
-                .setParameter("longitude", null)
+        HotSpot newHotSpot = (HotSpot) session.createQuery(query).setParameter("longitude", null)
                 .setParameter("lattitude", hotSpot3.getLattitude()).uniqueResult();
         
         assertTrue("HotSpot object must not be persisted to DB", newHotSpot == null);
@@ -113,7 +112,7 @@ public class HotSpotDaoImplTest {
         
         List<HotSpot> hotSpots = hotSpotDAO.readAllHotSpotsByLocationId(location.getLocationId());
         
-        assertTrue("Companies must not be null", hotSpots != null);
+        assertTrue("hotSpots must not be null", hotSpots != null);
         
         hotSpots.sort((item1, item2) -> {
             if (item1.getHotSpotId() < item2.getHotSpotId()) {
