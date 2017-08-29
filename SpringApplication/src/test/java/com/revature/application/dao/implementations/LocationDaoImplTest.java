@@ -144,14 +144,11 @@ public class LocationDaoImplTest {
     public void deleteMustDeleteLocation() {
         
         Session session = sf.getCurrentSession();
+              
+        Long locationId = location1.getLocationId();
+        locationDAO.delete(location1);
         
-        String query = "from Location location where location.locationId = :locationId";
-        Location newLocation = (Location) session.createQuery(query)
-                .setParameter("locationId", location1.getLocationId()).uniqueResult();
-        
-        locationDAO.delete(newLocation);
-        
-        Location testLocation = session.get(Location.class, newLocation.getLocationId());
+        Location testLocation = session.get(Location.class, locationId);
         
         assertTrue("Test location must be null", testLocation == null);
     }
@@ -161,11 +158,7 @@ public class LocationDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from Location location where location.locationId = :locationId";
-        Location newLocation = (Location) session.createQuery(query)
-                .setParameter("locationId", location1.getLocationId()).uniqueResult();
-        
-        long locationId = newLocation.getLocationId();
+        Long locationId = location1.getLocationId();
         locationDAO.deleteById(locationId);
         
         Location testLocation = (Location) session.get(Location.class, locationId);

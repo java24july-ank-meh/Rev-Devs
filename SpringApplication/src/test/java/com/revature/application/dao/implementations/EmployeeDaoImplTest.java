@@ -210,13 +210,10 @@ public class EmployeeDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from Employee employee where employee.username = :username";
-        Employee newEmployee = (Employee) session.createQuery(query)
-                .setParameter("username", employee1.getUsername()).uniqueResult();
+        long employeeId = employee1.getEmployeeId();
+        employeeDAO.delete(employee1);
         
-        employeeDAO.delete(newEmployee);
-        
-        Employee testEmployee = session.get(Employee.class, newEmployee.getEmployeeId());
+        Employee testEmployee = session.get(Employee.class, employeeId);
         
         assertTrue("Test company must be null", testEmployee == null);
     }
@@ -226,11 +223,7 @@ public class EmployeeDaoImplTest {
         
         Session session = sf.getCurrentSession();
         
-        String query = "from Employee employee where employee.username = :username";
-        Employee newEmployee = (Employee) session.createQuery(query)
-                .setParameter("username", employee1.getUsername()).uniqueResult();
-        
-        long employeeId = newEmployee.getEmployeeId();
+        long employeeId = employee1.getEmployeeId();
         employeeDAO.deleteById(employeeId);
         
         Employee testEmployee = (Employee) session.get(Employee.class, employeeId);
