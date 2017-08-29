@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
@@ -39,7 +40,14 @@ public class LocationDaoImplTest {
     public void setup() {
         
         Session session = sf.getCurrentSession();
-        
+     
+        session.createQuery("delete from PostComment").executeUpdate();
+        session.createQuery("delete from Company").executeUpdate();
+        session.createQuery("delete from Post").executeUpdate();
+        session.createQuery("delete from HotSpot").executeUpdate();
+        session.createQuery("delete from Employee").executeUpdate();  
+        session.createQuery("delete from Location").executeUpdate();
+
         location1 = new Location("LA", 123.12, 123.12);
         location2 = new Location("SF", 123.12, 123.12);
         location3 = new Location("NY", 123.12, 123.12);
@@ -105,6 +113,8 @@ public class LocationDaoImplTest {
             }
         });
         
+        System.out.println("-------------------------------"+locations.size());
+        
         assertTrue(locations.size() == 2);
         
         assertTrue(locations.get(0).getLocationId().equals(location1.getLocationId()));
@@ -161,8 +171,16 @@ public class LocationDaoImplTest {
         Long locationId = location1.getLocationId();
         locationDAO.deleteById(locationId);
         
-        Location testLocation = (Location) session.get(Location.class, locationId);
+//		Query query = session.createQuery("delete Location where locationId = :ID");
+//		query.setParameter("ID", locationId);
+//		
+//		int result = query.executeUpdate();
+//		System.out.println(locationId+" result: " + result);
         
+		session.flush();
+		
+        Location testLocation = (Location) session.get(Location.class, locationId);
+
         assertTrue("Test location must be null", testLocation == null);
     }
 }
