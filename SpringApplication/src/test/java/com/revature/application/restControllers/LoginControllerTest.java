@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -14,6 +15,9 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -43,11 +48,12 @@ public class LoginControllerTest {
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
 	private MockMvc mockMvc;
-
+	private MockHttpSession mockSession;
 	private Employee employee;
 	
 	@Mock
 	private EmployeeDao mockEmpDao;
+		
 	@InjectMocks
 	private LoginController loginController;
 
@@ -55,12 +61,15 @@ public class LoginControllerTest {
 	public void setup() throws Exception {
 
 		MockitoAnnotations.initMocks(this);
+		mockSession = new MockHttpSession();
 
 		this.mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
-		
+			
 		employee = new Employee();
 		employee.setUsername("emp123");
 		employee.setPassword("password");
+		employee.setEmployeeId(12345L);
+
 	}
 	
 	@Test
@@ -68,7 +77,7 @@ public class LoginControllerTest {
 	    
 	}
 
-//	@Test
+	@Test
 	public void loginPass() throws Exception {
 
 		when(mockEmpDao.read(isA(String.class))).thenReturn(employee);
@@ -86,7 +95,7 @@ public class LoginControllerTest {
 	
 	}
 	
-//	@Test
+	@Test
 	public void loginUsernameFail() throws Exception {
 
 		when(mockEmpDao.read(isA(String.class))).thenReturn(null);
@@ -98,13 +107,13 @@ public class LoginControllerTest {
 
 		mockMvc.perform(rb).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType))
-		.andDo(print())
+//		.andDo(print())
 		.andExpect(jsonPath("$.message",is("User does not exist")))
 		.andExpect(jsonPath("$.success",is(false)));
 	
 	}
 	
-//	@Test
+	@Test
 	public void loginPasswordFail() throws Exception {
 
 		when(mockEmpDao.read(isA(String.class))).thenReturn(employee);
@@ -122,7 +131,7 @@ public class LoginControllerTest {
 	
 	}
 
-//	@Test
+	@Test
 	public void logout() throws Exception {
 
 		RequestBuilder rb = get("/authentication/logout");
@@ -139,15 +148,21 @@ public class LoginControllerTest {
 	 * since we dont have a dao to mock?
 	 * also what exactly is show with the RequestEmployee bean
 	 */
-//	@Test
-	public void user() throws Exception {
-
-		RequestBuilder rb = post("/authentication/user");
+	@Test
+	public void userPass() throws Exception {
+		
+		mockSession.setAttribute("id",employee.getEmployeeId().toString());
+		when(mockEmpDao.read(isA(Long.class))).thenReturn(employee);
+		
+		RequestBuilder rb = get("/authentication/user").session(mockSession);
+		
+//		RequestBuilder rb = get("/authentication/userNew");
 
 		mockMvc.perform(rb).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType))
+//		.andExpect(content().contentType(contentType))
 		.andDo(print())
-		.andExpect(jsonPath("$.message",is("Success")))
+//		.andExpect(jsonPath("$.message",is("Success")))
+//		.andExpect(jsonPath("$.employee.employeeId", is(employee.getEmployeeId())))
 		.andExpect(jsonPath("$.success",is(true)));
 	
 	}
