@@ -15,13 +15,15 @@ app.controller('homeController', function($http, $rootScope, $scope) {
 	
 	$scope.submitPost = function($event) {
 		
-		data = {
-				"typeId": parseInt($scope.post.typeId),
+		let typeId = isNaN(parseInt($scope.post.typeId)) ? null : parseInt($scope.post.typeId);
+		
+		let data = $.param({
+				"typeId": typeId,
 				"locationId": $rootScope.employee.location.locationId,
 				"content": $scope.post.comment
-		}
-		console.log(data);
+		})
 		
+		console.log(data);
 		$http({
 			method: 'POST',
 			url: "/posts",

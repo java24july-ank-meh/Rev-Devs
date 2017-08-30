@@ -28,14 +28,14 @@ public class PostDaoImpl implements PostDao {
         
         Session session = sf.getCurrentSession();
         
-        Location location = new Location();
-        location.setLocationId(postForm.getLocationId());
+        Location location = (Location) session.get(Location.class, postForm.getLocationId());
         
-        Employee employee = new Employee();
-        employee.setEmployeeId(postForm.getEmployeeId());
+        Employee employee = (Employee) session.get(Employee.class, postForm.getEmployeeId());
         
-        PostType postType = new PostType();
-        postType.setTypeId(postForm.getTypeId());
+        PostType postType = null;
+        if (postForm.getTypeId() != null) {
+            postType = (PostType) session.get(PostType.class, postForm.getTypeId());
+        }
         
         Post post = new Post(location, employee, postType, new Date(), postForm.getContent());
         
