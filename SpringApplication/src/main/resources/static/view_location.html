@@ -1,166 +1,130 @@
-<div class="container" style="margin: 0 auto;" ng-controller="locationController">
-<div class="row">
-  <div class="col-9"><h2>{{Area}}'s Posts</h2></div>
-</div>
-  <div class="row">
-    <div class="col-2">
-        <ul class="list-group">
-          <li class="list-group-item justify-content-between" style="background: #e8ebef;"><h5>Users in your area</h5></li>
-          <li class="list-group-item justify-content-between">
-            <a href="#">
-              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
-              User
-            </a>
-          </li>
-          <li class="list-group-item justify-content-between">
-            <a href="#">
-              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
-              Cartoon Guy
-            </a>
-          </li>
-          <li class="list-group-item justify-content-between">
-            <a href="#">
-              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
-              Melbin Pastrami
-            </a>
-          </li>
-          <li class="list-group-item justify-content-between">
-              <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#myModal" style="background: none; border: none; padding: 0; top: 50px;">See More</button>
-          </li>
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                <div class="modal-body">
-                  
-                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Pokemon Fan</a><br/><br/>
-                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Cartoon Guy</a><br/><br/>
-                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Melbin Pastrami</a><br/><br/>
-                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Bob Jones</a><br/><br/>
-                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Bill Billson</a>
-                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ul>
-    </div>
-    <div class="col-8" style="text-align: center;">
-      <table class="table table borderless" style="width: 80%;" ng-repeat="post in locationPosts">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="64" width="64" alt="Generic placeholder image">
-                      </div>
-                    </th>
-                    <th><h5>{{post.employee.username}}</h5><small>Date: {{post.posted|date}} | Post Type: {{post.type.type}}</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>{{post.content}}</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
-    </div>
-    <div class="col-2">
-    <h4>Filter Post By:</h4>
-      <div id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="card">
-          <div class="card-header" role="tab" id="headingOne">
-            <h5 class="mb-0">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                Date
-              </a>
-            </h5>
-          </div>
+<div class="container" style="margin: 0 auto;"
+	ng-controller="locationController" ng-init="init()">
+	<div class="row">
+		<div class="col-9">
+			<h2>{{location.city}}</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-2">
+			<ul class="list-group">
+				<li class="list-group-item justify-content-between"
+					style="background: #e8ebef;"><h5>Users in your area</h5></li>
+				<li class="list-group-item justify-content-between"><a href="#">
+						<img
+						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+						height="24" width="24"> User
+				</a></li>
+				<li class="list-group-item justify-content-between"><a href="#">
+						<img
+						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+						height="24" width="24"> Cartoon Guy
+				</a></li>
+				<li class="list-group-item justify-content-between"><a href="#">
+						<img
+						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+						height="24" width="24"> Melbin Pastrami
+				</a></li>
+				<li class="list-group-item justify-content-between">
+					<button type="button" class="btn btn-sm" data-toggle="modal"
+						data-target="#myModal"
+						style="background: none; border: none; padding: 0; top: 50px;">See
+						More</button>
+				</li>
+				<div class="modal fade" id="myModal" role="dialog">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-body">
 
-          <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-            <div class="card-block">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" value="">Today
-                </label>
-              </div>
+								<a href="#"><img
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="24" width="24">Pokemon Fan</a><br />
+								<br /> <a href="#"><img
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="24" width="24">Cartoon Guy</a><br />
+								<br /> <a href="#"><img
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="24" width="24">Melbin Pastrami</a><br />
+								<br /> <a href="#"><img
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="24" width="24">Bob Jones</a><br />
+								<br /> <a href="#"><img
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="24" width="24">Bill Billson</a>
 
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" value="">This Week
-                </label>
-              </div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ul>
+		</div>
+		<div class="col-8" style="text-align: center;">
+			<table class="table table borderless" style="width: 80%;"
+				ng-repeat="post in posts">
+				<thead>
+					<tr>
+						<th>
+							<div class="media">
+								<img class="d-flex mr-3"
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									height="64" width="64" alt="Generic placeholder image">
+							</div>
+						</th>
+						<th><h5>{{post.employee.username}}</h5>
+							<small>Date: {{post.posted|date}} | Post Type:
+								{{post.type.type}}</small></th>
+					<tr>
+						<td></td>
+						<td>{{post.content}}</td>
+						<td></td>
+					</tr>
+					<tr class="active">
+						<td></td>
+						<td><button type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-thumbs-up"></span> Like
+							</button>
+							<button type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-comment"></span> Comment
+							</button></td>
+					</tr>
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-2">
+			<h4>Filter Post By:</h4>
+			<div id="accordion" role="tablist" aria-multiselectable="true">
+				<div class="card">
+					<div class="card-header" role="tab" id="headingOne">
+						<h5>Date</h5>
+					</div>
 
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" value="">This Month
-                </label>
-              </div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="radio" value="">This year
-                </label>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header" role="tab" id="headingTwo">
-            <h5 class="mb-0">
-              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Post Type
-              </a>
-            </h5>
-          </div>
-          <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="card-block">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                    Food
-                </label>
-              </div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                    Housing
-                </label>
-              </div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                    Work
-                </label>
-              </div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                    Shopping
-                </label>
-              </div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" value="">
-                    Medical
-                </label>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-          </div>
-      </div>
+					<div id="collapseOne" class="collapse show" role="tabpanel"
+						aria-labelledby="headingOne">
+						<div class="card-block">
+							<label class="form-check"><input type="radio" name="dateFilter">Today<label/>
+							<label class="form-check"><input type="radio" name="dateFilter">This Week<label/>
+							<label class="form-check"><input type="radio" name="dateFilter">This Month<label/>
+							<label class="form-check"><input type="radio" name="dateFilter">This Year<label/>
+						</div>
+					</div>
+				</div>
+				<div class="card">
+					<div class="card-header" role="tab" id="headingOne">
+						<h5>Type</h5>
+					</div>
+					<div id="collapseOne" class="collapse show" role="tabpanel"
+						aria-labelledby="headingOne">
+						<div class="card-block">
+							<label class="form-check" ng-repeat="type in types"><input type="radio" name="typeFilter">{{type.type}}<label/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
