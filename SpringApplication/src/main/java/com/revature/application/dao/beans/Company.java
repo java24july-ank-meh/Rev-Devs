@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Company {
     
@@ -20,8 +22,9 @@ public class Company {
     @Column
     private String companyName;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "companyId")
+    @JsonIgnore
     private Set<Employee> employees = new HashSet<Employee>();
     
     public Company() {

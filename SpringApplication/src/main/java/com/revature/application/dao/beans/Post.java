@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Post {
     
@@ -32,8 +34,9 @@ public class Post {
     @Column
     private String content;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "postId")
+    @JsonIgnore
     private Set<PostComment> comments = new HashSet<>();
     
     public Post() {

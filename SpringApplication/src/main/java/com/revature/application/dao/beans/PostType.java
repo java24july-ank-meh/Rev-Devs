@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class PostType {
     
@@ -16,8 +18,9 @@ public class PostType {
     @Column
     private String type;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "typeId")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
     
     public PostType() {

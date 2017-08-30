@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Location {
     
@@ -22,16 +24,19 @@ public class Location {
     @Column(nullable = false)
     private Double lattitude;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "locationId")
+    @JsonIgnore
     private Set<Employee> employees = new HashSet<>();
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "locationId")
+    @JsonIgnore
     private Set<Company> companies = new HashSet<>();
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "locationId")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
     
     public Location() {
