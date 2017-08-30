@@ -17,6 +17,7 @@ app.config(function($routeProvider) {
 
 app.run(function($rootScope, $http, $location){
 	$rootScope.employee = null;
+	$rootScope.employeePosts = null;
 	
 	$rootScope.logout = function(){
 		$http({
@@ -39,11 +40,23 @@ app.run(function($rootScope, $http, $location){
 			let success = response.data.success;
 			if(success){
 				$rootScope.employee = response.data.employee;
+				$rootScope.getPosts();
 			} else {
 				window.location.href = "/";
 			}
 		}, function errorCallback(response){
 		});
 	};
+	
+	$rootScope.getPosts = function(){
+		$http({
+			method: 'GET',
+			url: '/employees/posts',
+		}).then(function successCallback(response){
+			$rootScope.employeePosts = response.data;
+		}, function errorCallback(response){
+		});
+	};
+	
 	$rootScope.getCurrentUser();
 });

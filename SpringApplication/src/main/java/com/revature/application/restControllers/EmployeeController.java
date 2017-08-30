@@ -1,9 +1,11 @@
 package com.revature.application.restControllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.EmployeeForm;
 import com.revature.application.services.LoginOperations;
 
@@ -47,6 +50,16 @@ public class EmployeeController {
         // Get single employee from db by id
         if (loginService.isLoggedIn()) {
             return new ResponseEntity<>(employeeDAO.read(employeeId), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
+    @RequestMapping(path = "/posts", method = RequestMethod.GET)
+    public ResponseEntity<Set<Post>> readEmployeeById() {
+        // Get single employee from db by id
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(employeeDAO.read(loginService.getEmployeeId()).getPosts(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

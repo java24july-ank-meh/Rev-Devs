@@ -39,12 +39,14 @@ public class Employee {
     @Column
     private String lname;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "employeeId")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<Post>();
     
     @OneToMany(cascade = { CascadeType.ALL })
     @JoinColumn(name = "employeeId")
+    @JsonIgnore
     private Set<PostComment> comments = new HashSet<PostComment>();
     
     public Employee() {
