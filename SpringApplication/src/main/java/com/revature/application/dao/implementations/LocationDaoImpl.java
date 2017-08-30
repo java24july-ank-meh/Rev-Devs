@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.dao.LocationDao;
+import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.forms.LocationForm;
 
@@ -44,6 +45,21 @@ public class LocationDaoImpl implements LocationDao {
 		return loc;
 	}
 
+	@Override
+    @Transactional
+    public Location read(String city) {
+        
+        Session session = sf.getCurrentSession();
+        
+        String query = "from Location location where location.city = :city";
+        Location location = (Location) session.createQuery(query).setParameter("city", city)
+                .uniqueResult();
+        
+        session.flush();
+        
+        return location;
+    }
+	
 	@Override
 	@Transactional
 	public List<Location> readAll() {

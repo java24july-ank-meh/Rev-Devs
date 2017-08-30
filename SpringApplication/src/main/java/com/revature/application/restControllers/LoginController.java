@@ -12,8 +12,11 @@ import com.revature.application.beans.Greeting;
 import com.revature.application.beans.RequestEmployee;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
+import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.forms.EmployeeForm;
+import com.revature.application.dao.beans.forms.LocationForm;
 
 @RestController
 @RequestMapping("/authentication")
@@ -21,6 +24,9 @@ public class LoginController {
     
     @Autowired
     EmployeeDao employeeDAO;
+    
+    @Autowired
+	LocationDao locationDAO;
     
     /*
      * Main handler for logging in a user
@@ -84,27 +90,6 @@ public class LoginController {
         return new RequestEmployee(true, employee);
     }
     
-    
-   /*
-    * Change method (NEEDS to validate input)
-    * 
-    @RequestMapping(path = "/employees/{userId}", method = RequestMethod.PUT)
-    public RequestStatus updateProfile(@Valid EmployeeForm employeeForm, BindingResult bindingResult, 
-                                       @PathVariable userId, HttpSession session) {
-        Employee employee = loadEmployee(session);
-        if (employee == null || employee.getEmployeeId() != userId) {
-            return new RequestStatus(false, "Not logged in");
-        }
-            
-        if (!bindingResult.hasErrors()) {
-            employeeDAO.update(userId, employeeForm);
-            return new Request();
-        }
-        
-        return new RequestStatus(false, "Failed to update employee");
-    }
-    */
-    
     @RequestMapping(path = "/update-profile", method = RequestMethod.POST)
     public RequestStatus updateProfile(String username, String email, String fname, String lname,
             HttpSession session) {
@@ -120,5 +105,23 @@ public class LoginController {
         
         employeeDAO.update(employee.getEmployeeId(), employeeForm);
         return new RequestStatus();
+    }
+    
+    @RequestMapping(path = "/set-location", method = RequestMethod.POST)
+    public RequestStatus setLocation(String city, HttpSession session) {
+    	Employee employee = loadEmployee(session);
+    	if(employee == null) {
+    		 return new RequestStatus(false, "Not logged in");
+    	}
+    	
+    	Location loc = locationDAO.read(city);
+    	if(loc == null) return new RequestStatus(false, "location not found");
+    	
+    	employee.setLocation(loc);
+    	EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), employee.getCompany().getCompanyId(), employee.getUsername(),
+                employee.getPassword(), employee.getEmail(), employee.getFname(), employee.getLname());
+    	employeeDAO.update(employee.getEmployeeId(), employeeForm);
+    	
+    	return new RequestStatus();
     }
 }

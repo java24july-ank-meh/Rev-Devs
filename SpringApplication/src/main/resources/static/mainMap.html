@@ -1,9 +1,13 @@
+
+<div ng-controller="exploreController">
 	<div id="mapDiv">
 		<div id="locationField">
- 	 	 <input id="autocomplete" placeholder="Enter a city" type="text" />
- 		</div>
- 	
- 	    <div id="map"></div>
- 	    
- 	    <script src="js/mainMap.js"></script>
-     </div>
+			<input id="autocomplete" placeholder="Enter a city" type="text" />
+		</div>
+
+		<div id="map"></div>
+		<script src="js/mainMap.js"></script>
+	</div>
+	
+	<button hidden id="setLocationButton" ng-click="setLocation()"></button>
+</div>
