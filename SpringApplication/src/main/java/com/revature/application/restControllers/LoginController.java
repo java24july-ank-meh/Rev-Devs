@@ -117,10 +117,7 @@ public class LoginController {
     	Location loc = locationDAO.read(city);
     	if(loc == null) return new RequestStatus(false, "location not found");
     	
-    	employee.setLocation(loc);
-    	EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), employee.getCompany().getCompanyId(), employee.getUsername(),
-                employee.getPassword(), employee.getEmail(), employee.getFname(), employee.getLname());
-    	employeeDAO.update(employee.getEmployeeId(), employeeForm);
+    	employeeDAO.updateLocation(employee.getEmployeeId(), loc);
     	
     	return new RequestStatus();
     }
