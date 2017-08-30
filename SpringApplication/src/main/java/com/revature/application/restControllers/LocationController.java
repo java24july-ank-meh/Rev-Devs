@@ -1,6 +1,7 @@
 package com.revature.application.restControllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
+import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.HotSpotForm;
 import com.revature.application.dao.beans.forms.LocationForm;
 import com.revature.application.services.LoginOperations;
@@ -31,6 +34,9 @@ public class LocationController {
     
     @Autowired
     HotSpotDao hotSpotDAO;
+    
+    @Autowired
+    PostDao postDAO;
     
     @Autowired
     LoginOperations loginService;
@@ -67,8 +73,18 @@ public class LocationController {
                     hotSpotDAO.readAllHotSpotsByLocationId(locationId), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        
+        }  
+    }
+    
+    @RequestMapping(path = "/{locationId}/posts", method = RequestMethod.GET)
+    public ResponseEntity<Set<Post>> readAllPosts(@PathVariable long locationId) {
+        // Read the hotspot for a post
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<Set<Post>>(
+                    locationDAO.read(locationId).getPosts(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }  
     }
     
     /*

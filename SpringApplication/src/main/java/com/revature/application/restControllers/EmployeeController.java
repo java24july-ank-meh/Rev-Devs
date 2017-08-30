@@ -55,8 +55,18 @@ public class EmployeeController {
         }
     }
     
+    @RequestMapping(path = "/{employeeId}/posts", method = RequestMethod.GET)
+    public ResponseEntity<Set<Post>> readAllPosts(@PathVariable long employeeId) {
+        // Get single employee from db by id
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(employeeDAO.read(employeeId).getPosts(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
     @RequestMapping(path = "/posts", method = RequestMethod.GET)
-    public ResponseEntity<Set<Post>> readEmployeeById() {
+    public ResponseEntity<Set<Post>> readAllPostsOfLoggedInUser() {
         // Get single employee from db by id
         if (loginService.isLoggedIn()) {
             return new ResponseEntity<>(employeeDAO.read(loginService.getEmployeeId()).getPosts(), HttpStatus.OK);
@@ -72,16 +82,12 @@ public class EmployeeController {
     public ResponseEntity<RequestStatus> createEmployee(@Valid EmployeeForm employeeForm,
             BindingResult bindingResult) {
         // Add a new user to the db
-        if (loginService.isLoggedIn()) {
-            if (!bindingResult.hasErrors()) {
-                employeeDAO.create(employeeForm);
-                return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
-            }
-            return new ResponseEntity<>(new RequestStatus(false, "Failed to create new employee"),
-                    HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (!bindingResult.hasErrors()) {
+            employeeDAO.create(employeeForm);
+            return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
         }
+        return new ResponseEntity<>(new RequestStatus(false, "Failed to create new employee"),
+                HttpStatus.OK);
     }
     
     /*
