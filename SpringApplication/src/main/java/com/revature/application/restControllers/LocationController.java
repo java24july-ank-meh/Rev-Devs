@@ -87,6 +87,16 @@ public class LocationController {
         }  
     }
     
+    @RequestMapping(path = "/name/{location}", method = RequestMethod.GET)
+    public ResponseEntity<Location> readLocationByName(@PathVariable String location) {
+        
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(locationDAO.read(location), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
     /*
      * All POST requests
      */

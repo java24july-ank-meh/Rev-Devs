@@ -12,4 +12,14 @@ app.controller("exploreController", function($window, $scope,$rootScope,$http,$l
 			$rootScope.status = response.data.error + ": " + response.data.exception;
 		});
 	};
+	
+	$scope.viewLocation = function(){
+		$http({
+			method: 'GET',
+			url: '/locations/name/'+$window.viewLocationCity,
+		}).then(function successCallback(response){
+			$location.path('/location/'+response.data.locationId);
+		}, function errorCallback(response){
+		});
+	}
 });

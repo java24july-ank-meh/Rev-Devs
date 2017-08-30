@@ -83,10 +83,10 @@ function initMap() {
 										content : "<h5>"
 												+ l.city
 												+ "</h5><button type=\"button\" style=\"width:200px\" class=\"btn btn-primary\""
-												+ "onClick=\"viewLocation()\">View Location</button>"
+												+ "onClick=\"viewLocation('"+l.city+"')\">View Location</button>"
 												+ "</br>"
 												+ "<button type=\"button\" style=\"width:200px\" class=\"btn btn-primary\""
-												+ "onClick=\"setLocation('"+l.city+"',"+l.lattitude+","+l.longitude+")\""
+												+ "onClick=\"setLocation('"+l.city+"')\""
 												+ ">Set As Your Location</button>"
 									}),
 							position : new google.maps.LatLng(l.lattitude,
@@ -174,22 +174,15 @@ function initMap() {
 	}
 }
 var setLocationCity;
-var setLocationLat;
-var setLocationLng;
 function setLocation(city, lat, lng){
 	setLocationCity = city;
-	setLocationLat = lat;
-	setLocationLng = lng;
 	angular.element(document.querySelector('#setLocationButton')).click();
 }
 
 var viewLocationCity;
-var viewLocationLat;
-var viewLocationLng;
 function viewLocation(city, lat, lng){
 	viewLocationCity = city;
-	viewLocationLat = lat;
-	viewLocationLng = lng;
+	angular.element(document.querySelector('#viewLocationButton')).click();
 }
 
 // Creates a new location in the database
