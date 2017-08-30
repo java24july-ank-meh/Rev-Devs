@@ -2,6 +2,7 @@ package com.revature.application.dao.implementations;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -17,8 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.RevatureSocialNetworkApplication;
 import com.revature.application.dao.HotSpotDao;
+import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.Post;
+import com.revature.application.dao.beans.PostType;
 import com.revature.application.dao.beans.forms.HotSpotForm;
 
 @RunWith(SpringRunner.class)
@@ -34,6 +38,7 @@ public class HotSpotDaoImplTest {
     
     // Objects we want to attach to hotSpots
     Location location = null;
+    Post post = null;
     
     // Objects we want to persist in db
     HotSpot hotSpot1 = null;
@@ -46,6 +51,7 @@ public class HotSpotDaoImplTest {
         Session session = sf.getCurrentSession();
         
         location = new Location("LA", 123.12, 123.12);
+        post = new Post(location, new Employee(), new PostType(), new Date(), "content", new HotSpot());
         
         session.saveOrUpdate(location);
         
@@ -75,7 +81,7 @@ public class HotSpotDaoImplTest {
         Session session = sf.getCurrentSession();
         
         HotSpotForm hotSpotForm = new HotSpotForm(hotSpot3.getLongitude(), hotSpot3.getLattitude(),
-                hotSpot3.getLocation().getLocationId());
+                hotSpot3.getLocation().getLocationId(), hotSpot3.getPost().getPostId());
         
         hotSpotDAO.createHotSpot(hotSpotForm);
         
@@ -95,7 +101,7 @@ public class HotSpotDaoImplTest {
         Session session = sf.getCurrentSession();
         
         HotSpotForm hotSpotForm = new HotSpotForm(null, hotSpot3.getLattitude(),
-                hotSpot3.getLocation().getLocationId());
+                hotSpot3.getLocation().getLocationId(), hotSpot3.getPost().getPostId());
         
         hotSpotDAO.createHotSpot(hotSpotForm);
              

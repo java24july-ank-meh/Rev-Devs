@@ -36,6 +36,7 @@ import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.HotSpotForm;
 import com.revature.application.dao.beans.forms.LocationForm;
 

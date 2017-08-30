@@ -37,6 +37,7 @@ import com.revature.application.RevatureSocialNetworkApplication;
 import com.revature.application.dao.PostCommentDao;
 import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostType;
@@ -83,9 +84,9 @@ public class PostControllerTest {
         validSession.setAttribute("id", employee.getEmployeeId());
         
         date = new Date(1L);
-        post1 = new Post(location, employee, postType, date, "content1");
+        post1 = new Post(location, employee, postType, date, "content1", new HotSpot());
         post1.setPostId(1L);
-        post2 = new Post(location, employee, postType, date, "content2");
+        post2 = new Post(location, employee, postType, date, "content2", new HotSpot());
         post2.setPostId(2L);
         
         posts = new ArrayList<>();

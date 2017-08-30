@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Cascade;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -28,6 +30,9 @@ public class Post {
     @JoinColumn(name = "typeId")
     private PostType type;
     
+    @OneToOne(cascade = CascadeType.ALL)
+    private HotSpot hotSpot;
+    
     @Column
     private Date posted;
     
@@ -42,15 +47,24 @@ public class Post {
     public Post() {
     }
     
-    public Post(Location location, Employee employee, PostType type, Date posted, String content) {
+    public Post(Location location, Employee employee, PostType type, Date posted, String content, HotSpot hotSpot) {
         super();
         this.location = location;
         this.employee = employee;
         this.type = type;
         this.posted = posted;
         this.content = content;
+        this.hotSpot = hotSpot;
     }
     
+    public HotSpot getHotSpot() {
+        return hotSpot;
+    }
+
+    public void setHotSpot(HotSpot hotSpot) {
+        this.hotSpot = hotSpot;
+    }
+
     public Long getPostId() {
         return postId;
     }

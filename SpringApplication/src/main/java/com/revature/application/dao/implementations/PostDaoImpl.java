@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.application.dao.PostDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostType;
@@ -37,7 +38,15 @@ public class PostDaoImpl implements PostDao {
             postType = (PostType) session.get(PostType.class, postForm.getTypeId());
         }
         
-        Post post = new Post(location, employee, postType, new Date(), postForm.getContent());
+        Double longitude = postForm.getLongitude();
+        Double lattitude = postForm.getLattitude();
+        
+        HotSpot hotSpot = null;
+        if (longitude != null && lattitude != null) {
+            hotSpot = new HotSpot(longitude, lattitude, location);
+        }
+        
+        Post post = new Post(location, employee, postType, new Date(), postForm.getContent(), hotSpot);
         
         session.save(post);
         session.flush();

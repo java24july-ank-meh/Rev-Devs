@@ -1,63 +1,114 @@
-<br/><br/><br/><br/>
+<br />
+<br />
+<br />
+<br />
 <h3>Welcome back user!</h3>
-          <div class="jumbotron" style=" background-image: url(http://9cover.com/images/ccovers/1365475071city-lights-on-the-streets.jpg);"></div>
-          <div class="container" ng-controller="homeController">
-            <div class="row">
+<div class="jumbotron"
+	style="background-image: url(http://9cover.com/images/ccovers/1365475071city-lights-on-the-streets.jpg);"></div>
+<div class="container" ng-controller="homeController">
+	<div class="row">
 
-              <div class="col">
-                <div class="card text-center" style="width: 55rem; margin: 0 auto">
-                  <div class="card-header"></div>
-                    <div class="card-block">
-                        <form>
-                          <div class="form-group">
-                            <label for="comment">Show other people what's going on in your area:</label>
-                            <textarea class="form-control" rows="5" id="comment" ng-model="post.comment"></textarea>
-                          </div>
+		<div class="col">
+			<div class="card text-center" style="width: 55rem; margin: 0 auto">
+				<div class="card-header"></div>
+				<div class="card-block">
+					<form>
+						<div class="form-group">
+							<label for="comment">Show other people what's going on in
+								your area:</label>
+							<textarea class="form-control" rows="5" id="comment"
+								ng-model="post.comment"></textarea>
+						</div>
 
-                          <div style="text-align: left;">
-                            <h5>Post Type</h5>
-                          <select ng-model="post.typeId">
-                            <option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
-                          </select>
-                        </div>
-                          <div class="wrapper" style="text-align: right;">
-                            <button type="submit" class="btn btn-primary" align="left" ng-click="submitPost()" >Post!</button>
-                          </div>
-                        </form>
-                    </div>
-                  </div>
-              </div>
-            </div>
+						<div style="text-align: left;">
+							<h5>Post Type</h5>
+							<select ng-model="post.typeId">
+								<option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
+							</select>
 
-            <br/><br/>
+							<div class="form-group">
+								<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress" placeholder="HotSpot" />
+							</div>
 
-            <div style="width:1000px; margin: 0 auto;">
-            <div class="row">
+						</div>
+						<div class="wrapper" style="text-align: right;">
+							<button type="submit" class="btn btn-primary" align="left"
+								ng-click="submitPost()">Post!</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-              <table class="table table borderless" style="width: 60%;" ng-repeat="post in locationPosts">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" alt="Generic placeholder image" height="64" width="64">
-                      </div>
-                    </th>
-                    <th><h5>{{post.employee.username}}</h5><small>Date: {{post.posted|date}} | Post Type: {{post.type.type}}</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>{{post.content}}</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
+	<br />
+	<br />
 
-            </div>
+	<div style="width: 1000px; margin: 0 auto;">
+		<div class="row">
 
-            </div>
-          </div>
+			<table class="table table borderless" style="width: 60%;"
+				ng-repeat="post in locationPosts">
+				<thead>
+					<tr>
+						<th>
+							<div class="media">
+								<img class="d-flex mr-3"
+									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+									alt="Generic placeholder image" height="64" width="64">
+							</div>
+						</th>
+						<th><h5>{{post.employee.username}}</h5>
+							<small>Date: {{post.posted|date}} | Post Type:
+								{{post.type.type}}</small></th>
+					<tr>
+						<td></td>
+						<td>{{post.content}}</td>
+					</tr>
+					<tr class="active">
+						<td></td>
+						<td><button type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-thumbs-up"></span> Like
+							</button>
+							<button type="button" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-comment"></span> Comment
+							</button></td>
+					</tr>
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
+</div>
+
+
+<script>
+	var autocomplete;
+	function initAutocomplete() {
+		var lat = 43.0481;
+		var lng = -76.1474;
+		var cityBounds = new google.maps.LatLngBounds(new google.maps.LatLng(
+				lat - .1, lng - .1), new google.maps.LatLng(lat + .1, lng + .1));
+
+		autocomplete = new google.maps.places.Autocomplete((document
+				.getElementById('autocompleteHotSpot')), {
+			bounds : cityBounds
+		});
+		autocomplete.addListener('place_changed', onPlaceChanged);
+	}
+
+	var searchLongitude = null;
+	var searchLattitude = null;
+	function onPlaceChanged() {
+		var place = autocomplete.getPlace();
+		var location = place.geometry.location;
+		searchLongitude = location.longitude;
+		searchLattitude = location.latitude;
+	}
+</script>
+
+</script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8G37jOv4-9enSEXFuxtiDl0DKiOR1BG0&libraries=places&callback=initAutocomplete" async defer></script>
