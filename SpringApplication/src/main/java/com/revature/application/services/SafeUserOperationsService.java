@@ -52,6 +52,7 @@ public class SafeUserOperationsService implements SafeUserOperations{
 
 	@Override
 	public Employee loadEmployee() {
+		
 
 		Long emp_id = (Long) masterSession.getAttribute("id");
 
@@ -76,6 +77,7 @@ public class SafeUserOperationsService implements SafeUserOperations{
 	@Override
 	public void updateUser(Employee e2) {
 		Employee emp = loadEmployee();
+		if(emp == null)return;
 
 		long locId = emp.getLocation().getLocationId();
 		long compId = emp.getCompany().getCompanyId();
@@ -89,7 +91,8 @@ public class SafeUserOperationsService implements SafeUserOperations{
 	@Override
 	public void updateUser2(String username, String email, String fname, String lname) {
 		Employee emp = loadEmployee();
-
+		if(emp == null)return;
+		
 		long locId = emp.getLocation() == null ? 0 : emp.getLocation().getLocationId();
 		long compId = emp.getCompany() == null ? 0 : emp.getCompany().getCompanyId();
 
@@ -102,7 +105,7 @@ public class SafeUserOperationsService implements SafeUserOperations{
 	@Override
 	public boolean setLocation(String city) {
 		Employee emp = loadEmployee();
-
+		if(emp == null)return false;
 		Location loc = null;
 		loc = locationDAO.read(city);
 		if(loc == null)return false;
