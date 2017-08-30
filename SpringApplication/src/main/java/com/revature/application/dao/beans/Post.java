@@ -111,7 +111,15 @@ public class Post {
         this.comments = comments;
     }
     
-    @Override
+    public HotSpot getHotSpot() {
+		return hotSpot;
+	}
+
+	public void setHotSpot(HotSpot hotSpot) {
+		this.hotSpot = hotSpot;
+	}
+
+	@Override
     public String toString() {
         return "Post [postId=" + postId + ", location=" + location + ", employee=" + employee
                 + ", type=" + type + ", posted=" + posted + ", content=" + content + "]";
