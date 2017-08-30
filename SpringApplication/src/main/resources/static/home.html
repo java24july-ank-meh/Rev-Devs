@@ -44,7 +44,7 @@
             <div style="width:1000px; margin: 0 auto;">
             <div class="row">
 
-              <table class="table table borderless" style="width: 60%;">
+              <table class="table table borderless" style="width: 60%;" ng-repeat="post in locationPosts">
                 <thead>
                   <tr>
                     <th>
@@ -52,57 +52,10 @@
                         <img class="d-flex mr-3" src="https://pldh.net/media/pokemon/shuffle/169.png" alt="Generic placeholder image">
                       </div>
                     </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
+                    <th><h5>{{post.employee.username}}</h5><small>Date:{{post.posted}} | Post Type: {{post.type.type}}</small></th>
                   <tr>
                     <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
-
-
-              <table class="table table borderless" style="width: 55%;">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/mark-sanchez-2.thumbnail.jpg" alt="Generic placeholder image">
-                      </div>
-                    </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table class="table table borderless" style="width: 55%;">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="http://www.startupcompanylawyer.com/wp-content/uploads/2007/04/wsgrwebpic.thumbnail.jpg" alt="Generic placeholder image">
-                      </div>
-                    </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td>{{post.content}}</td>
                   </tr>
                   <tr class="active">
                   <td></td>
