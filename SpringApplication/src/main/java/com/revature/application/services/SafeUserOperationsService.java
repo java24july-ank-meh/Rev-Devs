@@ -37,7 +37,7 @@ public class SafeUserOperationsService implements SafeUserOperations{
 
 	public void logoutUser() {
 
-		masterSession.setAttribute("id", "");	
+		masterSession.setAttribute("id", null);	
 		masterSession.setAttribute("auth", false);
 
 		masterSession.invalidate();
