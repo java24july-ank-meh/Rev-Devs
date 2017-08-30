@@ -1,8 +1,4 @@
-<br />
-<br />
-<br />
-<br />
-<h3>Welcome back user!</h3>
+
 <div class="jumbotron"
 	style="background-image: url(http://9cover.com/images/ccovers/1365475071city-lights-on-the-streets.jpg);"></div>
 <div class="container" ng-controller="homeController">
@@ -27,7 +23,8 @@
 							</select>
 
 							<div class="form-group">
-								<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress" placeholder="HotSpot" />
+								<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress"
+									placeholder="HotSpot" />
 							</div>
 
 						</div>
@@ -41,8 +38,7 @@
 		</div>
 	</div>
 
-	<br />
-	<br />
+	<br /> <br />
 
 	<div style="width: 1000px; margin: 0 auto;">
 		<div class="row">
@@ -59,7 +55,7 @@
 							</div>
 						</th>
 						<th><h5>{{post.employee.username}}</h5>
-							<small>Date: {{post.posted|date}} | Post Type:
+							<small>Submitted: {{post.posted|date}} | Post Type:
 								{{post.type.type}}</small></th>
 					<tr>
 						<td></td>
@@ -110,5 +106,7 @@
 	}
 </script>
 
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8G37jOv4-9enSEXFuxtiDl0DKiOR1BG0&libraries=places&callback=initAutocomplete" async defer></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8G37jOv4-9enSEXFuxtiDl0DKiOR1BG0&libraries=places&callback=initAutocomplete"
+	async defer></script>
 
