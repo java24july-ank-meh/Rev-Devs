@@ -11,28 +11,18 @@
                         <form>
                           <div class="form-group">
                             <label for="comment">Show other people what's going on in your area:</label>
-                            <textarea class="form-control" rows="5" id="comment" placeholder="What's going on in your area" ng-model="posts.comment"></textarea>
+                            <textarea class="form-control" rows="5" id="comment" ng-model="post.comment"></textarea>
                           </div>
 
-                          <div class="dropdown" style="text-align: left;">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Post Type
-                            </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" ng-model="types">
-                            <a class="dropdown-item" href="#" ng-repeat="type in types">{{type}}</a>
-                          </div>
+                          <div style="text-align: left;">
+                            <h5>Post Type</h5>
+                          <select ng-model="post.typeId">
+                            <option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
+                          </select>
                         </div>
                           <div class="wrapper" style="text-align: right;">
-                            <input type="image" src="images/icon.png"/>
-                            <input type="file" id="my_file" accept="image/*" style="display: none;" />
                             <button type="submit" class="btn btn-primary" align="left" ng-click="submitPost()" >Post!</button>
                           </div>
-
-                              <script>
-                               $("input[type='image']").click(function() {
-                                $("input[id='my_file']").click();
-                                });
-                            </script>
                         </form>
                     </div>
                   </div>
