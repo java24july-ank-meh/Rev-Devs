@@ -28,6 +28,10 @@ public class Post {
     @JoinColumn(name = "typeId")
     private PostType type;
     
+    @ManyToOne
+    @JoinColumn(name = "hotSpotId")
+    private HotSpot hotSpot;
+    
     @Column
     private Date posted;
     

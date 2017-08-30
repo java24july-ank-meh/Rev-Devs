@@ -1,6 +1,11 @@
 package com.revature.application.dao.beans;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class HotSpot {
