@@ -14,7 +14,7 @@ app.config(function($routeProvider) {
 		templateUrl : "mainMap.html",
 		activetab: 'explore'
 	})
-	.when("/location", {
+	.when("/location/:loc", {
 		templateUrl : "view_location.html",
 		activetab: 'location'
 	});
