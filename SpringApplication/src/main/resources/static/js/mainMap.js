@@ -9,6 +9,7 @@ var image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 var markers;
 var currentMarker;
 var markerCluster;
+var openMarker;
 
 // Initializes the map
 function initMap() {
@@ -64,7 +65,7 @@ function initMap() {
 	});
 	places = new google.maps.places.PlacesService(map);
 	autocomplete.addListener('place_changed', onPlaceChanged);
-
+	
 	// Places the markers on the map and sets listeners for clicks
 	markers = locations.map(function(l, i) {
 				if(l.employees == null)
@@ -100,6 +101,7 @@ function initMap() {
 					marker.infowindow.setMap(null);
 				});
 				marker.addListener('click', function() {
+					openMarker = marker;
 					marker.infowindow.setMap(null);
 					marker.clickwindow.open(map, marker);
 				});
@@ -175,6 +177,8 @@ function initMap() {
 }
 var setLocationCity;
 function setLocation(city, lat, lng){
+	openMarker.clickwindow.setMap(null);
+	openMarker.employees += 1;
 	setLocationCity = city;
 	angular.element(document.querySelector('#setLocationButton')).click();
 }

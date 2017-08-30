@@ -30,12 +30,12 @@ public class Post {
     @JoinColumn(name = "typeId")
     private PostType type;
     
-<<<<<<< HEAD
+
     @ManyToOne
     @JoinColumn(name = "hotSpotId")
-=======
+
     @OneToOne(cascade = CascadeType.ALL)
->>>>>>> addHotSpot
+
     private HotSpot hotSpot;
     
     @Column
@@ -125,14 +125,6 @@ public class Post {
     public void setComments(Set<PostComment> comments) {
         this.comments = comments;
     }
-    
-    public HotSpot getHotSpot() {
-		return hotSpot;
-	}
-
-	public void setHotSpot(HotSpot hotSpot) {
-		this.hotSpot = hotSpot;
-	}
 
 	@Override
     public String toString() {
