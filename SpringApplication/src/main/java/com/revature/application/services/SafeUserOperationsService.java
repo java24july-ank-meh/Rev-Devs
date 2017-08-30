@@ -63,8 +63,14 @@ public class SafeUserOperationsService implements SafeUserOperations{
 	}
 
 	@Override
-	public boolean isValidSession() {
-		return (boolean) masterSession.getAttribute("auth");
+	public Boolean isValidSession() {
+	    
+	    Boolean isAuthenticated = (Boolean) masterSession.getAttribute("auth");
+	    if (isAuthenticated != null) {
+	        return isAuthenticated;
+	    } else {
+	        return false;
+	    }
 	}
 
 	@Override

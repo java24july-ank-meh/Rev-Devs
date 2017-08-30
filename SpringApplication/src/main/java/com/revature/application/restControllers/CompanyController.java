@@ -1,10 +1,13 @@
 package com.revature.application.restControllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.forms.CompanyForm;
+import com.revature.application.services.SafeUserOperations;
 
 @RestController
 @RequestMapping("/companies")
@@ -23,19 +27,30 @@ public class CompanyController {
 	@Autowired
 	CompanyDao companyDAO;
 	
+	@Autowired
+	SafeUserOperations userOperations;
+	
 	/*
 	 * All GET requests
 	 */
 	@RequestMapping(path = "", method = RequestMethod.GET)
-	public List<Company> readAllCompanies() {
+	public ResponseEntity<List<Company>> readAllCompanies() {
 		// Get all the companies from db
-		return companyDAO.readAll();
+		if (userOperations.isValidSession()) {
+		    return new ResponseEntity<>(companyDAO.readAll(), HttpStatus.OK);
+		} else {
+		    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@RequestMapping(path = "/{companyId}", method = RequestMethod.GET)
 	public Company readCompanyById(@PathVariable long companyId) {
 		// Get single company from db by id
-		return companyDAO.read(companyId);
+	    if (userOperations.isValidSession()) {
+	        return companyDAO.read(companyId);
+	    } else {
+	        return new Company();
+	    }
 	}
 
 	/*

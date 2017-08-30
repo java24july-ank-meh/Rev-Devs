@@ -17,7 +17,7 @@ public interface SafeUserOperations {
 	public Employee loadEmployee();
 	
 	//checks if authenticated or not and have employee id
-	public boolean isValidSession();
+	public Boolean isValidSession();
 	
 	//update user taken from out of controller
 	public void updateUser(Employee e2);
