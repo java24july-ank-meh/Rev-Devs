@@ -3,7 +3,8 @@ app.config(function($routeProvider) {
 	$routeProvider
 	.when("/", {
 		templateUrl : "home.html",
-		activetab: 'home'
+		activetab: 'home',
+		controller: 'homeController'
 	})
 	.when("/profile", {
 		templateUrl : "profile.html",
