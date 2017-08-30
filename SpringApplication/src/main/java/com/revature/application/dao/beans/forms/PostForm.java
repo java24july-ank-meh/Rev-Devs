@@ -13,7 +13,6 @@ public class PostForm {
     @Min(0)
     private Long employeeId;
     
-    @NotNull
     @Min(0)
     private Long typeId;
     
