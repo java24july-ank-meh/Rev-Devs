@@ -45,7 +45,7 @@ public class AuthenticationService implements LoginOperations {
     }
 
     @Override
-    public Long employeeId() {
+    public Long getEmployeeId() {
        return (Long) masterSession.getAttribute("id");
     }
 
