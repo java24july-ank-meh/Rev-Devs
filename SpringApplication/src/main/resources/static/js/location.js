@@ -2,6 +2,7 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 	$scope.location = null;
 	$scope.posts = null;
 	$scope.types = null;
+	$scope.users = null;
 	
 	$scope.init = function(){
 		$routeParams.loc;
@@ -27,6 +28,14 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 			url: '/postTypes',
 		}).then(function successCallback(response){
 			$scope.types = response.data;
+		}, function errorCallback(response){
+		});
+		
+		$http({
+			method: 'GET',
+			url: '/locations/'+$routeParams.loc+'/users',
+		}).then(function successCallback(response){
+			$scope.users = response.data;
 		}, function errorCallback(response){
 		});
 	}

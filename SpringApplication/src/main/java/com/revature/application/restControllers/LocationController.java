@@ -18,6 +18,7 @@ import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.PostDao;
+import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
@@ -82,6 +83,17 @@ public class LocationController {
         if (loginService.isLoggedIn()) {
             return new ResponseEntity<Set<Post>>(
                     locationDAO.read(locationId).getPosts(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }  
+    }
+    
+    @RequestMapping(path = "/{locationId}/users", method = RequestMethod.GET)
+    public ResponseEntity<Set<Employee>> readAllUsers(@PathVariable long locationId) {
+        // Read the hotspot for a post
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<Set<Employee>>(
+                    locationDAO.read(locationId).getEmployees(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }  

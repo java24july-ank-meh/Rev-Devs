@@ -10,55 +10,11 @@
 			<ul class="list-group">
 				<li class="list-group-item justify-content-between"
 					style="background: #e8ebef;"><h5>Users in your area</h5></li>
-				<li class="list-group-item justify-content-between"><a href="#">
-						<img
-						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-						height="24" width="24"> User
+					
+				<li ng-repeat="user in users" class="list-group-item justify-content-between"><a href="#">
+						<img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24"> 
+						{{user.username}}
 				</a></li>
-				<li class="list-group-item justify-content-between"><a href="#">
-						<img
-						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-						height="24" width="24"> Cartoon Guy
-				</a></li>
-				<li class="list-group-item justify-content-between"><a href="#">
-						<img
-						src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-						height="24" width="24"> Melbin Pastrami
-				</a></li>
-				<li class="list-group-item justify-content-between">
-					<button type="button" class="btn btn-sm" data-toggle="modal"
-						data-target="#myModal"
-						style="background: none; border: none; padding: 0; top: 50px;">See
-						More</button>
-				</li>
-				<div class="modal fade" id="myModal" role="dialog">
-					<div class="modal-dialog modal-sm">
-						<div class="modal-content">
-							<div class="modal-body">
-
-								<a href="#"><img
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="24" width="24">Pokemon Fan</a><br />
-								<br /> <a href="#"><img
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="24" width="24">Cartoon Guy</a><br />
-								<br /> <a href="#"><img
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="24" width="24">Melbin Pastrami</a><br />
-								<br /> <a href="#"><img
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="24" width="24">Bob Jones</a><br />
-								<br /> <a href="#"><img
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="24" width="24">Bill Billson</a>
-
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-sm" data-dismiss="modal">Close</button>
-							</div>
-						</div>
-					</div>
-				</div>
 			</ul>
 		</div>
 		<div class="col-8" style="text-align: center;">
