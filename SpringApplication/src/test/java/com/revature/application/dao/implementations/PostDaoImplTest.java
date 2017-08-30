@@ -23,6 +23,7 @@ import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostType;
 import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.PostForm;
@@ -66,9 +67,9 @@ public class PostDaoImplTest {
 		session.saveOrUpdate(type);
 		session.saveOrUpdate(emp);
 
-		post1 = new Post(loc, emp, type, date, "post1");
-		post2 = new Post(loc, emp, type, date, "post2");
-		post3 = new Post(loc, emp, type, date, "post3");
+		post1 = new Post(loc, emp, type, date, "post1", new HotSpot());
+		post2 = new Post(loc, emp, type, date, "post2", new HotSpot());
+		post3 = new Post(loc, emp, type, date, "post3", new HotSpot());
 
 		session.saveOrUpdate(post1);
 		session.saveOrUpdate(post2);
@@ -100,7 +101,7 @@ public class PostDaoImplTest {
 		Session session = sf.getCurrentSession();
 
 		PostForm postForm = new PostForm(loc.getLocationId(),emp.getEmployeeId(),
-				post1.getType().getTypeId(), post3.getContent());
+				post1.getType().getTypeId(), post3.getContent(), 123.12, 123.12);
 
 		postDAO.create(postForm);
 
@@ -160,7 +161,7 @@ public class PostDaoImplTest {
 
 		Session session = sf.getCurrentSession();
 		PostForm form = new PostForm(loc.getLocationId(),emp.getEmployeeId(),
-				post1.getType().getTypeId(), "Changed");
+				post1.getType().getTypeId(), "Changed", 1.0, 1.0);
 
 		postDAO.update(post1.getPostId(), form);
 

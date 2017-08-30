@@ -25,6 +25,18 @@ public class HotSpot {
     @JoinColumn(name = "locationId")
     private Location location;
     
+    @OneToOne
+    @JoinColumn(name = "postId")
+    private Post post;
+    
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public HotSpot() {
         super();
     }
@@ -71,7 +83,7 @@ public class HotSpot {
     @Override
     public String toString() {
         return "HotSpot [hotSpotId=" + hotSpotId + ", longitude=" + longitude + ", lattitude="
-                + lattitude + ", location=" + location + "]";
+                + lattitude + ", location=" + location + ", post=" + post + "]";
     }
     
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.application.dao.HotSpotDao;
 import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
+import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.HotSpotForm;
 
 @Service
@@ -39,8 +40,9 @@ public class HotSpotDaoImpl implements HotSpotDao {
         
         Session session = sf.getCurrentSession();
         
-        Location location = new Location();
-        location.setLocationId(hotSpotForm.getLocationId());
+        Location location = (Location) session.get(Location.class, hotSpotForm.getLocationId());
+        
+        Post post = (Post) session.get(Post.class, hotSpotForm.getPostId());
         
         HotSpot hotSpot = new HotSpot(hotSpotForm.getLongitude(), hotSpotForm.getLattitude(),
                 location);

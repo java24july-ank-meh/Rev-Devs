@@ -21,6 +21,7 @@ import com.revature.application.dao.beans.PostComment;
 import com.revature.application.dao.beans.PostType;
 import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.PostCommentForm;
@@ -60,7 +61,7 @@ public class PostCommentDaoImplTest {
 		type = new PostType("new type");
 		//only truly need these 2
 		emp = new Employee(loc, company, "un12", "pw12", "un@mail.com", "Mike", "Stein");
-		post = new Post(loc, emp, type, date, "post1234"); 
+		post = new Post(loc, emp, type, date, "post1234", new HotSpot()); 
 
 		session.saveOrUpdate(company);
 		session.saveOrUpdate(loc);
