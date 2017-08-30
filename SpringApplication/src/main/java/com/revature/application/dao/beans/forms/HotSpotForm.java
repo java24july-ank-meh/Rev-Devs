@@ -19,17 +19,22 @@ public class HotSpotForm {
     
     @NotNull
     @Min(0)
+    private Long postId;
+    
+    @NotNull
+    @Min(0)
     private Long locationId;
     
     public HotSpotForm() {
         super();
     }
     
-    public HotSpotForm(Double longitude, Double lattitude, Long locationId) {
+    public HotSpotForm(Double longitude, Double lattitude, Long locationId, Long postId) {
         super();
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.locationId = locationId;
+        this.postId = postId;
     }
     
     public Double getLongitude() {
@@ -56,10 +61,18 @@ public class HotSpotForm {
         this.locationId = locationId;
     }
     
+    public Long getPostId() {
+        return postId;
+    }
+    
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+    
     @Override
     public String toString() {
         return "HotSpotForm [longitude=" + longitude + ", lattitude=" + lattitude + ", locationId="
-                + locationId + "]";
+                + locationId + ", postId=" + postId + "]";
     }
     
 }

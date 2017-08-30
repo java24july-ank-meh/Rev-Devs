@@ -1,7 +1,8 @@
-app.controller('homeController', function($http, $rootScope, $scope) {
+app.controller('homeController', function($http, $rootScope, $scope, $window) {
 	$scope.post = {};
 	$scope.post.typeId = undefined;
 	$scope.post.comment = "";
+	$scope.post.hotSpotAddress = "";
 	$scope.types = [];
 	$scope.posts = [];
 	
@@ -20,7 +21,9 @@ app.controller('homeController', function($http, $rootScope, $scope) {
 		let data = $.param({
 				"typeId": typeId,
 				"locationId": $rootScope.employee.location.locationId,
-				"content": $scope.post.comment
+				"content": $scope.post.comment,
+				"longitude": $window.searchLongitude,
+				"lattitude": $window.searchLattitude
 		})
 		
 		console.log(data);
@@ -36,8 +39,10 @@ app.controller('homeController', function($http, $rootScope, $scope) {
 			$scope.post.comment = "";
 			$rootScope.getCurrentUser();
 		}, function(error) {
-			console.log("Request was unsuccessful")
+			console.log("Request was unsuccessful for post")
 		});
+	
+		
 	}
 	
 	
