@@ -15,10 +15,10 @@ public class EmployeeForm {
     private Long companyId;
     
     @NotNull
-    @Size(min = 5, max = 32)
+    @Size(min = 1, max = 32)
     private String username;
     
-    @Size(min = 7, max = 32)
+    @Size(min = 1, max = 32)
     private String password;
     
     @NotNull
