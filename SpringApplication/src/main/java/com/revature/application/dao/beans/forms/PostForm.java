@@ -10,7 +10,6 @@ public class PostForm {
     @Min(0)
     private Long locationId;
     
-    @NotNull
     @Min(0)
     private Long employeeId;
     

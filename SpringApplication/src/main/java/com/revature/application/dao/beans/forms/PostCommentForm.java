@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 
 public class PostCommentForm {
     
-    @NotNull
     @Min(0)
     private Long employeeId;
     
