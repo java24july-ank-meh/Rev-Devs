@@ -3,6 +3,8 @@ package com.revature.application.restControllers;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +18,7 @@ import com.revature.application.dao.LocationDao;
 import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.forms.EmployeeForm;
-import com.revature.application.dao.beans.forms.LocationForm;
+import com.revature.application.services.LoginOperations;
 
 @RestController
 @RequestMapping("/authentication")
@@ -26,29 +28,24 @@ public class LoginController {
     EmployeeDao employeeDAO;
     
     @Autowired
-	LocationDao locationDAO;
+    LoginOperations loginService;
+    
+    @Autowired
+    LocationDao locationDAO;
     
     /*
      * Main handler for logging in a user
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public RequestStatus login(String username, String password, HttpSession session) {
+    public ResponseEntity<RequestStatus> login(String username, String password) {
         
         // Search in the database
-        Employee user = employeeDAO.read(username);
-        if (user == null)
-            return new RequestStatus(false, "User does not exist");
+        loginService.login(username, password);
         
-        if (user.getPassword().equals(password)) {
-            // Start a session
-            // session.setAttribute("id", ""+user.getEmployeeId());
-            saveEmployee(session, user);
-            
-            // Return Success
-            return new RequestStatus();
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
         } else {
-            // Return Failure
-            return new RequestStatus(false, "Incorrect password");
+            return new ResponseEntity<>(new RequestStatus(false, "Login was not successful"), HttpStatus.OK);
         }
     }
     
@@ -57,28 +54,17 @@ public class LoginController {
      */
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public RequestStatus logout(HttpSession session) {
-        // Destroy session
-        session.invalidate();
-        
-        // Return success
+        loginService.logout();
         return new RequestStatus();
     }
     
-    private void saveEmployee(HttpSession session, Employee e) {
-        session.setAttribute("id", "" + e.getEmployeeId());
-    }
-    
     private Employee loadEmployee(HttpSession session) {
-        String id_str = (String) session.getAttribute("id");
-        if (id_str == null)
-            return null;
-        long employee_id;
-        try {
-            employee_id = Long.parseLong(id_str);
-        } catch (Exception e) {
+        Long employeeId = (Long) session.getAttribute("id");
+        if (employeeId == null) {
             return null;
         }
-        Employee employee = employeeDAO.read(employee_id);
+        
+        Employee employee = employeeDAO.read(employeeId);
         return employee;
     }
     
@@ -109,19 +95,22 @@ public class LoginController {
     
     @RequestMapping(path = "/set-location", method = RequestMethod.POST)
     public RequestStatus setLocation(String city, HttpSession session) {
-    	Employee employee = loadEmployee(session);
-    	if(employee == null) {
-    		 return new RequestStatus(false, "Not logged in");
-    	}
-    	
-    	Location loc = locationDAO.read(city);
-    	if(loc == null) return new RequestStatus(false, "location not found");
-    	
-    	employee.setLocation(loc);
-    	EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(), employee.getCompany().getCompanyId(), employee.getUsername(),
-                employee.getPassword(), employee.getEmail(), employee.getFname(), employee.getLname());
-    	employeeDAO.update(employee.getEmployeeId(), employeeForm);
-    	
-    	return new RequestStatus();
+        Employee employee = loadEmployee(session);
+        if (employee == null) {
+            return new RequestStatus(false, "Not logged in");
+        }
+        
+        Location loc = locationDAO.read(city);
+        if (loc == null)
+            return new RequestStatus(false, "location not found");
+        
+        employee.setLocation(loc);
+        EmployeeForm employeeForm = new EmployeeForm(loc.getLocationId(),
+                employee.getCompany().getCompanyId(), employee.getUsername(),
+                employee.getPassword(), employee.getEmail(), employee.getFname(),
+                employee.getLname());
+        employeeDAO.update(employee.getEmployeeId(), employeeForm);
+        
+        return new RequestStatus();
     }
 }

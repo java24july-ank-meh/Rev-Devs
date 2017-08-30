@@ -1,6 +1,5 @@
 package com.revature.application.restControllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,7 +17,7 @@ import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.CompanyDao;
 import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.forms.CompanyForm;
-import com.revature.application.services.SafeUserOperations;
+import com.revature.application.services.LoginOperations;
 
 @RestController
 @RequestMapping("/companies")
@@ -28,7 +27,7 @@ public class CompanyController {
     CompanyDao companyDAO;
     
     @Autowired
-    SafeUserOperations userOperations;
+    LoginOperations loginService;
     
     /*
      * All GET requests
@@ -36,7 +35,7 @@ public class CompanyController {
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<List<Company>> readAllCompanies() {
         // Get all the companies from db
-        if (userOperations.isValidSession()) {
+        if (loginService.isLoggedIn()) {
             return new ResponseEntity<>(companyDAO.readAll(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -46,7 +45,7 @@ public class CompanyController {
     @RequestMapping(path = "/{companyId}", method = RequestMethod.GET)
     public ResponseEntity<Company> readCompanyById(@PathVariable long companyId) {
         // Get single company from db by id
-        if (userOperations.isValidSession()) {
+        if (loginService.isLoggedIn()) {
             return new ResponseEntity<>(companyDAO.read(companyId), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -61,7 +60,7 @@ public class CompanyController {
             BindingResult bindingResult) {
         // Add a new company to the db
         
-        if (userOperations.isValidSession()) {
+        if (loginService.isLoggedIn()) {
             if (!bindingResult.hasErrors()) {
                 companyDAO.create(companyForm);
                 return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
@@ -78,7 +77,7 @@ public class CompanyController {
     @RequestMapping(path = "/{companyId}", method = RequestMethod.DELETE)
     public ResponseEntity<RequestStatus> deleteLocation(@PathVariable long companyId) {
         // Delete a single location
-        if (userOperations.isValidSession()) {
+        if (loginService.isLoggedIn()) {
             companyDAO.deleteById(companyId);
             return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK); 
         }
