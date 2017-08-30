@@ -2,7 +2,7 @@
 	<div class="jumbotron">
 		<div class="media">
 			<img class="d-flex mr-3"
-				src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="64" width="64">
+				src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="128" width="128">
 			<div class="media-body">
 				<table id="userinfo" class="table table-no-border"
 					style="width: 40%;">
@@ -50,12 +50,12 @@
 	<br />
 	<div class="jumbotron">
 		<h2>My Recent Posts</h2>
-
+		<br/>
 		<table class="table table borderless" style="width: 55%;" ng-repeat="post in employeePosts">
 			<tbody>
 				<tr>
 					<td></td>
-					<td><small>{{post.posted | date}} | {{post.type.type}} | {{post.location.city}}</small></td>
+					<td><small>Submitted:{{post.posted | date}} |Post Type: {{post.type.type}} | To: {{post.location.city}}</small></td>
 				</tr>
 				<tr>
 					<td></td>
@@ -73,5 +73,6 @@
 				</tr>
 			</tbody>
 		</table>
+		<br/><br/><br/>
 	</div>
 </div>
