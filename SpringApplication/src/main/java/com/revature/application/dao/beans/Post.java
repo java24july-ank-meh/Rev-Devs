@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Post {
     
@@ -26,14 +28,19 @@ public class Post {
     @JoinColumn(name = "typeId")
     private PostType type;
     
+    @ManyToOne
+    @JoinColumn(name = "hotSpotId")
+    private HotSpot hotSpot;
+    
     @Column
     private Date posted;
     
     @Column
     private String content;
     
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch=FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "postId")
+    @JsonIgnore
     private Set<PostComment> comments = new HashSet<>();
     
     public Post() {
@@ -104,7 +111,15 @@ public class Post {
         this.comments = comments;
     }
     
-    @Override
+    public HotSpot getHotSpot() {
+		return hotSpot;
+	}
+
+	public void setHotSpot(HotSpot hotSpot) {
+		this.hotSpot = hotSpot;
+	}
+
+	@Override
     public String toString() {
         return "Post [postId=" + postId + ", location=" + location + ", employee=" + employee
                 + ", type=" + type + ", posted=" + posted + ", content=" + content + "]";

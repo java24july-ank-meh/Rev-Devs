@@ -1,4 +1,4 @@
-<div class="container" style="margin: 0 auto;">
+<div class="container" style="margin: 0 auto;" ng-controller="locationController">
 <div class="row">
   <div class="col-9"><h2>{{Area}}'s Posts</h2></div>
 </div>
@@ -8,19 +8,19 @@
           <li class="list-group-item justify-content-between" style="background: #e8ebef;"><h5>Users in your area</h5></li>
           <li class="list-group-item justify-content-between">
             <a href="#">
-              <img src="https://pldh.net/media/pokemon/shuffle/169.png" style="width: 24px; height: 24px;">
-              Pokemon Fan
+              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
+              User
             </a>
           </li>
           <li class="list-group-item justify-content-between">
             <a href="#">
-              <img src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/mark-sanchez-2.thumbnail.jpg" style="width: 24px; height: 24px;">
+              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
               Cartoon Guy
             </a>
           </li>
           <li class="list-group-item justify-content-between">
             <a href="#">
-              <img src="http://www.startupcompanylawyer.com/wp-content/uploads/2007/04/wsgrwebpic.thumbnail.jpg" style="width: 24px; height: 24px;">
+              <img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">
               Melbin Pastrami
             </a>
           </li>
@@ -32,11 +32,11 @@
               <div class="modal-content">
                 <div class="modal-body">
                   
-                    <a href="#"><img src="https://pldh.net/media/pokemon/shuffle/169.png" style="width: 24px; height: 24px;">Pokemon Fan</a><br/><br/>
-                    <a href="#"><img src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/mark-sanchez-2.thumbnail.jpg" style="width: 24px; height: 24px;">Cartoon Guy</a><br/><br/>
-                    <a href="#"><img src="http://www.startupcompanylawyer.com/wp-content/uploads/2007/04/wsgrwebpic.thumbnail.jpg" style="width: 24px; height: 24px;">Melbin Pastrami</a><br/><br/>
-                    <a href="#"><img src="https://dbpedia.atlassian.net/wiki/images/icons/profilepics/default.png?noRedirect=true" style="width: 24px; height: 24px;">Bob Jones</a><br/><br/>
-                    <a href="#"><img src="https://filedb.experts-exchange.com/files/public/2016/11/6/49ba7778-2786-4d42-bdd4-32aa84df38b6.jpeg" style="width: 24px; height: 24px;">Bill Billson</a>
+                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Pokemon Fan</a><br/><br/>
+                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Cartoon Guy</a><br/><br/>
+                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Melbin Pastrami</a><br/><br/>
+                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Bob Jones</a><br/><br/>
+                    <a href="#"><img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24">Bill Billson</a>
                   
                 </div>
                 <div class="modal-footer">
@@ -48,65 +48,18 @@
         </ul>
     </div>
     <div class="col-8" style="text-align: center;">
-      <table class="table table borderless" style="width: 80%;">
+      <table class="table table borderless" style="width: 80%;" ng-repeat="post in locationPosts">
                 <thead>
                   <tr>
                     <th>
                       <div class="media">
-                        <img class="d-flex mr-3" src="https://pldh.net/media/pokemon/shuffle/169.png" alt="Generic placeholder image">
+                        <img class="d-flex mr-3" src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="64" width="64" alt="Generic placeholder image">
                       </div>
                     </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
+                    <th><h5>{{post.employee.username}}</h5><small>Date: {{post.posted|date}} | Post Type: {{post.type.type}}</small></th>
                   <tr>
                     <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
-
-
-              <table class="table table borderless" style="width: 80%;">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="https://fh8346m8fdjai4sy-zippykid.netdna-ssl.com/wp-content/uploads/2015/05/mark-sanchez-2.thumbnail.jpg" alt="Generic placeholder image">
-                      </div>
-                    </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                  </tr>
-                  <tr class="active">
-                  <td></td>
-                    <td><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
-                    <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-comment"></span> Comment</button></td>
-                  </tr>
-                  <tr>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table class="table table borderless" style="width: 80%;">
-                <thead>
-                  <tr>
-                    <th>
-                      <div class="media">
-                        <img class="d-flex mr-3" src="http://www.startupcompanylawyer.com/wp-content/uploads/2007/04/wsgrwebpic.thumbnail.jpg" alt="Generic placeholder image">
-                      </div>
-                    </th>
-                    <th><h5>Username</h5><small>Date | Post Type</small></th>
-                  <tr>
-                    <td> </td>
-                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                    <td>{{post.content}}</td>
                   </tr>
                   <tr class="active">
                   <td></td>

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.PostCommentDao;
 import com.revature.application.dao.PostDao;
-import com.revature.application.dao.beans.HotSpot;
 import com.revature.application.dao.beans.Post;
-import com.revature.application.dao.beans.PostComment;
 import com.revature.application.dao.beans.forms.PostCommentForm;
 import com.revature.application.dao.beans.forms.PostForm;
 import com.revature.application.services.LoginOperations;
@@ -67,13 +65,16 @@ public class PostController {
             BindingResult bindingResult) {
         // Create a post in the db
         if (loginService.isLoggedIn()) {
+            
+            System.out.println(bindingResult.getFieldErrors());
+            
             if (!bindingResult.hasErrors()) {
                 postForm.setEmployeeId(loginService.getEmployeeId());
                 postDAO.create(postForm);
                 return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
             }
             return new ResponseEntity<>(new RequestStatus(false, "Failed to create new post"),
-                    HttpStatus.OK);
+                    HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

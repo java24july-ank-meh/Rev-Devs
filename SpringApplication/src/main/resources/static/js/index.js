@@ -3,7 +3,8 @@ app.config(function($routeProvider) {
 	$routeProvider
 	.when("/", {
 		templateUrl : "home.html",
-		activetab: 'home'
+		activetab: 'home',
+		controller: 'homeController'
 	})
 	.when("/profile", {
 		templateUrl : "profile.html",
@@ -12,11 +13,17 @@ app.config(function($routeProvider) {
 	.when("/explore", {
 		templateUrl : "mainMap.html",
 		activetab: 'explore'
+	})
+	.when("/location", {
+		templateUrl : "view_location.html",
+		activetab: 'location'
 	});
 });
 
 app.run(function($rootScope, $http, $location){
 	$rootScope.employee = null;
+	$rootScope.employeePosts = null;
+	$rootScope.locationPosts = null;
 	
 	$rootScope.logout = function(){
 		$http({
@@ -39,11 +46,31 @@ app.run(function($rootScope, $http, $location){
 			let success = response.data.success;
 			if(success){
 				$rootScope.employee = response.data.employee;
+				$rootScope.getPosts();
 			} else {
 				window.location.href = "/";
 			}
 		}, function errorCallback(response){
 		});
 	};
+	
+	$rootScope.getPosts = function(){
+		$http({
+			method: 'GET',
+			url: '/employees/posts',
+		}).then(function successCallback(response){
+			$rootScope.employeePosts = response.data;
+		}, function errorCallback(response){
+		});
+		
+		$http({
+			method: 'GET',
+			url: '/locations/'+$rootScope.employee.location.locationId+'/posts',
+		}).then(function successCallback(response){
+			$rootScope.locationPosts = response.data;
+		}, function errorCallback(response){
+		});
+	};
+	
 	$rootScope.getCurrentUser();
 });

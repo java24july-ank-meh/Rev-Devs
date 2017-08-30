@@ -15,6 +15,7 @@ app.controller("profileController", function($scope,$rootScope,$http,$location){
 		let _email = $rootScope.employee.email;
 		let _fname = $rootScope.employee.fname;
 		let _lname = $rootScope.employee.lname;
+		
 		if($scope.editMode){
 			$http({
 				method: 'POST',

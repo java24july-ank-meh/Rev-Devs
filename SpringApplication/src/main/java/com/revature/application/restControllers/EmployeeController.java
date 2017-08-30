@@ -1,9 +1,11 @@
 package com.revature.application.restControllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.application.beans.RequestStatus;
 import com.revature.application.dao.EmployeeDao;
 import com.revature.application.dao.beans.Employee;
+import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.forms.EmployeeForm;
 import com.revature.application.services.LoginOperations;
 
@@ -52,6 +55,26 @@ public class EmployeeController {
         }
     }
     
+    @RequestMapping(path = "/{employeeId}/posts", method = RequestMethod.GET)
+    public ResponseEntity<Set<Post>> readAllPosts(@PathVariable long employeeId) {
+        // Get single employee from db by id
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(employeeDAO.read(employeeId).getPosts(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
+    @RequestMapping(path = "/posts", method = RequestMethod.GET)
+    public ResponseEntity<Set<Post>> readAllPostsOfLoggedInUser() {
+        // Get single employee from db by id
+        if (loginService.isLoggedIn()) {
+            return new ResponseEntity<>(employeeDAO.read(loginService.getEmployeeId()).getPosts(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+    
     /*
      * All POST requests
      */
@@ -59,16 +82,12 @@ public class EmployeeController {
     public ResponseEntity<RequestStatus> createEmployee(@Valid EmployeeForm employeeForm,
             BindingResult bindingResult) {
         // Add a new user to the db
-        if (loginService.isLoggedIn()) {
-            if (!bindingResult.hasErrors()) {
-                employeeDAO.create(employeeForm);
-                return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
-            }
-            return new ResponseEntity<>(new RequestStatus(false, "Failed to create new employee"),
-                    HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (!bindingResult.hasErrors()) {
+            employeeDAO.create(employeeForm);
+            return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
         }
+        return new ResponseEntity<>(new RequestStatus(false, "Failed to create new employee"),
+                HttpStatus.OK);
     }
     
     /*
