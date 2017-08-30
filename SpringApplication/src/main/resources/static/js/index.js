@@ -12,6 +12,10 @@ app.config(function($routeProvider) {
 	.when("/explore", {
 		templateUrl : "mainMap.html",
 		activetab: 'explore'
+	})
+	.when("/location", {
+		templateUrl : "view_location.html",
+		activetab: 'location'
 	});
 });
 
