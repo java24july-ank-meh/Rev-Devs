@@ -65,6 +65,9 @@ public class PostController {
             BindingResult bindingResult) {
         // Create a post in the db
         if (loginService.isLoggedIn()) {
+            
+            System.out.println(bindingResult.getFieldErrors());
+            
             if (!bindingResult.hasErrors()) {
                 postForm.setEmployeeId(loginService.getEmployeeId());
                 postDAO.create(postForm);
