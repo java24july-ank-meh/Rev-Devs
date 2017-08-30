@@ -66,8 +66,11 @@ function initMap() {
 	autocomplete.addListener('place_changed', onPlaceChanged);
 
 	// Places the markers on the map and sets listeners for clicks
-	markers = locations
-			.map(function(l, i) {
+	markers = locations.map(function(l, i) {
+				if(l.employees == null)
+					l.employees = 0;
+				if(l.companies == null)
+					l.companies = 0;
 				var marker = new google.maps.Marker(
 						{
 							infowindow : new google.maps.InfoWindow({
@@ -178,6 +181,15 @@ function setLocation(city, lat, lng){
 	setLocationLat = lat;
 	setLocationLng = lng;
 	angular.element(document.querySelector('#setLocationButton')).click();
+}
+
+var viewLocationCity;
+var viewLocationLat;
+var viewLocationLng;
+function viewLocation(city, lat, lng){
+	viewLocationCity = city;
+	viewLocationLat = lat;
+	viewLocationLng = lng;
 }
 
 // Creates a new location in the database
