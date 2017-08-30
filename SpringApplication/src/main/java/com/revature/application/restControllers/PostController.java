@@ -68,6 +68,7 @@ public class PostController {
         // Create a post in the db
         if (loginService.isLoggedIn()) {
             if (!bindingResult.hasErrors()) {
+                postForm.setEmployeeId(loginService.getEmployeeId());
                 postDAO.create(postForm);
                 return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
             }
@@ -85,6 +86,7 @@ public class PostController {
         // Save a comment for this comment
         if (loginService.isLoggedIn()) {
             if (!bindingResult.hasErrors()) {
+                commentForm.setEmployeeId(loginService.getEmployeeId());
                 commentDAO.create(commentForm);
                 return new ResponseEntity<>(new RequestStatus(), HttpStatus.OK);
             }
