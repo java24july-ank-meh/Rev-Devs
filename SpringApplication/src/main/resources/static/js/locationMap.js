@@ -1,7 +1,8 @@
 var locationLat = 38.8338816;
 var locationLng = -104.8213634;
+var locationId = 13;
 var hotspots = [];
-$.getJSON('http://localhost:8080/locations/13/hotspots', function(json) {
+$.getJSON('http://localhost:8080/locations/'+locationId+'/hotspots', function(json) {
 	hotspots = json;
 });
 
