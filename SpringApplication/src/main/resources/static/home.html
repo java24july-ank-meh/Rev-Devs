@@ -101,8 +101,8 @@
 	function onPlaceChanged() {
 		var place = autocomplete.getPlace();
 		var location = place.geometry.location;
-		searchLongitude = location.longitude;
-		searchLattitude = location.latitude;
+		searchLongitude = location.lng().toFixed(8);
+		searchLattitude = location.lat().toFixed(8);
 	}
 </script>
 
