@@ -134,7 +134,8 @@ public class PostDaoImpl implements PostDao {
         
         Session session = sf.getCurrentSession();
         
-        List<Post> posts = session.createQuery("from Post post where post.hotSpotId is not null and post.locationId = :locationId")
+        String query = "from Post post where post.hotSpot is not null and post.location.locationId = :locationId";
+        List<Post> posts = session.createQuery(query)
                 .setParameter("locationId", locationId)
                 .list();
         
