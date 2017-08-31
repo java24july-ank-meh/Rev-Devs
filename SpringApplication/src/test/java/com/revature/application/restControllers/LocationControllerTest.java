@@ -3,15 +3,12 @@ package com.revature.application.restControllers;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
@@ -26,7 +23,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -160,7 +156,7 @@ public class LocationControllerTest {
         
         mockMvc.perform(get("/locations/" + location1.getLocationId() + "/hotspots")).andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(jsonPath("$[0].hotSpotId",
                         Matchers.is(hotSpots.get(0).getHotSpotId().intValue())))
                 .andExpect(jsonPath("$[0].longitude", Matchers.is(hotSpots.get(0).getLongitude())))
@@ -200,8 +196,8 @@ public class LocationControllerTest {
                 .param("longitude", "");
         
         mockMvc.perform(rb).andExpect(status().isUnauthorized())
-        .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.success", is(false)));
+//        .andDo(print())
+        ;
     }
     
     /*
@@ -221,7 +217,7 @@ public class LocationControllerTest {
                 ;
         
         mockMvc.perform(rb).andExpect(status().isOk())
-        		.andDo(print())
+//        		.andDo(print())
         		.andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$.message", is("Success")))
                 .andExpect(jsonPath("$.success", is(true)));
@@ -240,13 +236,9 @@ public class LocationControllerTest {
                 .param("locationId", "")
                 .param("lattitude", "")
                 .param("longitude", "");
-//                .contentType(contentType)
-        		;
         
         mockMvc.perform(rb).andExpect(status().isUnauthorized())
-        		.andDo(print())
-        		.andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.success", Matchers.is(false)));
+        		/*.andDo(print())*/;
     }
     
     @Test
