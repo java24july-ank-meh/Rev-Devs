@@ -17,16 +17,29 @@
 						</div>
 
 						<div style="text-align: left;">
-							<h5>Post Type</h5>
-							<select ng-model="post.typeId">
-								<option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
-							</select>
 
-							<div class="form-group">
-								<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress"
-									placeholder="HotSpot" />
+							<div class="row">
+								<div class="col-4">
+									<h5>Post Type</h5>
+								</div>
+								<div class="col-8" style="display: flex;">
+									<select ng-model="post.typeId">
+										<option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
+									</select>
+								</div>
 							</div>
+							<div class="row" style="margin-top: 25px;">
+								<div class="col-4">
+									<h5>Hot Spot</h5>
+								</div>
+								<div class="col-8" style="display: flex;">
+									<div class="form-group">
+										<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress"
+											placeholder="Associate a Hot Spot" />
+									</div>
+								</div>
 
+							</div>
 						</div>
 						<div class="wrapper" style="text-align: right;">
 							<button type="submit" class="btn btn-primary" align="left"
@@ -54,9 +67,8 @@
 									alt="Generic placeholder image" height="64" width="64">
 							</div>
 						</th>
-						<th><h5>{{post.employee.username}}</h5>
-							<small>Submitted: {{post.posted|date}} | Post Type:
-								{{post.type.type}}</small></th>
+						<th><h5>{{post.employee.username}}</h5> <small>Submitted:
+								{{post.posted|date}} | Post Type: {{post.type.type}}</small></th>
 					<tr>
 						<td></td>
 						<td>{{post.content}}</td>
@@ -101,8 +113,8 @@
 	function onPlaceChanged() {
 		var place = autocomplete.getPlace();
 		var location = place.geometry.location;
-		searchLongitude = location.longitude;
-		searchLattitude = location.latitude;
+		searchLongitude = location.lng().toFixed(8);
+		searchLattitude = location.lat().toFixed(8);
 	}
 </script>
 
