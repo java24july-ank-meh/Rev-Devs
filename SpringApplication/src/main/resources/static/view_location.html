@@ -68,12 +68,6 @@
 		
 		
 			<br/>
-			filter:
-			<select ng-model="typeIndex">
-				<option value="">All Types</option>
-				<option ng-repeat="type in types" value="{{$index}}" >{{type.type}}</option>
-			</select>
-			{{types[typeIndex].type}}
 		
 			<div style="width: 100%; margin: 0 auto;"
 				ng-repeat="post in posts | orderBy: '-posted'">
