@@ -94,6 +94,9 @@ app.run(function($rootScope, $http, $location, $window){
 		}, function errorCallback(response){
 		});
 	};	
-	$rootScope.getCurrentUser();
-	$rootScope.getPostTypes();
+	
+	$rootScope.onStart = function(){
+		$rootScope.getCurrentUser();
+		$rootScope.getPostTypes();
+	};
 });

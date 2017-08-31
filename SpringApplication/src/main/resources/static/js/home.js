@@ -9,5 +9,7 @@ app.controller('homeController', function($http, $rootScope, $scope) {
 		});
 	};
 	
-	$scope.getPosts();
+	$scope.init = function(){
+		$scope.getPosts();
+	}
 });
