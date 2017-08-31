@@ -17,6 +17,9 @@ app.config(function($routeProvider) {
 	.when("/location/:loc", {
 		templateUrl : "view_location.html",
 		activetab: 'location'
+	})
+	.when("/locationMap/:loc", {
+		templateUrl : "locationMap.html"
 	});
 });
 

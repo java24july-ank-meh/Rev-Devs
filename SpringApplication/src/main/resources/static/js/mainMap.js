@@ -75,9 +75,7 @@ function initMap() {
 				var marker = new google.maps.Marker(
 						{
 							infowindow : new google.maps.InfoWindow({
-								content : l.city + '<br>Employees: '
-										+ l.employees + '<br>Companies: '
-										+ l.companies
+								content : l.city
 							}),
 							clickwindow : new google.maps.InfoWindow(
 									{
