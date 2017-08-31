@@ -35,6 +35,7 @@ import com.revature.application.dao.beans.Company;
 import com.revature.application.dao.beans.Employee;
 import com.revature.application.dao.beans.Location;
 import com.revature.application.dao.beans.forms.EmployeeForm;
+import com.revature.application.services.LoginOperations;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
@@ -45,6 +46,8 @@ public class EmployeeControllerTest {
     
     private MockMvc mockMvc;
     
+    @Mock
+    private LoginOperations mockLOperation;
     @Mock
     private EmployeeDao employeeDAO;
     @InjectMocks
@@ -83,9 +86,12 @@ public class EmployeeControllerTest {
         employees.add(employee2);
     }
     
+    /*
+     * logged in validation pass
+     */
     @Test
-    public void returnAllUsers() throws Exception {
-        
+    public void returnAllUsersPass() throws Exception {
+    	when(mockLOperation.isLoggedIn()).thenReturn(true);
         when(employeeDAO.readAll()).thenReturn(employees);
         
         mockMvc.perform(get("/employees")).andExpect(status().isOk())
@@ -107,9 +113,12 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[1].lname", Matchers.is(employees.get(1).getLname())));
     }
     
+    /*
+     * logged in validation pass
+     */
     @Test
     public void returnSingleUser() throws Exception {
-        
+    	when(mockLOperation.isLoggedIn()).thenReturn(true);
         when(employeeDAO.read(employee1.getEmployeeId())).thenReturn(employee1);
         
         mockMvc.perform(get("/employees/1")).andExpect(status().isOk())
@@ -178,10 +187,12 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));
     }
     
-    
+    /*
+     * logged in validation pass
+     */
     @Test
-    public void updateUser() throws Exception {
-        
+    public void updateUserPass() throws Exception {
+    	when(mockLOperation.isLoggedIn()).thenReturn(true);
         when(employeeDAO.update(anyLong(), any(EmployeeForm.class)))
                 .thenReturn(true);
         
@@ -200,9 +211,12 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.message", Matchers.is("Success")));
     }
     
+    /*
+     * logged in validation pass
+     */
     @Test
     public void updateUserMissingParam() throws Exception {
-        
+    	when(mockLOperation.isLoggedIn()).thenReturn(true);
         when(employeeDAO.update(anyLong(), any(EmployeeForm.class)))
                 .thenReturn(true);
         
@@ -219,9 +233,12 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.success", Matchers.is(false)));
     }
     
+    /*
+     * logged in validation pass
+     */
     @Test
     public void deleteUser() throws Exception {
-        
+    	when(mockLOperation.isLoggedIn()).thenReturn(true);
         when(employeeDAO.delete(any(Employee.class))).thenReturn(true);
         
         mockMvc.perform(delete("/employees/1")).andExpect(status().isOk())

@@ -182,8 +182,7 @@ public class LocationControllerTest {
         RequestBuilder rb = post("/locations")
         		.param("city", location1.getCity())
                 .param("lattitude", location1.getLattitude() + "")
-                .param("longitude", location1.getLongitude() + "")
-                .contentType(contentType);
+                .param("longitude", location1.getLongitude() + "");
         
         mockMvc.perform(rb).andExpect(status().isOk())
         	.andExpect(content().contentType(contentType))
@@ -198,8 +197,7 @@ public class LocationControllerTest {
         RequestBuilder rb = post("/locations")
         		.param("city", "")
                 .param("lattitude", "")
-                .param("longitude", "")
-                .contentType(contentType.toString());
+                .param("longitude", "");
         
         mockMvc.perform(rb).andExpect(status().isUnauthorized())
         .andExpect(content().contentType(contentType))

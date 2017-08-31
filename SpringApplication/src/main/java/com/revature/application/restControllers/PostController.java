@@ -40,8 +40,16 @@ public class PostController {
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<List<Post>> readAllPosts() {
         // Read all posts from the db
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(postDAO.readAll(), HttpStatus.OK);
+   	 System.out.println("------------------------in servlet read all");
+
+        if (loginService.isLoggedIn()) {//<------null pointer exception here
+        	 System.out.println("------------------------logeged in");
+        	 
+        	 List<Post> allPosts = postDAO.readAll();
+        	 if(allPosts != null) {
+        		    return new ResponseEntity<>(allPosts, HttpStatus.OK);
+        	 }
+          return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
