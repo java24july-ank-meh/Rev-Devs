@@ -1,5 +1,6 @@
 package com.revature.application.dao.implementations;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +126,17 @@ public class PostDaoImpl implements PostDao {
         session.flush();
         
         return true;
+    }
+
+    @Override
+    @Transactional
+    public List<Post> getPostsWithHotSpots(long locationId) {
+        
+        Session session = sf.getCurrentSession();
+        
+        List<Post> posts = session.createQuery("from Post post where post.hotSpotId is not null").list();
+        
+        return posts;
     }
     
 }

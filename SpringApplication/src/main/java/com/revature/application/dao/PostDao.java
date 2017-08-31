@@ -12,4 +12,5 @@ public interface PostDao {
 	public boolean update(long post_id, PostForm postForm);
 	public boolean delete(Post post);
 	public boolean deleteById(long post_id);
+    public List<Post> getPostsWithHotSpots(long locationid);
 }
