@@ -30,6 +30,7 @@ public class AuthenticationService implements LoginOperations {
 
     @Override
     public void logout() {
+//        masterSession.removeAttribute("id");
         masterSession.setAttribute("id", null);
     }
 

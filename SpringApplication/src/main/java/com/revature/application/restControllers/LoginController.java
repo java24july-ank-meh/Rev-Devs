@@ -59,12 +59,14 @@ public class LoginController {
     }
     
     private Employee loadEmployee(HttpSession session) {
-        Long employeeId = (Long) session.getAttribute("id");
-        if (employeeId == null) {
+       String employeeId = (String) session.getAttribute("id");
+        
+       if (employeeId == null) {
             return null;
         }
-        
-        Employee employee = employeeDAO.read(employeeId);
+       
+       long empId = Long.parseLong(employeeId);
+        Employee employee = employeeDAO.read(empId);
         return employee;
     }
     
@@ -96,6 +98,7 @@ public class LoginController {
     @RequestMapping(path = "/set-location", method = RequestMethod.POST)
     public RequestStatus setLocation(String city, HttpSession session) {
     	Employee employee = loadEmployee(session);
+
     	if(employee == null) {
     		 return new RequestStatus(false, "Not logged in");
     	}
