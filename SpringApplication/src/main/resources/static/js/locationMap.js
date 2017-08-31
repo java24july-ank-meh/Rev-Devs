@@ -195,7 +195,7 @@ function addToTable(result, i) {
 	icon.setAttribute('className', 'placeIcon');
 	var name = document.createTextNode(result.name);
 	if (result.name == undefined)
-		name = document.createTextNode(result.type.type + " Post");
+		name = document.createTextNode(result + " Post");
 	iconTd.appendChild(icon);
 	nameTd.appendChild(name);
 	tr.appendChild(iconTd);
@@ -222,25 +222,28 @@ function clearMarkers() {
 function mapHotspots() {
 	clearResults();
 	for (var i = 0; i < hotspots.length; i++) {
+		var t = "Misc.";
+		if(hotspots[i].type != undefined)
+			t = hotspots[i].type.type;
 		var marker = new google.maps.Marker({
 			map : map,
 			city : hotspots[i].location.city,
 			position : new google.maps.LatLng(hotspots[i].hotSpot.lattitude,
 					hotspots[i].hotSpot.longitude),
-			type : hotspots[i].type.type,
+			type : t,
 			employee : hotspots[i].employee.username,
 			post : hotspots[i].content
 		});
 		markers.push(marker);
 		google.maps.event.addListener(marker, 'mouseover', function() {
-			infowindow.setContent(this.city);
+			infowindow.setContent(this.type + " Post");
 			infowindow.open(map, this);
 		});
 		google.maps.event.addListener(marker,'click',function() {
 			modal.style.display = "block";
 			document.getElementById('locationModalContent').innerHTML = setSpotWindow(this.employee, this.post);
 		});
-		addToTable(hotspots[i], i);
+		addToTable(t, i);
 	}
 }
 
