@@ -37,7 +37,7 @@ app.controller('homeController', function($http, $rootScope, $scope, $window) {
 		}).then(function (response) {
 			console.log("Request was successful")
 			$scope.post.comment = "";
-			$rootScope.getCurrentUser();
+			$rootScope.getPosts();
 		}, function(error) {
 			console.log("Request was unsuccessful for post")
 		});

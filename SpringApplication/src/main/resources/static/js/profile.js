@@ -1,20 +1,49 @@
-app.controller("profileController", function($scope,$rootScope,$http,$location){
+app.controller("profileController", function($scope,$rootScope,$http,$location,$routeParams){
 	$scope.editMode = false;
 	$scope.editButtonName = "EDIT";
 	$scope.status = "";
 	$scope.statusColor = "red";
+	$scope.user = null;
+	$scope.posts = null;
+	
+	$scope.init = function(){
+		getEmployee();
+		getPosts();
+	};
+	
+	function getEmployee(){
+		$http({
+			method: 'GET',
+			url: '/employees/'+$routeParams.emp,
+		}).then(function successCallback(response){
+			$scope.user = response.data;
+		}, function errorCallback(response){
+		});
+	};
+	
+	function getPosts(){
+		$http({
+			method: 'GET',
+			url: '/employees/'+ $routeParams.emp +'/posts',
+		}).then(function successCallback(response){
+			$scope.posts = response.data;
+		}, function errorCallback(response){
+		});
+	};
+	
 	$scope.cancelButton = function(){
-		$rootScope.getCurrentUser();
+		getEmployee();
 		$scope.editMode = false;
 		$scope.editButtonName = "EDIT";
 		$scope.status = "";
 		$scope.statusColor = "red";
 	};
+	
 	$scope.editButton = function(){
-		let _username = $rootScope.employee.username;
-		let _email = $rootScope.employee.email;
-		let _fname = $rootScope.employee.fname;
-		let _lname = $rootScope.employee.lname;
+		let _username = $scope.user.username;
+		let _email = $scope.user.email;
+		let _fname = $scope.user.fname;
+		let _lname = $scope.user.lname;
 		
 		if($scope.editMode){
 			$http({
@@ -28,6 +57,7 @@ app.controller("profileController", function($scope,$rootScope,$http,$location){
 					$scope.status = "successfully updated account";
 					$scope.statusColor = "green";
 					$rootScope.getCurrentUser();
+					getEmployee();
 					$scope.editMode = false;
 					$scope.editButtonName = "EDIT";
 				} else {

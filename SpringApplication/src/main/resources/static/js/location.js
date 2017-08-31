@@ -5,8 +5,6 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 	$scope.users = null;
 	
 	$scope.init = function(){
-		$routeParams.loc;
-		
 		$http({
 			method: 'GET',
 			url: '/locations/'+$routeParams.loc+'/posts',

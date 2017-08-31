@@ -6,7 +6,7 @@ app.config(function($routeProvider) {
 		activetab: 'home',
 		controller: 'homeController'
 	})
-	.when("/profile", {
+	.when("/profile/:emp", {
 		templateUrl : "profile.html",
 		activetab: 'profile'
 	})
@@ -22,7 +22,6 @@ app.config(function($routeProvider) {
 
 app.run(function($rootScope, $http, $location){
 	$rootScope.employee = null;
-	$rootScope.employeePosts = null;
 	$rootScope.locationPosts = null;
 	
 	$rootScope.logout = function(){
@@ -55,14 +54,6 @@ app.run(function($rootScope, $http, $location){
 	};
 	
 	$rootScope.getPosts = function(){
-		$http({
-			method: 'GET',
-			url: '/employees/posts',
-		}).then(function successCallback(response){
-			$rootScope.employeePosts = response.data;
-		}, function errorCallback(response){
-		});
-		
 		$http({
 			method: 'GET',
 			url: '/locations/'+$rootScope.employee.location.locationId+'/posts',

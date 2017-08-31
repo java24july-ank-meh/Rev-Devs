@@ -11,7 +11,7 @@
 				<li class="list-group-item justify-content-between"
 					style="background: #e8ebef;"><h5>Users in your area</h5></li>
 					
-				<li ng-repeat="user in users" class="list-group-item justify-content-between"><a href="#">
+				<li ng-repeat="user in users" class="list-group-item justify-content-between"><a href="#!/profile/{{user.employeeId}}">
 						<img src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg" height="24" width="24"> 
 						{{user.username}}
 				</a></li>
@@ -29,7 +29,7 @@
 									height="64" width="64" alt="Generic placeholder image">
 							</div>
 						</th>
-						<th><h5>{{post.employee.username}}</h5>
+						<th><h5><a href="#!/profile/{{post.employee.employeeId}}">{{post.employee.username}}</a></h5>
 							<small>Date: {{post.posted|date}} | Post Type:
 								{{post.type.type}}</small></th>
 					<tr>

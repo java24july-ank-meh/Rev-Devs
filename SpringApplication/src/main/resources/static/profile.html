@@ -1,4 +1,4 @@
-<div style="width: 1000px; margin: 0 auto;" ng-controller="profileController">
+<div style="width: 1000px; margin: 0 auto;" ng-controller="profileController" ng-init="init()">
 	<div class="jumbotron">
 		<div class="media">
 			<img class="d-flex mr-3"
@@ -9,32 +9,32 @@
 					<tr>
 						<td>Username:</td>
 						<td><span ng-if="editMode"> <input type="text"
-								ng-model="employee.username" />
-						</span> <span ng-if="!editMode"> {{employee.username}} </span></td>
+								ng-model="user.username" />
+						</span> <span ng-if="!editMode"> {{user.username}} </span></td>
 					</tr>
 					<tr>
 						<td>Eamil:</td>
 						<td><span ng-if="editMode"> <input type="text"
-								ng-model="employee.email" />
-						</span> <span ng-if="!editMode"> {{employee.email}} </span></td>
+								ng-model="user.email" />
+						</span> <span ng-if="!editMode"> {{user.email}} </span></td>
 					</tr>
 					<tr>
 						<td>First name:</td>
 						<td><span ng-if="editMode"> <input type="text"
 								ng-model="employee.fname" />
-						</span> <span ng-if="!editMode"> {{employee.fname}} </span></td>
+						</span> <span ng-if="!editMode"> {{user.fname}} </span></td>
 					</tr>
 					<tr>
 						<td>Last name:</td>
 						<td><span ng-if="editMode"> <input type="text"
-								ng-model="employee.lname" />
-						</span> <span ng-if="!editMode"> {{employee.lname}} </span></td>
+								ng-model="user.lname" />
+						</span> <span ng-if="!editMode"> {{user.lname}} </span></td>
 					</tr>
 					<tr>
 						<td>Location:</td>
-						<td>{{employee.location.city}}</td>
+						<td><a href="#!/location/{{user.location.locationId}}">{{user.location.city}}</a></td>
 					</tr>
-					<tr>
+					<tr ng-if="employee.employeeId == user.employeeId">
 						<td></td>
 						<td><font color="{{statusColor}}">{{status}}</font><br />
 							<button type="button" class="btn btn-sm"
@@ -45,17 +45,14 @@
 				</table>
 			</div>
 		</div>
-	</div>
-	<br />
-	<br />
-	<div class="jumbotron">
+		
 		<h2>My Recent Posts</h2>
 		<br/>
-		<table class="table table borderless" style="width: 55%;" ng-repeat="post in employeePosts">
+		<table class="table table borderless" style="width: 55%;" ng-repeat="post in posts">
 			<tbody>
 				<tr>
 					<td></td>
-					<td><small>Submitted: {{post.posted | date}} | Post Type: {{post.type.type}} | To: {{post.location.city}}</small></td>
+					<td><small>Submitted: {{post.posted | date}} | Post Type: {{post.type.type}} | To: <a href="#!/location/{{post.location.locationId}}">{{post.location.city}}</a></small></td>
 				</tr>
 				<tr>
 					<td></td>
