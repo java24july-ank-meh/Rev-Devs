@@ -22,7 +22,6 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 		}, function errorCallback(response){
 		});
 	
-		
 		$http({
 			method: 'GET',
 			url: '/locations/'+$routeParams.loc+'/users',
@@ -30,5 +29,17 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 			$scope.users = response.data;
 		}, function errorCallback(response){
 		});
-	}
+		
+		$scope.getPosts();
+	};
+	
+	$scope.getPosts = function(){
+		$http({
+			method: 'GET',
+			url: '/locations/'+$scope.location.locationId+'/posts',
+		}).then(function successCallback(response){
+			$scope.posts = response.data;
+		}, function errorCallback(response){
+		});
+	};
 });	

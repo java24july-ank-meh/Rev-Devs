@@ -46,7 +46,6 @@ app.run(function($rootScope, $http, $location, $window){
 			let success = response.data.success;
 			if(success){
 				$rootScope.employee = response.data.employee;
-				$rootScope.getPosts();
 			} else {
 				window.location.href = "/";
 			}
@@ -54,17 +53,7 @@ app.run(function($rootScope, $http, $location, $window){
 		});
 	};
 	
-	$rootScope.getPosts = function(){
-		$http({
-			method: 'GET',
-			url: '/locations/'+$rootScope.employee.location.locationId+'/posts',
-		}).then(function successCallback(response){
-			$rootScope.locationPosts = response.data;
-		}, function errorCallback(response){
-		});
-	};
-	
-	$rootScope.submitPost = function(locationId, currentPost) {
+	$rootScope.submitPost = function(locationId, currentPost, getPostsCallback) {
 		
 		let typeId = isNaN(parseInt(currentPost.typeId)) ? null : parseInt(currentPost.typeId);
 		
@@ -74,7 +63,7 @@ app.run(function($rootScope, $http, $location, $window){
 				"content": currentPost.comment,
 				"longitude": $window.searchLongitude,
 				"lattitude": $window.searchLattitude
-		})
+		});
 		
 		console.log(data);
 		$http({
@@ -87,12 +76,10 @@ app.run(function($rootScope, $http, $location, $window){
 		}).then(function (response) {
 			console.log("Request was successful")
 			currentPost.comment = "";
-			$rootScope.getPosts();
+			getPostsCallback();
 		}, function(error) {
 			console.log("Request was unsuccessful for post")
 		});
-	
-		
 	};
 	
 	$rootScope.getPostTypes = function() {
