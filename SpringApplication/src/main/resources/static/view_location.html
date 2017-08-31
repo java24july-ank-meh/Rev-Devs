@@ -5,6 +5,8 @@
 			<h2>{{location.city}}</h2>
 		</div>
 	</div>
+	
+	
 	<div class="row">
 		<div class="col-2">
 			<ul class="list-group">
@@ -18,6 +20,54 @@
 			</ul>
 		</div>
 		<div class="col-8"">
+			
+				<div class="card text-center" style="width: 55rem; margin: 0 auto">
+				<div class="card-header"></div>
+				<div class="card-block">
+					<form>
+						<div class="form-group">
+							<label for="comment">Show other people what's going on in
+								your area:</label>
+							<textarea class="form-control" rows="5" id="comment"
+								ng-model="post.comment"></textarea>
+						</div>
+
+						<div style="text-align: left;">
+
+							<div class="row">
+								<div class="col-4">
+									<h5>Post Type</h5>
+								</div>
+								<div class="col-8" style="display: flex;">
+									<select ng-model="post.typeId">
+										<option ng-repeat="type in types" value="{{type.typeId}}">{{type.type}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="margin-top: 25px;">
+								<div class="col-4">
+									<h5>Hot Spot</h5>
+								</div>
+								<div class="col-8" style="display: flex;">
+									<div class="form-group">
+										<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress"
+											placeholder="Associate a Hot Spot" />
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="wrapper" style="text-align: right;">
+							<button type="submit" class="btn btn-primary" align="left"
+								ng-click="submitPost(location.locationId, post)">Post!</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		
+		
+		
+		
 			filter:
 			<select ng-model="typeIndex">
 				<option value="">All Types</option>
@@ -59,3 +109,32 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	var autocomplete;
+	function initAutocomplete() {
+		var lat = 43.0481;
+		var lng = -76.1474;
+		var cityBounds = new google.maps.LatLngBounds(new google.maps.LatLng(
+				lat - .1, lng - .1), new google.maps.LatLng(lat + .1, lng + .1));
+
+		autocomplete = new google.maps.places.Autocomplete((document
+				.getElementById('autocompleteHotSpot')), {
+			bounds : cityBounds
+		});
+		autocomplete.addListener('place_changed', onPlaceChanged);
+	}
+
+	var searchLongitude = null;
+	var searchLattitude = null;
+	function onPlaceChanged() {
+		var place = autocomplete.getPlace();
+		var location = place.geometry.location;
+		searchLongitude = location.lng().toFixed(8);
+		searchLattitude = location.lat().toFixed(8);
+	}
+</script>
+
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8G37jOv4-9enSEXFuxtiDl0DKiOR1BG0&libraries=places&callback=initAutocomplete"
+	async defer></script>

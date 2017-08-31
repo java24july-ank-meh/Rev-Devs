@@ -44,6 +44,7 @@ public class PostDaoImpl implements PostDao {
         HotSpot hotSpot = null;
         if (longitude != null && lattitude != null) {
             hotSpot = new HotSpot(longitude, lattitude, location);
+            session.save(hotSpot);
         }
         
         Post post = new Post(location, employee, postType, new Date(), postForm.getContent(), hotSpot);

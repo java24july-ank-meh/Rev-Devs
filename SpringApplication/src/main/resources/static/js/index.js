@@ -20,9 +20,10 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.run(function($rootScope, $http, $location){
+app.run(function($rootScope, $http, $location, $window){
 	$rootScope.employee = null;
 	$rootScope.locationPosts = null;
+	$rootScope.types = null;
 	
 	$rootScope.logout = function(){
 		$http({
@@ -63,5 +64,46 @@ app.run(function($rootScope, $http, $location){
 		});
 	};
 	
+	$rootScope.submitPost = function(locationId, currentPost) {
+		
+		let typeId = isNaN(parseInt(currentPost.typeId)) ? null : parseInt(currentPost.typeId);
+		
+		let data = $.param({
+				"typeId": typeId,
+				"locationId": locationId,
+				"content": currentPost.comment,
+				"longitude": $window.searchLongitude,
+				"lattitude": $window.searchLattitude
+		})
+		
+		console.log(data);
+		$http({
+			method: 'POST',
+			url: "/posts",
+			data: data,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+			}
+		}).then(function (response) {
+			console.log("Request was successful")
+			currentPost.comment = "";
+			$rootScope.getPosts();
+		}, function(error) {
+			console.log("Request was unsuccessful for post")
+		});
+	
+		
+	};
+	
+	$rootScope.getPostTypes = function() {
+		$http({
+			method: 'GET',
+			url: '/postTypes',
+		}).then(function successCallback(response){
+			$rootScope.types = response.data;
+		}, function errorCallback(response){
+		});
+	};	
 	$rootScope.getCurrentUser();
+	$rootScope.getPostTypes();
 });
