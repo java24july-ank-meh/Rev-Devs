@@ -174,15 +174,16 @@ function initMap() {
 	}
 }
 var setLocationCity;
-function setLocation(city, lat, lng){
+function setLocation(city){
+	console.log(city);
 	openMarker.clickwindow.setMap(null);
-	openMarker.employees += 1;
 	setLocationCity = city;
 	angular.element(document.querySelector('#setLocationButton')).click();
 }
 
 var viewLocationCity;
-function viewLocation(city, lat, lng){
+function viewLocation(city){
+	console.log(city);
 	viewLocationCity = city;
 	angular.element(document.querySelector('#viewLocationButton')).click();
 }
@@ -213,13 +214,14 @@ function createLocation() {
 		}),
 		clickwindow : new google.maps.InfoWindow({
 			content : "<button type=\"button\" class=\"btn btn-primary\""
-					+ "onClick=\"viewLocation()\">View Location</button>"
+					+ "onClick=\"viewLocation('"+currentMarker.city+"')\">View Location</button>"
 					+ "<button type=\"button\" class=\"btn btn-primary\""
-					+ "onClick=\"setLocation()\">Set As Your Location</button>"
+					+ "onClick=\"setLocation('"+currentMarker.city+"')\">Set As Your Location</button>"
 		}),
 		position : new google.maps.LatLng(Location.lattitude,
 				Location.longitude),
-		icon : image
+		icon : image,
+		city: currentMarker.city
 	});
 	marker.addListener('mouseover', function() {
 		marker.infowindow.open(map, marker);
@@ -228,6 +230,7 @@ function createLocation() {
 		marker.infowindow.setMap(null);
 	});
 	marker.addListener('click', function() {
+		openMarker = marker;
 		marker.infowindow.setMap(null);
 		marker.clickwindow.open(map, marker);
 	});
