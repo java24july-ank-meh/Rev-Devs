@@ -1,17 +1,17 @@
 var locationLat = 38.8338816;
 var locationLng = -104.8213634;
 var locationId = 13;
-
+var hotspots = [];
 var getLocation = function(loc_id,loc_lat,loc_lng){
 	locationId = loc_id;
 	locationLat = loc_lat;
 	locationLng = loc_lng;
+	$.getJSON('http://localhost:8080/locations/'+locationId+'/hotspots', function(json) {
+		hotspots = json;
+	});
+	map.setCenter(new google.maps.LatLng(locationLat, locationLng));
+	search();
 }
-
-var hotspots = [];
-$.getJSON('http://localhost:8080/locations/'+locationId+'/hotspots', function(json) {
-	hotspots = json;
-});
 
 // Modal Code
 var modal = document.getElementsByClassName('locationModal')[0];
@@ -60,10 +60,6 @@ function initMap() {
 	}
 	map = new google.maps.Map(document.getElementById('locationMap'), {
 		zoom : 13,
-		center : {
-			lat : locationLat,
-			lng : locationLng
-		},
 		mapTypeControl : false,
 		panControl : false,
 		zoomControl : false,
@@ -72,7 +68,6 @@ function initMap() {
 
 	infowindow = new google.maps.InfoWindow();
 	service = new google.maps.places.PlacesService(map);
-	search();
 }
 function search() {
 	service.nearbySearch({
