@@ -48,11 +48,11 @@
 		
 		<h2>My Recent Posts</h2>
 		<br/>
-		<table class="table table borderless" style="width: 55%;" ng-repeat="post in posts">
+		<table class="table table borderless" style="width: 55%;" ng-repeat="post in posts | orderBy: '-posted'">
 			<tbody>
 				<tr>
 					<td></td>
-					<td><small>Submitted: {{post.posted | date}} | Post Type: {{post.type.type}} | To: <a href="#!/location/{{post.location.locationId}}">{{post.location.city}}</a></small></td>
+					<td><small>Submitted: {{post.posted | date:'short'}} | Post Type: {{post.type.type}} | To: <a href="#!/location/{{post.location.locationId}}">{{post.location.city}}</a></small></td>
 				</tr>
 				<tr>
 					<td></td>

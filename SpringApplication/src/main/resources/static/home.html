@@ -57,7 +57,7 @@
 		<div class="row">
 
 			<table class="table table borderless" style="width: 60%;"
-				ng-repeat="post in locationPosts">
+				ng-repeat="post in locationPosts | orderBy: '-posted'">
 				<thead>
 					<tr>
 						<th>
@@ -67,8 +67,9 @@
 									alt="Generic placeholder image" height="64" width="64">
 							</div>
 						</th>
-						<th><h5>{{post.employee.username}}</h5> <small>Submitted:
-								{{post.posted|date}} | Post Type: {{post.type.type}}</small></th>
+						<th><h5><a href="#!/profile/{{post.employee.employeeId}}">{{post.employee.username}}</a></h5> <small>Submitted:
+								{{post.posted|date:'short'}} | Post Type: {{post.type.type}}</small></th>
+					</tr>
 					<tr>
 						<td></td>
 						<td>{{post.content}}</td>
@@ -84,7 +85,7 @@
 					</tr>
 					<tr>
 					</tr>
-				</tbody>
+				</thead>
 			</table>
 
 		</div>

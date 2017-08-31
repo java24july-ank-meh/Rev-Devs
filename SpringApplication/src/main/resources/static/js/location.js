@@ -4,6 +4,8 @@ app.controller('locationController', function($rootScope, $scope,$http, $routePa
 	$scope.types = null;
 	$scope.users = null;
 	
+	$scope.typeIndex = null;
+	
 	$scope.init = function(){
 		$http({
 			method: 'GET',
