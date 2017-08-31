@@ -2,8 +2,14 @@
 	ng-controller="locationController" ng-init="init()">
 	<div class="row">
 		<div class="col-9">
-			<h2>{{location.city}}</h2>
-			<a href="#!/locationMap/{{location.locationId}}">View On Map</a>
+			<table>
+				<td style="padding: 10px">
+					<h2>{{location.city}}</h2>
+				</td>
+				<td style="padding: 10px">
+					<a style="vertical-align:bottom" href="#!/locationMap/{{location.locationId}}"><img src="http://icon-icons.com/icons2/923/PNG/512/maps_icon-icons.com_72040.png" width="28" height="28"></img>View On Map</a>
+				</td>
+			</table>
 		</div>
 	</div>
 	

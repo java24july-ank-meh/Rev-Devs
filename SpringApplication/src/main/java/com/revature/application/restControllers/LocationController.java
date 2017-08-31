@@ -85,6 +85,11 @@ public class LocationController {
         return new ResponseEntity<>(locationDAO.read(location), HttpStatus.OK);
     }
     
+    @RequestMapping(path = "/{locationId}/postSpots", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> readAllPostsWithHotSpots(@PathVariable Long locationId) {
+        return new ResponseEntity<>(postDAO.getPostsWithHotSpots(locationId), HttpStatus.OK);
+    }
+    
     /*
      * All POST requests
      */
