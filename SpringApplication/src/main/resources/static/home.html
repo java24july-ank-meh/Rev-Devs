@@ -34,7 +34,7 @@
 								</div>
 								<div class="col-8" style="display: flex;">
 									<div class="form-group">
-										<input id="autocompleteHotSpot" ng-model="post.hotSpotAddress"
+										<input id="autocompleteHotSpot" style="width:250px;" ng-model="post.hotSpotAddress"
 											placeholder="Associate a Hot Spot" />
 									</div>
 								</div>
@@ -90,14 +90,8 @@
 <script>
 	var autocomplete;
 	function initAutocomplete() {
-		var lat = 43.0481;
-		var lng = -76.1474;
-		var cityBounds = new google.maps.LatLngBounds(new google.maps.LatLng(
-				lat - .1, lng - .1), new google.maps.LatLng(lat + .1, lng + .1));
-
 		autocomplete = new google.maps.places.Autocomplete((document
 				.getElementById('autocompleteHotSpot')), {
-			bounds : cityBounds
 		});
 		autocomplete.addListener('place_changed', onPlaceChanged);
 	}
