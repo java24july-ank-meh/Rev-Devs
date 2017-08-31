@@ -77,11 +77,11 @@
 	-ms-transform: translate(-50%, -50%)
 }
 
-.locationBox:hover .image {
+.locationBox:hover .locationImage {
 	opacity: 0.5;
 }
 
-.locationBox:hover .middle {
+.locationBox:hover .locationMiddle {
 	opacity: 1;
 }
 
