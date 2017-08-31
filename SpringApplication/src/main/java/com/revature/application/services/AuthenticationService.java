@@ -21,8 +21,8 @@ public class AuthenticationService implements LoginOperations {
 
     @Override
     public void login(String username, String password) {
-
         Employee employee = employeeDAO.read(username);
+        if(employee == null) return;
         if (employee.getPassword().equals(password)) {
             masterSession.setAttribute("id", employee.getEmployeeId());
         }
