@@ -84,6 +84,7 @@ public class LoginController {
 
 	@RequestMapping(path = "/set-location", method = RequestMethod.POST)
 	public RequestStatus setLocation(String city, HttpSession session) {
+
 		if (!loginService.isLoggedIn())
 			return new RequestStatus(false, "Not logged in");
 
