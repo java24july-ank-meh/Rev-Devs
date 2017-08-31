@@ -2,11 +2,11 @@ package com.revature.application.restControllers;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,8 +15,6 @@ import java.nio.charset.Charset;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -43,6 +41,7 @@ import com.revature.application.dao.beans.Post;
 import com.revature.application.dao.beans.PostType;
 import com.revature.application.dao.beans.forms.PostCommentForm;
 import com.revature.application.dao.beans.forms.PostForm;
+import com.revature.application.services.LoginOperations;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RevatureSocialNetworkApplication.class)
@@ -53,6 +52,8 @@ public class PostControllerTest {
 
 	private MockMvc mockMvc;
 
+	@Mock
+	private LoginOperations mockLOperation;
 	@Mock
 	private PostDao mockPostDao;
 	@Mock
@@ -96,80 +97,73 @@ public class PostControllerTest {
 
 	@Test
 	public void readAllWithoutSessionMustFail() throws Exception {
-		System.out.println("------------------------start test");
-		// when(mockPostDao.readAll()).thenReturn(posts);
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		RequestBuilder rb = get("/posts").session(emptySession);
+		RequestBuilder rb = get("/posts").accept(contentType);
 
 		mockMvc.perform(rb)
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(contentType))
-		.andExpect(jsonPath("$.success", Matchers.is(false)));
+		.andDo(print())
+		.andExpect(status().isUnauthorized());
 
-		System.out.println("------------------------test done");
 	}
 
-	// @Test
+	@Test
 	public void readWithoutSessionMustFail() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		when(mockPostDao.read(anyLong())).thenReturn(post1);
-
-		mockMvc.perform(get("/posts/" + post1.getPostId()).session(emptySession)).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.success", Matchers.is(false)));
+		mockMvc.perform(get("/posts/" + post1.getPostId()))
+		.andExpect(status().isUnauthorized());
 
 	}
 
-	// @Test
+	@Test
 	public void createPostWithoutSessionMustFail() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
-
-		RequestBuilder builder = post("/posts").session(emptySession).param("employeeId", "1").param("locationId", "1")
+		RequestBuilder builder = post("/posts")
+				.param("employeeId", "1").param("locationId", "1")
 				.param("typeId", "1").param("content", "message");
 
-		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-		.andExpect(jsonPath("$.success", Matchers.is(false)));
+		mockMvc.perform(builder).andExpect(status().isUnauthorized());
 
 	}
 
-	// @Test
+	@Test
 	public void createCommentWithoutSessionMustFail() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
-
-		RequestBuilder builder = post("/posts/comment").session(emptySession).param("employeeId", "1")
+		RequestBuilder builder = post("/posts/comment")
+				.param("employeeId", "1")
 				.param("postId", "1").param("content", "content");
 
-		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-		.andExpect(jsonPath("$.success", Matchers.is(false)));
+		mockMvc.perform(builder).andExpect(status().isUnauthorized());
 
 	}
 
-	// @Test
+	@Test
 	public void deletePostWithoutSessionMustFail() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		when(mockPostDao.deleteById(anyLong())).thenReturn(true);
-
-		mockMvc.perform(delete("/posts/1").session(emptySession)).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.success", Matchers.is(false)));
+		mockMvc.perform(delete("/posts/1"))
+		.andExpect(status().isUnauthorized());
 	}
 
-	// @Test
+	@Test
 	public void deleteCommentWithoutSessionMustFail() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(false);
 
-		when(postCommentDao.deleteById(anyLong())).thenReturn(true);
+		mockMvc.perform(delete("/posts/comment/1"))
+		.andExpect(status().isUnauthorized());
 
-		mockMvc.perform(delete("/posts/comment/1").session(emptySession)).andExpect(status().isOk())
-		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.success", Matchers.is(false)));
-		;
 	}
 
-	// @Test
+	@Test
 	public void returnAllPosts() throws Exception {
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 
 		when(mockPostDao.readAll()).thenReturn(posts);
 
-		mockMvc.perform(get("/posts").session(validSession)).andExpect(status().isOk())
+		mockMvc.perform(get("/posts")).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$", Matchers.hasSize(2)))
 		.andExpect(jsonPath("$[0].postId", Matchers.is(posts.get(0).getPostId().intValue())))
 		.andExpect(jsonPath("$[0].content", Matchers.is(posts.get(0).getContent())))
@@ -183,12 +177,12 @@ public class PostControllerTest {
 		.andExpect(jsonPath("$[1].type", Matchers.notNullValue()));
 	}
 
-	// @Test
+	@Test
 	public void returnSinglePost() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(mockPostDao.read(post1.getPostId())).thenReturn(post1);
 
-		mockMvc.perform(get("/posts/1").session(validSession)).andExpect(status().isOk())
+		mockMvc.perform(get("/posts/1")).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType))
 		.andExpect(jsonPath("$.postId", Matchers.is(post1.getPostId().intValue())))
 		.andExpect(jsonPath("$.content", Matchers.is(post1.getContent())))
@@ -197,12 +191,12 @@ public class PostControllerTest {
 		.andExpect(jsonPath("$.type", Matchers.notNullValue()));
 	}
 
-	// @Test
+	@Test
 	public void createPost() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
 
-		RequestBuilder builder = post("/posts").session(validSession).param("locationId", "1").param("typeId", "1")
+		RequestBuilder builder = post("/posts").param("locationId", "1").param("typeId", "1")
 				.param("content", "message");
 
 		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
@@ -210,57 +204,58 @@ public class PostControllerTest {
 		.andExpect(jsonPath("$.message", Matchers.is("Success")));
 	}
 
-	// @Test
+	@Test
 	public void missingParamForPost() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(mockPostDao.create(any(PostForm.class))).thenReturn(true);
 
-		RequestBuilder builder = post("/posts").session(validSession).param("typeId", "1");
+		RequestBuilder builder = post("/posts").param("typeId", "1");
 
-		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+		mockMvc.perform(builder).andExpect(status().isBadRequest()).andExpect(content().contentType(contentType))
 		.andExpect(jsonPath("$.success", Matchers.is(false)));
 	}
 
-	// @Test
+	@Test
 	public void createComment() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
 
-		RequestBuilder builder = post("/posts/comment").session(validSession).param("postId", "1").param("content",
-				"content");
+		RequestBuilder builder = post("/posts/comment")
+				.param("postId", "1").param("content",
+						"content");
 
 		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
 		.andExpect(jsonPath("$.success", Matchers.is(true)))
 		.andExpect(jsonPath("$.message", Matchers.is("Success")));
 	}
 
-	// @Test
+	@Test
 	public void createCommentMissingParamsMustFail() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(postCommentDao.create(any(PostCommentForm.class))).thenReturn(true);
 
-		RequestBuilder builder = post("/posts").session(validSession).param("content", "content");
+		RequestBuilder builder = post("/posts").param("content", "content");
 
-		mockMvc.perform(builder).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+		mockMvc.perform(builder).andExpect(status().isBadRequest()).andExpect(content().contentType(contentType))
 		.andExpect(jsonPath("$.success", Matchers.is(false)));
 	}
 
-	// @Test
+	@Test
 	public void deletePost() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(mockPostDao.deleteById(anyLong())).thenReturn(true);
 
-		mockMvc.perform(delete("/posts/1").session(validSession)).andExpect(status().isOk())
+		mockMvc.perform(delete("/posts/1")).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.success", Matchers.is(true)))
 		.andExpect(jsonPath("$.message", Matchers.is("Success")));
 	}
 
-	// @Test
+	@Test
 	public void deleteComment() throws Exception {
-
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		when(postCommentDao.deleteById(anyLong())).thenReturn(true);
 
-		mockMvc.perform(delete("/posts/comment/1").session(validSession)).andExpect(status().isOk())
+		mockMvc.perform(delete("/posts/comment/1")).andExpect(status().isOk())
 		.andExpect(content().contentType(contentType)).andExpect(jsonPath("$.success", Matchers.is(true)))
 		.andExpect(jsonPath("$.message", Matchers.is("Success")));
 	}
