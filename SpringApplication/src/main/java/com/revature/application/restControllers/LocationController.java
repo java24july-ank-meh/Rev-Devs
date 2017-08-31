@@ -47,23 +47,13 @@ public class LocationController {
      */
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<List<Location>> readAllLocations() {
-        
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(locationDAO.readAll(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(locationDAO.readAll(), HttpStatus.OK);
         
     }
     
     @RequestMapping(path = "/{locationId}", method = RequestMethod.GET)
     public ResponseEntity<Location> readLocationById(@PathVariable long locationId) {
-        
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(locationDAO.read(locationId), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(locationDAO.read(locationId), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/{locationId}/hotspots", method = RequestMethod.GET)
@@ -79,34 +69,20 @@ public class LocationController {
     
     @RequestMapping(path = "/{locationId}/posts", method = RequestMethod.GET)
     public ResponseEntity<Set<Post>> readAllPosts(@PathVariable long locationId) {
-        // Read the hotspot for a post
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<Set<Post>>(
-                    locationDAO.read(locationId).getPosts(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }  
+        return new ResponseEntity<Set<Post>>(
+                locationDAO.read(locationId).getPosts(), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/{locationId}/users", method = RequestMethod.GET)
     public ResponseEntity<Set<Employee>> readAllUsers(@PathVariable long locationId) {
         // Read the hotspot for a post
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<Set<Employee>>(
-                    locationDAO.read(locationId).getEmployees(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }  
+        return new ResponseEntity<Set<Employee>>(
+                locationDAO.read(locationId).getEmployees(), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/name/{location}", method = RequestMethod.GET)
     public ResponseEntity<Location> readLocationByName(@PathVariable String location) {
-        
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(locationDAO.read(location), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(locationDAO.read(location), HttpStatus.OK);
     }
     
     /*

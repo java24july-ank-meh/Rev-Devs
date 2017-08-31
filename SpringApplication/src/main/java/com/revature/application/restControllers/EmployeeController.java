@@ -38,31 +38,19 @@ public class EmployeeController {
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<List<Employee>> readAllEmployees() {
         // Get all the employee from db
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(employeeDAO.readAll(), HttpStatus.OK);
-        } else {
-           return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(employeeDAO.readAll(), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/{employeeId}", method = RequestMethod.GET)
     public ResponseEntity<Employee> readEmployeeById(@PathVariable long employeeId) {
         // Get single employee from db by id
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(employeeDAO.read(employeeId), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(employeeDAO.read(employeeId), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/{employeeId}/posts", method = RequestMethod.GET)
     public ResponseEntity<Set<Post>> readAllPosts(@PathVariable long employeeId) {
         // Get single employee from db by id
-        if (loginService.isLoggedIn()) {
-            return new ResponseEntity<>(employeeDAO.read(employeeId).getPosts(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+       return new ResponseEntity<>(employeeDAO.read(employeeId).getPosts(), HttpStatus.OK);
     }
     
     @RequestMapping(path = "/posts", method = RequestMethod.GET)
