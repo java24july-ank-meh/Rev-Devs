@@ -21,6 +21,7 @@ public class AuthenticationService implements LoginOperations {
 
     @Override
     public void login(String username, String password) {
+
         Employee employee = employeeDAO.read(username);
         if(employee == null) return;
         if (employee.getPassword().equals(password)) {
@@ -36,18 +37,23 @@ public class AuthenticationService implements LoginOperations {
 
     @Override
     public Boolean isLoggedIn() {
+    	 System.out.println("------------------------login validation");
+        String employeeId = (String) masterSession.getAttribute("id");
         
-        Long employeeId = (Long) masterSession.getAttribute("id");
-        if (employeeId != null) {
+        if (!employeeId.equals(null)) {
+        	 System.out.println("-----------------------not null");
             return true;
         } else {
+        	 System.out.println("------------------------null");
             return false;
         }
     }
 
     @Override
     public Long getEmployeeId() {
-       return (Long) masterSession.getAttribute("id");
+       String empid = (String) masterSession.getAttribute("id");
+       if(!empid.equals(null))return Long.parseLong(empid);
+       return null;
     }
 
 }

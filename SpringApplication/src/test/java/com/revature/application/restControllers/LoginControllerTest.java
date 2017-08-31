@@ -181,15 +181,15 @@ public class LoginControllerTest {
 	 * also what exactly is show with the RequestEmployee bean
 	 */
 	@Test
-	public void userPass() throws Exception {
-		
+	public void userPass() throws Exception {		
 		mockSession.setAttribute("id",employee.getEmployeeId().toString());
 		when(mockEmpDao.read(isA(Long.class))).thenReturn(employee);
-		
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
+
 		RequestBuilder rb = get("/authentication/user").session(mockSession);
 		
 		mockMvc.perform(rb).andExpect(status().isOk())
-		.andDo(print())
+//		.andDo(print())
 		.andExpect(jsonPath("$.employee.username", is(employee.getUsername())))
 		.andExpect(jsonPath("$.success",is(true)));
 	}
@@ -209,6 +209,7 @@ public class LoginControllerTest {
 	public void upadateProfileSuccess() throws Exception {
 		mockSession.setAttribute("id",employee.getEmployeeId().toString());
 		when(mockEmpDao.read(isA(Long.class))).thenReturn(employee);
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 		
 		RequestBuilder rb = post("/authentication/update-profile")
 				.accept(contentType)
@@ -246,6 +247,8 @@ public class LoginControllerTest {
 		mockSession.setAttribute("id",employee.getEmployeeId().toString());
 		when(mockEmpDao.read(isA(Long.class))).thenReturn(employee);
 		when(mockLocDao.read(isA(String.class))).thenReturn(location);
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
+
 		
 		RequestBuilder rb = post("/authentication/set-location")
 				.session(mockSession)
@@ -270,15 +273,23 @@ public class LoginControllerTest {
 	
 	}
 	
+	/*
+	 * we should only be using 
+	 * 		when(mockLOperation.isLoggedIn()).thenReturn(true);
+
+	 * not mock session now, bc we only care about what happens when failed and what happens when passed
+	 * 
+	 * the LoginOperation should have its own test for session stuff
+	 */
 	@Test
-	public void setLocationFailNoLocation() throws Exception {
-		
-		mockSession.setAttribute("id",employee.getEmployeeId().toString());
+	public void setLocationFailNoLocation() throws Exception {		
+//		mockSession.setAttribute("id",employee.getEmployeeId());
 		when(mockEmpDao.read(isA(Long.class))).thenReturn(employee);
 		when(mockLocDao.read(isA(Long.class))).thenReturn(null);
+		when(mockLOperation.isLoggedIn()).thenReturn(true);
 
 		RequestBuilder rb = post("/authentication/set-location")
-				.session(mockSession)
+//				.session(mockSession)
 				.param("city", "new york");
 		
 		mockMvc.perform(rb).andExpect(status().isOk())
