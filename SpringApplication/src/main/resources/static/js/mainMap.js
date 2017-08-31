@@ -175,7 +175,6 @@ function initMap() {
 }
 var setLocationCity;
 function setLocation(city){
-	console.log(city);
 	openMarker.clickwindow.setMap(null);
 	setLocationCity = city;
 	angular.element(document.querySelector('#setLocationButton')).click();
@@ -183,7 +182,6 @@ function setLocation(city){
 
 var viewLocationCity;
 function viewLocation(city){
-	console.log(city);
 	viewLocationCity = city;
 	angular.element(document.querySelector('#viewLocationButton')).click();
 }

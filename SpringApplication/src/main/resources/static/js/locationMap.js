@@ -1,12 +1,12 @@
 var locationLat = 38.8338816;
 var locationLng = -104.8213634;
 var locationId = 13;
-var hotspots = [];
+var hotspots;
 var getLocation = function(loc_id,loc_lat,loc_lng){
 	locationId = loc_id;
 	locationLat = loc_lat;
 	locationLng = loc_lng;
-	$.getJSON('http://localhost:8080/locations/'+locationId+'/hotspots', function(json) {
+	$.getJSON('http://localhost:8080/locations/'+locationId+'/postSpots', function(json) {
 		hotspots = json;
 	});
 	map.setCenter(new google.maps.LatLng(locationLat, locationLng));
@@ -195,7 +195,7 @@ function addToTable(result, i) {
 	icon.setAttribute('className', 'placeIcon');
 	var name = document.createTextNode(result.name);
 	if (result.name == undefined)
-		name = document.createTextNode(result.location.city);
+		name = document.createTextNode(result.type.type + " Post");
 	iconTd.appendChild(icon);
 	nameTd.appendChild(name);
 	tr.appendChild(iconTd);
@@ -225,14 +225,26 @@ function mapHotspots() {
 		var marker = new google.maps.Marker({
 			map : map,
 			city : hotspots[i].location.city,
-			position : new google.maps.LatLng(hotspots[i].lattitude,
-					hotspots[i].longitude)
+			position : new google.maps.LatLng(hotspots[i].hotSpot.lattitude,
+					hotspots[i].hotSpot.longitude),
+			type : hotspots[i].type.type,
+			employee : hotspots[i].employee.username,
+			post : hotspots[i].content
 		});
 		markers.push(marker);
 		google.maps.event.addListener(marker, 'mouseover', function() {
 			infowindow.setContent(this.city);
 			infowindow.open(map, this);
 		});
+		google.maps.event.addListener(marker,'click',function() {
+			modal.style.display = "block";
+			document.getElementById('locationModalContent').innerHTML = setSpotWindow(this.employee, this.post);
+		});
 		addToTable(hotspots[i], i);
 	}
+}
+
+function setSpotWindow(employee, post) {
+	return ('<h4>' + employee + ' posted:<h4><br>'
+			+ post);
 }
