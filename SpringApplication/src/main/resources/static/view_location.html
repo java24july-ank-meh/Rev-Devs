@@ -17,7 +17,7 @@
 				</a></li>
 			</ul>
 		</div>
-		<div class="col-8" style="text-align: center;">
+		<div class="col-8"">
 			filter:
 			<select ng-model="typeIndex">
 				<option value="">All Types</option>
@@ -25,38 +25,37 @@
 			</select>
 			{{types[typeIndex].type}}
 		
-			<table class="table table borderless" style="width: 80%;"
+			<div style="width: 100%; margin: 0 auto;"
 				ng-repeat="post in posts | orderBy: '-posted'">
-				<thead>
-					<tr>
-						<th>
-							<div class="media">
-								<img class="d-flex mr-3"
-									src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
-									height="64" width="64" alt="Generic placeholder image">
+				<div class="panel panel-white post">
+					<div class="post-heading">
+						<div class="pull-left image">
+							<img
+								src="https://t3.ftcdn.net/jpg/00/64/67/52/240_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+								class="img-circle avatar" alt="user profile image">
+						</div>
+						<div class="pull-left meta">
+							<div class="title h5">
+								<a href="#!/profile/{{post.employee.employeeId}}"><b>{{post.employee.username}}</b></a>
+								made a post to <a href="#!/location/{{post.location.locationId}}">{{post.location.city}}</a>
 							</div>
-						</th>
-						<th><h5><a href="#!/profile/{{post.employee.employeeId}}">{{post.employee.username}}</a></h5>
-							<small>Date: {{post.posted|date:'short'}} | Post Type:
-								{{post.type.type}}</small></th>
-					<tr>
-						<td></td>
-						<td>{{post.content}}</td>
-						<td></td>
-					</tr>
-					<tr class="active">
-						<td></td>
-						<td><button type="button" class="btn btn-default btn-sm">
+							<h6 class="text-muted time">{{post.posted|date:'short'}}</h6>
+						</div>
+					</div>
+					<div class="post-description">
+						<p>{{post.content}}</p>
+						<div class="stats">
+							<button type="button" class="btn btn-default btn-sm">
 								<span class="glyphicon glyphicon-thumbs-up"></span> Like
 							</button>
 							<button type="button" class="btn btn-default btn-sm">
 								<span class="glyphicon glyphicon-comment"></span> Comment
-							</button></td>
-					</tr>
-					<tr>
-					</tr>
-				</tbody>
-			</table>
+							</button>
+							{{post.type.type}}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
